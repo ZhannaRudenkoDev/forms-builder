@@ -1,0 +1,16 @@
+.header {
+  width: 100%;
+  border: 1px solid #C2D6E1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 300px;
+  .header__wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
