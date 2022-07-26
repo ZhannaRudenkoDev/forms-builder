@@ -5,17 +5,21 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialModule} from "../material/material.module";
 import { HeaderComponent } from './header/header.component';
+import { StyleFromComponent } from './style-from/style-from.component';
+import { BuilderComponent } from './builder/builder.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    StyleFromComponent,
+    BuilderComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
