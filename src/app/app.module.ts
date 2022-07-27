@@ -7,6 +7,9 @@ import {MaterialModule} from "../material/material.module";
 import { HeaderComponent } from './header/header.component';
 import { StyleFromComponent } from './style-from/style-from.component';
 import { BuilderComponent } from './builder/builder.component';
+import { FormItemsComponent } from './form-items/form-items.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import { CreatedFormComponent } from './created-form/created-form.component';
 
 
 @NgModule({
@@ -14,12 +17,15 @@ import { BuilderComponent } from './builder/builder.component';
     AppComponent,
     HeaderComponent,
     StyleFromComponent,
-    BuilderComponent
+    BuilderComponent,
+    FormItemsComponent,
+    CreatedFormComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

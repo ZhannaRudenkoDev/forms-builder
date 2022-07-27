@@ -1,0 +1,5 @@
+<div cdkDropList
+     class="example-list example-list__position"
+      [cdkDropListData]="fields">
+  <div class="example-box" *ngFor="let field of fields" cdkDrag>{{field}}</div>
+</div>

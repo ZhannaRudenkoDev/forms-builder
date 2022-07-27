@@ -11,10 +11,17 @@ export class StyleFromComponent implements OnInit {
   expandedIndex = 0;
 
   stylesFormOption = 'button';
+  //stylesFormOption = 'select';
+  //stylesFormOption = 'input';
+  //stylesFormOption = 'textarea';
+  //stylesFormOption = 'checkbox';
 
-/*
-  rgbControl = new FormControl(16, Validators.min(10));
-*/
+
+
+
+  /*
+    rgbControl = new FormControl(16, Validators.min(10));
+  */
 
 
   constructor() { }

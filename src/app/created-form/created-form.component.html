@@ -1,0 +1,45 @@
+<section class="form-created">
+  <div class="form-created__wrapper">
+    <p class="form-created__title">
+      Form label
+    </p>
+    <div class="form-created__fields" cdkDropList
+         [cdkDropListData]="fields"
+         (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let field of fields" cdkDrag class="form-created__input">
+        <div *ngIf="field === 'Input'" class="form-created__input"
+             (click)="getField(field, $event)">
+          <div class="text-field text-field_floating">
+            <input class="text-field__input" type="text" placeholder="Placeholder">
+            <label class="text-field__label">Input label</label>
+          </div>
+        </div>
+        <div *ngIf="field === 'Textarea'" class="form-created__input" >
+          <div class="text-field text-field_floating">
+            <textarea class="text-field__input" placeholder="Placeholder"></textarea>
+            <label class="text-field__label" >Textarea label</label>
+          </div>
+        </div>
+        <div *ngIf="field === 'Button'" class="form-created__button-wrapper" >
+          <button mat-button class="form-created__button">Button label</button>
+        </div>
+        <div *ngIf="field === 'Select'" class="form-created__input" >
+          <div class="floating-label">
+            <select class="floating-select" value="">
+              <option value=""></option>
+            </select>
+            <span class="highlight"></span>
+            <label class="label__select">Select</label>
+          </div>
+        </div>
+        <div *ngIf="field === 'Checkbox'" class="form-created__input" >
+          <p class="form-created__title">
+            Checkbox label
+          </p>
+          <input type="checkbox" id="option1" name="option1" value="option1" class="form-created__checkbox">
+          <label class="form-created__checkbox-label" for="option1"> option 1</label><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
