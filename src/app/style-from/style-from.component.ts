@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-style-from',
@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class StyleFromComponent implements OnInit {
 
   items = ['Form General Styles', 'Field Styles'];
+
+  @Input() field = '';
+
   expandedIndex = 0;
 
   stylesFormOption = 'button';

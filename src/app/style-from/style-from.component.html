@@ -54,7 +54,7 @@
         <button mat-button class="apply__button">Apply</button>
       </form>
       <ng-template #elseBlock>
-        <div *ngIf="stylesFormOption === 'input'">
+        <div *ngIf="field === 'Input' || field === 'Textarea'" >
           <div class="example-accordion-item-body-wrapper-options">
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Input label</mat-label>
@@ -107,7 +107,7 @@
               <button mat-button class="apply__button">Delete</button>
           </div>
         </div>
-        <div *ngIf="stylesFormOption === 'select'">
+        <div *ngIf="field === 'Select'">
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
             <mat-label class="example-accordion-item-body-wrapper-label-text">Select Label</mat-label>
             <input class="example-accordion-item-body-wrapper-input" matInput>
@@ -163,7 +163,7 @@
             <button mat-button class="apply__button apply__button-add">Add</button>
           </div>
           </div>
-        <div *ngIf="stylesFormOption === 'button'">
+        <div *ngIf="field === 'Button'">
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
             <mat-label class="example-accordion-item-body-wrapper-label-text">Button Label</mat-label>
             <input class="example-accordion-item-body-wrapper-input" matInput>

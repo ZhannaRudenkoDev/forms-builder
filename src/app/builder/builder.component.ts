@@ -7,7 +7,12 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class BuilderComponent implements OnInit {
 
-  @Input() field = '';
+  public field = 'Input';
+
+  getField(field: string) {
+    console.log("Build component: " + field);
+    this.field = field;
+  }
 
   constructor() { }
 

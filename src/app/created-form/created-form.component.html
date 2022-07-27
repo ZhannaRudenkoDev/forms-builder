@@ -8,22 +8,22 @@
          (cdkDropListDropped)="drop($event)">
       <div *ngFor="let field of fields" cdkDrag class="form-created__input">
         <div *ngIf="field === 'Input'" class="form-created__input"
-             (click)="getField(field, $event)">
+             (click)="getField(field)">
           <div class="text-field text-field_floating">
             <input class="text-field__input" type="text" placeholder="Placeholder">
             <label class="text-field__label">Input label</label>
           </div>
         </div>
-        <div *ngIf="field === 'Textarea'" class="form-created__input" >
+        <div *ngIf="field === 'Textarea'" class="form-created__input" (click)="getField(field)">
           <div class="text-field text-field_floating">
             <textarea class="text-field__input" placeholder="Placeholder"></textarea>
             <label class="text-field__label" >Textarea label</label>
           </div>
         </div>
-        <div *ngIf="field === 'Button'" class="form-created__button-wrapper" >
+        <div *ngIf="field === 'Button'" class="form-created__button-wrapper" (click)="getField(field)">
           <button mat-button class="form-created__button">Button label</button>
         </div>
-        <div *ngIf="field === 'Select'" class="form-created__input" >
+        <div *ngIf="field === 'Select'" class="form-created__input" (click)="getField(field)">
           <div class="floating-label">
             <select class="floating-select" value="">
               <option value=""></option>
@@ -32,7 +32,7 @@
             <label class="label__select">Select</label>
           </div>
         </div>
-        <div *ngIf="field === 'Checkbox'" class="form-created__input" >
+        <div *ngIf="field === 'Checkbox'" class="form-created__input" (click)="getField(field)">
           <p class="form-created__title">
             Checkbox label
           </p>

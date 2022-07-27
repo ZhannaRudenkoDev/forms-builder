@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({
@@ -9,15 +9,13 @@ import {CdkDragDrop, copyArrayItem, moveItemInArray, transferArrayItem} from "@a
 export class CreatedFormComponent implements OnInit {
 
   fields: string[] = [];
-  statusInput: boolean = false;
+  //statusInput: boolean = false;
+
+  @Output() fieldStyleEvent = new EventEmitter<string>();
 
 
-  getField(field: string, event: Event) {
-    console.log(field);
-    console.log(event);
-
-    //this.status = !this.status;
-
+  getField(field: string) {
+    this.fieldStyleEvent.emit(field);
   }
 
 
