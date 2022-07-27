@@ -212,6 +212,32 @@
             <button mat-button class="apply__button">Delete</button>
           </div>
         </div>
+        <div *ngIf="field === 'Checkbox'">
+          <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
+            <mat-label class="example-accordion-item-body-wrapper-label-text">Checkbox Label</mat-label>
+            <input class="example-accordion-item-body-wrapper-input" matInput>
+          </mat-form-field>
+          <div class="example-accordion-item-body-wrapper-options">
+            <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
+              <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
+              <input matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
+              <mat-label class = "example-accordion-item-body-wrapper-option-label">Font weight</mat-label>
+              <mat-select>
+                <mat-option value="100">100</mat-option>
+                <mat-option value="500">500</mat-option>
+                <mat-option value="1000">1000</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-checkbox class = "example-accordion-item-body-wrapper-option-label"> Required field</mat-checkbox>
+          <div class="buttons__row">
+            <button mat-button class="apply__button">Apply</button>
+            <button mat-button class="apply__button">Delete</button>
+          </div>
+        </div>
       </ng-template>
     </div>
   </cdk-accordion-item>
