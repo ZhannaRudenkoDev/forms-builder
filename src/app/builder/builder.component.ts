@@ -7,10 +7,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class BuilderComponent implements OnInit {
 
-  public field = 'Input';
+  public field = 'Checkbox';
 
   getField(field: string) {
-    console.log("Build component: " + field);
     this.field = field;
   }
 

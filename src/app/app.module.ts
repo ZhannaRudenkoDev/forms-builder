@@ -10,6 +10,8 @@ import { BuilderComponent } from './builder/builder.component';
 import { FormItemsComponent } from './form-items/form-items.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { CreatedFormComponent } from './created-form/created-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { CreatedFormComponent } from './created-form/created-form.component';
     BrowserAnimationsModule,
     MaterialModule,
     DragDropModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
