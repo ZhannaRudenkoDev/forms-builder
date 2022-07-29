@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {FormInterface, FieldOBJ} from "../interfaces";
 
 @Component({
   selector: 'app-builder',
@@ -7,15 +9,19 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class BuilderComponent implements OnInit {
 
-  public field = 'Checkbox';
+  public field: FieldOBJ = {
+    field: '',
+    id: ''
+  };
 
-  getField(field: string) {
+  getField(field: FieldOBJ) {
     this.field = field;
   }
 
-  constructor() { }
+  constructor(private store$: Store<FormInterface>) { }
 
   ngOnInit(): void {
+
   }
 
 }

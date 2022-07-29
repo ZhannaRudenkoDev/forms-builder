@@ -8,9 +8,12 @@ import { HeaderComponent } from './header/header.component';
 import { StyleFromComponent } from './style-from/style-from.component';
 import { BuilderComponent } from './builder/builder.component';
 import { FormItemsComponent } from './form-items/form-items.component';
-import {DragDropModule} from "@angular/cdk/drag-drop";
 import { CreatedFormComponent } from './created-form/created-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 
 
@@ -27,8 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    DragDropModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
   bootstrap: [AppComponent]

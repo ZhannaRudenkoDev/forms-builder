@@ -1,11 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, NG_VALIDATORS, Validators} from "@angular/forms";
+import {Component, OnInit, Input, forwardRef} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {FieldOBJ} from "../interfaces";
 
 @Component({
   selector: 'app-style-from',
   templateUrl: './style-from.component.html',
   styleUrls: ['./style-from.component.scss'],
-
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => StyleFromComponent),
+    }
+  ]
 })
 export class StyleFromComponent implements OnInit {
 
@@ -14,7 +21,10 @@ export class StyleFromComponent implements OnInit {
 
 
   @Input() field = '';
-
+  @Input() fieldOBJ: FieldOBJ = {
+    field: '',
+    id: ''
+  };
 
   formGeneral= new FormGroup({
     'formLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -76,7 +86,6 @@ export class StyleFromComponent implements OnInit {
     return this.checkBoxControl.get('checkBoxColor');
   }
 
-
   get buttonLabel() {
     return this.buttonControl.get('buttonLabel');
   }
@@ -92,9 +101,6 @@ export class StyleFromComponent implements OnInit {
   get buttonColor() {
     return this.buttonControl.get('buttonColor');
   }
-
-
-
 
 
   get selectLabel() {
@@ -135,11 +141,11 @@ export class StyleFromComponent implements OnInit {
     return this.inputControl.get('inputColor');
   }
 
-
   constructor() { }
 
   ngOnInit(): void {
-
+    console.log("Style component");
+    console.log(this.fieldOBJ);
   }
   get formLabel() {
     return this.formGeneral.get('formLabel');

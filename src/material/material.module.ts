@@ -6,7 +6,7 @@ import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 const MaterialComponents = [
@@ -16,7 +16,8 @@ const MaterialComponents = [
   MatInputModule,
   ReactiveFormsModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  DragDropModule
 ];
 
 @NgModule({
