@@ -1,6 +1,10 @@
 import {Component, OnInit, Input, forwardRef} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {FieldOBJ} from "../interfaces";
+import {AbstractControl, FormControl, FormGroup,NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {FieldOBJ, FormInterface, FormStyleInterface} from "../interfaces";
+import {Observable} from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {createFormStyle} from "../reducers/form/form.selector";
+import {FormStyleAddAction} from "../reducers/form/form.actions";
 
 @Component({
   selector: 'app-style-from',
@@ -17,22 +21,42 @@ import {FieldOBJ} from "../interfaces";
 export class StyleFromComponent implements OnInit {
 
   items = ['Form General Styles', 'Field Styles'];
+  public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
+
   expandedIndex = 0;
 
 
   @Input() field = '';
+
   @Input() fieldOBJ: FieldOBJ = {
     field: '',
     id: ''
   };
 
+
+
   formGeneral= new FormGroup({
-    'formLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
+    'formLabel': new FormControl('Form label', [Validators.required, Validators.minLength(3)]),
     'colorRGB': new FormControl('', ValidateRGB),
     'backgroundRGB': new FormControl('', ValidateRGB),
     'borderStyle': new FormControl(''),
     'borderColorRGB': new FormControl('', ValidateRGB),
   })
+
+  applyFormStyles() {
+    if(this.formGeneral.valid) {
+      this.store$.dispatch(new FormStyleAddAction({
+        formLabel: this.formGeneral.get('formLabel')?.value!,
+        colorRGB: "rgb(" + this.formGeneral.get('colorRGB')?.value! + ")",
+        backgroundRGB: "rgb(" + this.formGeneral.get('backgroundRGB')?.value! + ")",
+        borderStyle: this.formGeneral.get('borderStyle')?.value!,
+        borderColorRGB: "rgb(" + this.formGeneral.get('borderColorRGB')?.value! + ")",
+      }));
+    }
+    this.form$.subscribe(value => {
+      console.log(value);
+    })
+  }
 
   inputControl = new FormGroup({
     'inputLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -141,7 +165,7 @@ export class StyleFromComponent implements OnInit {
     return this.inputControl.get('inputColor');
   }
 
-  constructor() { }
+  constructor(private store$: Store<FormInterface>) { }
 
   ngOnInit(): void {
     console.log("Style component");
@@ -166,7 +190,6 @@ export class StyleFromComponent implements OnInit {
 
 function ValidateRGB(control: AbstractControl): {[key: string]: any} | null  {
   const rgbArray = control.value.split(',');
-  console.log(rgbArray);
   if (parseInt(rgbArray[0]) < 0 || parseInt(rgbArray[0]) > 255) {
     return { 'colorRGBInvalid': true };
   } else if (parseInt(rgbArray[1]) < 0 || parseInt(rgbArray[1]) > 255) {

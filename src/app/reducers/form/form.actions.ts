@@ -1,9 +1,12 @@
 import {Action} from "@ngrx/store";
-import {InputInterface,
+import {
+  InputInterface,
   SelectInterface,
   TextAreaInterface,
   CheckBoxInterface,
-  ButtonInterface} from "../../interfaces";
+  ButtonInterface, FormStyleInterface
+} from "../../interfaces";
+import {AbstractControl, FormControl, ɵFormGroupRawValue, ɵGetProperty, ɵTypedOrUntyped} from "@angular/forms";
 
 export const enum formActionsType {
   inputADD = '[FORM].inputADD',
@@ -11,6 +14,7 @@ export const enum formActionsType {
   textAreaADD = '[FORM].textAreaADD',
   checkBoxADD = '[FORM].checkBoxADD',
   buttonADD = '[FORM].buttonADD',
+  formStyleADD = '[FORM].formStyleADD'
 }
 
 export class InputAddAction implements Action {
@@ -32,10 +36,21 @@ export class CheckBoxAddAction implements Action {
   readonly type = formActionsType.checkBoxADD;
   constructor(public payload: CheckBoxInterface) {}
 }
+
 export class ButtonAddAction implements Action {
   readonly type = formActionsType.buttonADD;
   constructor(public payload: ButtonInterface) {}
 }
 
-export type FormActions = InputAddAction | SelectAddAction | TextAreaAddAction | CheckBoxAddAction | ButtonAddAction;
+export class FormStyleAddAction implements Action {
+  readonly type = formActionsType.formStyleADD;
+  constructor(public payload: FormStyleInterface) {}
+}
+
+export type FormActions = InputAddAction
+  | SelectAddAction
+  | TextAreaAddAction
+  | CheckBoxAddAction
+  | ButtonAddAction
+  | FormStyleAddAction;
 

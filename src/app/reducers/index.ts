@@ -7,7 +7,8 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import  {formNode, formReducer} from "./form/form.reducer";
-import {FormInterface} from "../interfaces";
+import {FormInterface, FormStyleInterface} from "../interfaces";
+import {FormActions} from "./form/form.actions";
 
 
 

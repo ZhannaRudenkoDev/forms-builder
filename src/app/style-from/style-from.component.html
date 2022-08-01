@@ -58,7 +58,7 @@
             <small *ngIf="borderColorRGB && borderColorRGB.invalid && borderColorRGB.touched" style="color: darkred">Invalid</small>
           </mat-form-field>
         </form>
-        <button mat-button class="apply__button">Apply</button>
+        <button mat-button class="apply__button" (click)="applyFormStyles()" >Apply</button>
       </form>
       <ng-template #elseBlock>
         <form *ngIf="field === 'Input' || field === 'Textarea'" [formGroup]="inputControl">

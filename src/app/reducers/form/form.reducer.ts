@@ -4,6 +4,13 @@ import {FormActions, formActionsType} from "./form.actions";
 export const formNode = 'form';
 
 const initialState: FormInterface = {
+  formGeneral: {
+    formLabel: '',
+    colorRGB: '',
+    borderColorRGB: '',
+    backgroundRGB: '',
+    borderStyle: '',
+  },
   inputs: [],
   selects: [],
   textAreas: [],
@@ -37,6 +44,11 @@ export const formReducer = (state = initialState, action: FormActions) => {
       return {
         ...state,
         buttons: [...state.buttons, action.payload]
+      }
+    case formActionsType.formStyleADD:
+      return {
+        ...state,
+        formGeneral: {...state.formGeneral, ...action.payload}
       }
     default:
       return {...state};

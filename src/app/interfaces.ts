@@ -1,5 +1,14 @@
 import {FormControl, Validators} from "@angular/forms";
 
+export interface FormStyleInterface {
+  formLabel: string,
+  colorRGB?: string,
+  borderColorRGB?: string,
+  backgroundRGB?: string,
+  borderStyle?: string,
+}
+
+
 export interface InputInterface {
   id: string,
   inputLabel: string,
@@ -60,6 +69,7 @@ export interface ButtonInterface {
 }
 
 export interface FormInterface {
+  formGeneral: FormStyleInterface,
   inputs: InputInterface[],
   selects: SelectInterface[],
   textAreas: TextAreaInterface[],

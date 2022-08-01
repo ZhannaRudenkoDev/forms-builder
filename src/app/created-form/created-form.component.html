@@ -1,7 +1,10 @@
-<section class="form-created">
+<section class="form-created"
+         [style.background-color]="this.formStyles.backgroundRGB"
+         [style.border-style]="this.formStyles.borderStyle"
+         [style.border-color]="this.formStyles.borderColorRGB">
   <div class="form-created__wrapper">
-    <p class="form-created__title">
-      Form label
+    <p class="form-created__title" [style.color]="this.formStyles.colorRGB">
+      {{this.formStyles.formLabel}}
     </p>
     <div class="form-created__fields" cdkDropList
          [cdkDropListData]="fields"

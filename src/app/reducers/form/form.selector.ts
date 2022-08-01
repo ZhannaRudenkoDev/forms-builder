@@ -3,7 +3,7 @@ import {formNode} from "./form.reducer";
 import {
   ButtonInterface,
   CheckBoxInterface,
-  FormInterface,
+  FormInterface, FormStyleInterface,
   InputInterface,
   SelectInterface,
   TextAreaInterface
@@ -30,6 +30,11 @@ export const createCheckBoxes = createSelector(
 export const createButtons = createSelector(
   selectorContFeature,
   (state: FormInterface) : ButtonInterface[] => state.buttons
+)
+
+export const createFormStyle = createSelector(
+  selectorContFeature,
+  (state: FormInterface) : FormStyleInterface => state.formGeneral
 )
 
 /*export const createUpdated = createSelector(

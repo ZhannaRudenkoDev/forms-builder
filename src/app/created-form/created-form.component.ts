@@ -8,14 +8,14 @@ import {
   FieldOBJ,
   SelectInterface,
   TextAreaInterface,
-  CheckBoxInterface, ButtonInterface
+  CheckBoxInterface, ButtonInterface, FormStyleInterface
 } from "../interfaces";
 
 import {select, Store} from "@ngrx/store";
 
 import {
   createButtons,
-  createCheckBoxes,
+  createCheckBoxes, createFormStyle,
   createInput,
   createSelect,
   createTextArea
@@ -45,8 +45,13 @@ export class CreatedFormComponent implements OnInit {
   public textArea$: Observable<TextAreaInterface[]> = this.store$.pipe(select(createTextArea));
   public checkbox$: Observable<CheckBoxInterface[]> = this.store$.pipe(select(createCheckBoxes));
   public button$: Observable<ButtonInterface[]> = this.store$.pipe(select(createButtons));
+  public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
+
+  public formStyles: FormStyleInterface = {formLabel: "Form label"};
+
 
   @Output() fieldStyleEvent = new EventEmitter<FieldOBJ>();
+
 
   getInputStyle() {
     return 'border: 1px solid pink';
@@ -58,34 +63,57 @@ export class CreatedFormComponent implements OnInit {
 
   getField(field: FieldOBJ) {
     this.fieldStyleEvent.emit(field);
-    if(field.field === 'Input') {
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      ); } else {
+      copyArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+    const addField = {
+      field: event.container.data[event.currentIndex],
+      id: event.container.data[event.currentIndex] + uuidv4()
+    }
+    this.fieldObj.push(addField);
+
+    if(addField.field === 'Input') {
       this.store$.dispatch(new InputAddAction({
-        id: field.id,
+        id: addField.id,
         inputLabel: '',
         inputPlaceholder: ''
       }));
-    } else if(field.field === 'Select') {
+    } else if(addField.field === 'Select') {
       this.store$.dispatch(new SelectAddAction({
-        id: field.id,
+        id: addField.id,
         selectLabel: '',
       }));
-    } else if(field.field === 'Textarea') {
+    } else if(addField.field === 'Textarea') {
       this.store$.dispatch(new TextAreaAddAction({
-        id: field.id,
+        id: addField.id,
         textAreaLabel: '',
         textAreaPlaceholder: ''
       }));
-    } else if(field.field === 'Checkbox') {
+    } else if(addField.field === 'Checkbox') {
       this.store$.dispatch(new CheckBoxAddAction({
-        id: field.id,
+        id: addField.id,
         checkBoxLabel: '',
       }));
-    } else if(field.field === 'Button') {
+    } else if(addField.field === 'Button') {
       this.store$.dispatch(new ButtonAddAction({
-        id: field.id,
+        id: addField.id,
         buttonLabel: '',
       }));
     }
+
     this.inputs$.subscribe(value => {
       console.log(value);
     })
@@ -104,30 +132,12 @@ export class CreatedFormComponent implements OnInit {
 
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      ); } else {
-      copyArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
-    this.fieldObj.push({
-      field: event.container.data[event.currentIndex],
-      id: uuidv4()
-    })
-  }
-
   constructor(private store$: Store<FormInterface>) { }
 
   ngOnInit(): void {
-
+    this.form$.subscribe(value => {
+      this.formStyles = value;
+    })
   }
 
 }
