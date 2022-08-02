@@ -14,9 +14,12 @@
              (click)="getField(field)"
              [attr.id]="field.id">
           <div class="text-field text-field_floating">
-            <input class="text-field__input" [style] = "getInputStyle()"
-                   type="text" placeholder="Placeholder">
-            <label class="text-field__label">Input label</label>
+            <input class="text-field__input"
+                   type="text" [placeholder]="getInputStyle(field.id, 'placeholder')"
+                   [style]="getInputStyle(field.id, 'input')">
+            <label class="text-field__label"> {{getInputStyle(field.id, 'label')}}
+              <span style="color: red"
+                [ngStyle] = "{'visibility': getInputStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span></label>
           </div>
         </div>
         <div *ngIf="field.field === 'Textarea'" class="form-created__input"

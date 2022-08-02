@@ -37,7 +37,25 @@ export const createFormStyle = createSelector(
   (state: FormInterface) : FormStyleInterface => state.formGeneral
 )
 
-/*export const createUpdated = createSelector(
-  selectorContFeature,
-  (state: CountState) : number => state.updated
-)*/
+export const getInputById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+  if (allItems.inputs) {
+    return allItems.inputs.find(item => {
+      return item.id === id;
+    });
+  } else {
+    return {
+      id: '',
+      inputLabel: '',
+      inputPlaceholder: '',
+      inputWidth: '',
+      inputHeight: '',
+      inputFontSize: '',
+      inputFontWeight: '',
+      inputColor: '',
+      inputBorderType: '',
+      inputCheckRequired: false
+    };
+  }
+});
+

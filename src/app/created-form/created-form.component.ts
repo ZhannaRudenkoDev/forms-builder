@@ -18,7 +18,8 @@ import {
   createCheckBoxes, createFormStyle,
   createInput,
   createSelect,
-  createTextArea
+  createTextArea,
+  getInputById
 } from "../reducers/form/form.selector";
 import {
   ButtonAddAction,
@@ -52,10 +53,36 @@ export class CreatedFormComponent implements OnInit {
 
   @Output() fieldStyleEvent = new EventEmitter<FieldOBJ>();
 
-
-  getInputStyle() {
-    return 'border: 1px solid pink';
+  getInputStyle(id: string, type: string) {
+    let inputStyle: string = '';
+    let labelText: string = '';
+    let placeholderText: string = '';
+    let requireStyle: boolean = false;
+    this.store$.select(getInputById(id))
+      .subscribe((item) => {
+        inputStyle = 'width: ' + item?.inputWidth + '; height: ' + item?.inputHeight +
+                     '; border-style: ' + item?.inputBorderType + '; color: ' + item?.inputColor +
+                      '; font-size: ' + item?.inputFontSize + '; font-weight: ' + item?.inputFontWeight;
+        labelText = item?.inputLabel + '';
+        requireStyle = !!item?.inputCheckRequired;
+        placeholderText = item?.inputPlaceholder + '';
+        /*console.log(inputStyle);
+        console.log(labelText);
+        console.log(requireStyle);
+        console.log(placeholderText);*/
+      });
+    if(type === 'input') {
+      return inputStyle;
+    } else if(type === 'label') {
+      return labelText;
+    } else if(type === 'placeholder') {
+      return placeholderText;
+    } else if(type === 'required') {
+      return requireStyle;
+    }
+    return;
   }
+
 
   get id() {
     return uuidv4();
@@ -63,6 +90,7 @@ export class CreatedFormComponent implements OnInit {
 
   getField(field: FieldOBJ) {
     this.fieldStyleEvent.emit(field);
+    //this.getInputStyle(field.id);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -83,13 +111,14 @@ export class CreatedFormComponent implements OnInit {
       field: event.container.data[event.currentIndex],
       id: event.container.data[event.currentIndex] + uuidv4()
     }
+
     this.fieldObj.push(addField);
 
     if(addField.field === 'Input') {
       this.store$.dispatch(new InputAddAction({
         id: addField.id,
-        inputLabel: '',
-        inputPlaceholder: ''
+        inputLabel: 'Input label',
+        inputPlaceholder: 'Input placeholder'
       }));
     } else if(addField.field === 'Select') {
       this.store$.dispatch(new SelectAddAction({

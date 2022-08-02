@@ -2,6 +2,7 @@
 
 .form-created {
   width: 100%;
+  padding: 10px 24px;
   &__wrapper {
     width: 100%;
     margin: 5px;
@@ -61,7 +62,9 @@
 
 .text-field_floating {
   position: relative;
-  @include displayCenter();
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .text-field_floating .text-field__input {
@@ -76,7 +79,6 @@
 .text-field_floating .text-field__label {
   position: absolute;
   top: 0;
-  left: 20px;
   height: 100%;
   padding: 1rem .75rem;
   pointer-events: none;

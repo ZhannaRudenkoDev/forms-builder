@@ -20,5 +20,4 @@ export const reducers: ActionReducerMap<State, any> = {
   [formNode]: formReducer,
 };
 
-
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

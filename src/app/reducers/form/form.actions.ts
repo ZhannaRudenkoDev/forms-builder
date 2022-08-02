@@ -14,11 +14,17 @@ export const enum formActionsType {
   textAreaADD = '[FORM].textAreaADD',
   checkBoxADD = '[FORM].checkBoxADD',
   buttonADD = '[FORM].buttonADD',
-  formStyleADD = '[FORM].formStyleADD'
+  formStyleADD = '[FORM].formStyleADD',
+  inputUpdate = '[FORM].inputUpdate',
 }
 
 export class InputAddAction implements Action {
   readonly type = formActionsType.inputADD;
+  constructor(public payload: InputInterface) {}
+}
+
+export class InputUpdateAction implements Action {
+  readonly type = formActionsType.inputUpdate;
   constructor(public payload: InputInterface) {}
 }
 
@@ -52,5 +58,6 @@ export type FormActions = InputAddAction
   | TextAreaAddAction
   | CheckBoxAddAction
   | ButtonAddAction
-  | FormStyleAddAction;
+  | FormStyleAddAction
+  | InputUpdateAction;
 

@@ -13,14 +13,15 @@ export interface InputInterface {
   id: string,
   inputLabel: string,
   inputPlaceholder: string,
-  inputWidth?: number,
-  inputHeight?: number,
-  inputFontSize?: number,
-  inputFontWeight?: number,
+  inputWidth?: string,
+  inputHeight?: string,
+  inputFontSize?: string,
+  inputFontWeight?: string,
   inputColor?: string,
   inputBorderType?: string,
   inputCheckRequired?: boolean
 }
+
 export interface SelectInterface {
   id: string,
   selectLabel: string,

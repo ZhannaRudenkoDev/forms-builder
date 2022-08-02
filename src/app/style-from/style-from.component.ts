@@ -1,10 +1,10 @@
 import {Component, OnInit, Input, forwardRef} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup,NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {FieldOBJ, FormInterface, FormStyleInterface} from "../interfaces";
+import {FieldOBJ, FormInterface, FormStyleInterface, InputInterface} from "../interfaces";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import {createFormStyle} from "../reducers/form/form.selector";
-import {FormStyleAddAction} from "../reducers/form/form.actions";
+import {createFormStyle, createInput} from "../reducers/form/form.selector";
+import {FormStyleAddAction, InputUpdateAction} from "../reducers/form/form.actions";
 
 @Component({
   selector: 'app-style-from',
@@ -22,6 +22,7 @@ export class StyleFromComponent implements OnInit {
 
   items = ['Form General Styles', 'Field Styles'];
   public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
+  public inputs$: Observable<InputInterface[]> = this.store$.pipe(select(createInput));
 
   expandedIndex = 0;
 
@@ -33,7 +34,27 @@ export class StyleFromComponent implements OnInit {
     id: ''
   };
 
-
+  applyInputStyles() {
+    //console.log(!!this.inputControl.get('inputCheckRequired')?.value!)
+    if(this.inputControl.valid) {
+      this.store$.dispatch(new InputUpdateAction({
+        id: this.fieldOBJ.id,
+        inputLabel: this.inputControl.get('inputLabel')?.value!,
+        inputPlaceholder: this.inputControl.get('inputPlaceholder')?.value!,
+        inputWidth: this.inputControl.get('inputWidth')?.value! + 'px',
+        inputHeight: this.inputControl.get('inputHeight')?.value! + 'px',
+        inputFontSize: this.inputControl.get('inputFontSize')?.value! + 'px',
+        inputFontWeight: this.inputControl.get('inputFontSize')?.value!,
+        inputColor: "rgb(" + this.inputControl.get('inputColor')?.value! + ")",
+        inputBorderType: this.inputControl.get('inputBorderType')?.value!,
+        inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
+      }));
+      }
+    this.inputs$.subscribe(value => {
+      console.log(value);
+    })
+    //console.log(this.fieldOBJ)
+  }
 
   formGeneral= new FormGroup({
     'formLabel': new FormControl('Form label', [Validators.required, Validators.minLength(3)]),
@@ -69,6 +90,19 @@ export class StyleFromComponent implements OnInit {
     'inputBorderType': new FormControl(''),
     'inputCheckRequired': new FormControl(''),
   });
+
+  textAreaControl = new FormGroup({
+    'textAreaLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
+    'textAreaPlaceholder': new FormControl('', [Validators.required, Validators.minLength(3)]),
+    'textAreaWidth': new FormControl('', [Validators.min(10), Validators.max(390)]),
+    'textAreaHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'textAreaFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'textAreaFontWeight': new FormControl(''),
+    'textAreaColor': new FormControl('', ValidateRGB),
+    'textAreaBorderType': new FormControl(''),
+    'textAreaCheckRequired': new FormControl(''),
+  });
+
 
   selectControl = new FormGroup({
     'selectLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -163,6 +197,25 @@ export class StyleFromComponent implements OnInit {
   }
   get inputColor() {
     return this.inputControl.get('inputColor');
+  }
+
+  get textAreaLabel() {
+    return this.textAreaControl.get('textAreaLabel');
+  }
+  get textAreaPlaceholder() {
+    return this.textAreaControl.get('textAreaPlaceholder');
+  }
+  get textAreaWidth() {
+    return this.textAreaControl.get('textAreaWidth');
+  }
+  get textAreaHeight() {
+    return this.textAreaControl.get('textAreaHeight');
+  }
+  get textAreaFontSize() {
+    return this.textAreaControl.get('textAreaFontSize');
+  }
+  get textAreaColor() {
+    return this.textAreaControl.get('textAreaColor');
   }
 
   constructor(private store$: Store<FormInterface>) { }

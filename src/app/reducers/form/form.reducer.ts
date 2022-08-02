@@ -50,6 +50,14 @@ export const formReducer = (state = initialState, action: FormActions) => {
         ...state,
         formGeneral: {...state.formGeneral, ...action.payload}
       }
+    case formActionsType.inputUpdate:
+      const updatedInput = state.inputs.map(input => {
+        return input.id === action.payload.id ? action.payload : input;
+      })
+      return {
+        ...state,
+        inputs: [...updatedInput]
+      }
     default:
       return {...state};
   }
