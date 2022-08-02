@@ -305,11 +305,16 @@
             <button mat-button class="apply__button">Delete</button>
           </div>
         </form>
-        <div *ngIf="field === 'Checkbox'" [formGroup]="checkBoxControl">
+        <form *ngIf="field === 'Checkbox'" [formGroup]="checkBoxControl">
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
             <mat-label class="example-accordion-item-body-wrapper-label-text">Checkbox Label</mat-label>
             <input formControlName="checkBoxLabel" class="example-accordion-item-body-wrapper-input" matInput>
             <small *ngIf="checkBoxLabel && checkBoxLabel.invalid && checkBoxLabel.touched" style="color: darkred">Invalid</small>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
+            <mat-label class="example-accordion-item-body-wrapper-label-text">Checkbox title</mat-label>
+            <input formControlName="checkBoxTitle" class="example-accordion-item-body-wrapper-input" matInput>
+            <small *ngIf="checkBoxTitle && checkBoxTitle.invalid && checkBoxTitle.touched" style="color: darkred">Invalid</small>
           </mat-form-field>
           <div class="example-accordion-item-body-wrapper-options">
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -336,10 +341,10 @@
           <mat-checkbox formControlName="checkBoxCheckRequired"
             class = "example-accordion-item-body-wrapper-option-label"> Required field</mat-checkbox>
           <div class="buttons__row">
-            <button mat-button class="apply__button">Apply</button>
+            <button mat-button class="apply__button" (click)="applyCheckBoxStyles()">Apply</button>
             <button mat-button class="apply__button">Delete</button>
           </div>
-        </div>
+        </form>
       </ng-template>
     </div>
   </cdk-accordion-item>

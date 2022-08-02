@@ -40,7 +40,8 @@
                   [style]="getButtonStyle(field.id, 'button')">
             {{getButtonStyle(field.id, 'label')}}
             <span style="color: red"
-                  [ngStyle] = "{'visibility': getButtonStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span></button>
+                  [ngStyle] = "{'visibility': getButtonStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span>
+          </button>
         </div>
         <div *ngIf="field.field === 'Select'" class="form-created__input"
              (click)="getField(field)"
@@ -56,11 +57,16 @@
         <div *ngIf="field.field === 'Checkbox'" class="form-created__input"
              (click)="getField(field)"
              [attr.id]="field.id">
-          <p class="form-created__title">
-            Checkbox label
+          <p class="form-created__title"
+             [style]="getCheckBoxStyle(field.id, 'checkBox')">
+            {{getCheckBoxStyle(field.id, 'title')}}
+            <span style="color: red"
+                  [ngStyle] = "{'visibility': getCheckBoxStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span>
           </p>
           <input type="checkbox" id="option1" name="option1" value="option1" class="form-created__checkbox">
-          <label class="form-created__checkbox-label" for="option1"> option 1</label><br>
+          <label class="form-created__checkbox-label" for="option1"
+                 [style]="getCheckBoxStyle(field.id, 'checkBox')">
+            {{getCheckBoxStyle(field.id, 'label')}}</label><br>
         </div>
       </div>
     </div>

@@ -103,3 +103,22 @@ export const getButtonById = (id: string) => createSelector(selectorContFeature,
     }
   });
 
+export const getCheckBoxById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+    if (allItems.checkBoxes) {
+      return allItems.checkBoxes.find(item => {
+        return item.id === id;
+      });
+    } else {
+      return {
+        id: '',
+        checkBoxLabel: '',
+        checkBoxTitle: '',
+        checkBoxFontSize: '',
+        checkBoxFontWeight: '',
+        checkBoxColor: '',
+        checkBoxCheckRequired: '',
+      };
+    }
+  });
+

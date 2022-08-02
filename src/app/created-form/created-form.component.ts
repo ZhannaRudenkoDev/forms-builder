@@ -18,7 +18,7 @@ import {
   createCheckBoxes, createFormStyle,
   createInput,
   createSelect,
-  createTextArea, getButtonById,
+  createTextArea, getButtonById, getCheckBoxById,
   getInputById, getTextAreaById
 } from "../reducers/form/form.selector";
 import {
@@ -128,6 +128,32 @@ export class CreatedFormComponent implements OnInit {
     return;
   }
 
+  getCheckBoxStyle(id: string, type: string) {
+    let checkBoxStyle: string = '';
+    let labelText: string = '';
+    let titleText: string = '';
+    let requireStyle: boolean = false;
+    this.store$.select(getCheckBoxById(id))
+      .subscribe((item) => {
+        checkBoxStyle = 'color: ' + item?.checkBoxColor +
+          '; font-size: ' + item?.checkBoxFontSize + '; font-weight: ' + item?.checkBoxFontWeight;
+        labelText = item?.checkBoxLabel + '';
+        titleText = item?.checkBoxTitle + '';
+        requireStyle = !!item?.checkBoxCheckRequired;
+      });
+    if(type === 'checkBox') {
+      return checkBoxStyle;
+    } else if(type === 'label') {
+      return labelText;
+    } else if(type === 'required') {
+      return requireStyle;
+    } else if(type === 'title') {
+      return titleText;
+    }
+    return;
+  }
+
+
 
   get id() {
     return uuidv4();
@@ -179,7 +205,8 @@ export class CreatedFormComponent implements OnInit {
     } else if(addField.field === 'Checkbox') {
       this.store$.dispatch(new CheckBoxAddAction({
         id: addField.id,
-        checkBoxLabel: '',
+        checkBoxLabel: 'label',
+        checkBoxTitle: 'CheckBox Title'
       }));
     } else if(addField.field === 'Button') {
       this.store$.dispatch(new ButtonAddAction({

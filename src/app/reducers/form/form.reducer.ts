@@ -74,6 +74,14 @@ export const formReducer = (state = initialState, action: FormActions) => {
         ...state,
         buttons: [...updatedButton]
       }
+    case formActionsType.checkBoxUpdate:
+      const updatedCheckBox = state.checkBoxes.map(checkBox => {
+        return checkBox.id === action.payload.id ? action.payload : checkBox;
+      })
+      return {
+        ...state,
+        checkBoxes: [...updatedCheckBox]
+      }
     default:
       return {...state};
   }

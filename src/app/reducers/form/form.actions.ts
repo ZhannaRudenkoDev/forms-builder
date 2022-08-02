@@ -17,6 +17,8 @@ export const enum formActionsType {
   inputUpdate = '[FORM].inputUpdate',
   textAreaUpdate = '[FORM].textAreaUpdate',
   buttonUpdate = '[FORM].buttonUpdate',
+  checkBoxUpdate = '[FORM].checkBoxUpdate',
+
 }
 
 export class InputAddAction implements Action {
@@ -48,6 +50,11 @@ export class CheckBoxAddAction implements Action {
   constructor(public payload: CheckBoxInterface) {}
 }
 
+export class CheckBoxUpdateAction implements Action {
+  readonly type = formActionsType.checkBoxUpdate;
+  constructor(public payload: CheckBoxInterface) {}
+}
+
 export class ButtonAddAction implements Action {
   readonly type = formActionsType.buttonADD;
   constructor(public payload: ButtonInterface) {}
@@ -70,5 +77,6 @@ export type FormActions = InputAddAction
   | FormStyleAddAction
   | InputUpdateAction
   | TextAreaUpdateAction
-  | ButtonUpdateAction;
+  | ButtonUpdateAction
+  | CheckBoxUpdateAction;
 

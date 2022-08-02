@@ -51,8 +51,9 @@ export interface TextAreaInterface {
 export interface CheckBoxInterface {
   id: string,
   checkBoxLabel: string,
-  checkBoxFontSize?: number,
-  checkBoxFontWeight?: number,
+  checkBoxTitle: string,
+  checkBoxFontSize?: string,
+  checkBoxFontWeight?: string,
   checkBoxColor?: string,
   checkBoxCheckRequired?: boolean,
 }

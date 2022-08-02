@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput} from "../reducers/form/form.selector";
 import {
-  ButtonUpdateAction,
+  ButtonUpdateAction, CheckBoxUpdateAction,
   FormStyleAddAction,
   InputUpdateAction,
   TextAreaUpdateAction
@@ -89,6 +89,21 @@ export class StyleFromComponent implements OnInit {
     }
   }
 
+  applyCheckBoxStyles() {
+    if(this.checkBoxControl.valid) {
+      this.store$.dispatch(new CheckBoxUpdateAction({
+        id: this.fieldOBJ.id,
+        checkBoxLabel: this.checkBoxControl.get('checkBoxLabel')?.value!,
+        checkBoxFontSize: this.checkBoxControl.get('checkBoxFontSize')?.value! + 'px',
+        checkBoxFontWeight: this.checkBoxControl.get('checkBoxFontWeight')?.value!,
+        checkBoxColor: "rgb(" + this.checkBoxControl.get('checkBoxColor')?.value! + ")",
+        checkBoxCheckRequired: !!this.checkBoxControl.get('checkBoxCheckRequired')?.value!,
+        checkBoxTitle: this.checkBoxControl.get('checkBoxTitle')?.value!
+      }));
+    }
+  }
+
+
   formGeneral= new FormGroup({
     'formLabel': new FormControl('Form label', [Validators.required, Validators.minLength(3)]),
     'colorRGB': new FormControl('', ValidateRGB),
@@ -160,16 +175,21 @@ export class StyleFromComponent implements OnInit {
     'buttonBorderType': new FormControl(''),
     'buttonCheckRequired': new FormControl(''),
   });
+
   checkBoxControl = new FormGroup({
     'checkBoxLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
     'checkBoxFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'checkBoxFontWeight': new FormControl(''),
     'checkBoxColor': new FormControl('', ValidateRGB),
     'checkBoxCheckRequired': new FormControl(''),
+    'checkBoxTitle': new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
   get checkBoxLabel() {
     return this.checkBoxControl.get('checkBoxLabel');
+  }
+  get checkBoxTitle() {
+    return this.checkBoxControl.get('checkBoxTitle');
   }
   get checkBoxFontSize() {
     return this.checkBoxControl.get('checkBoxFontSize');
