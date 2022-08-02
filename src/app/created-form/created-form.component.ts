@@ -19,7 +19,7 @@ import {
   createInput,
   createSelect,
   createTextArea,
-  getInputById
+  getInputById, getTextAreaById
 } from "../reducers/form/form.selector";
 import {
   ButtonAddAction,
@@ -66,13 +66,35 @@ export class CreatedFormComponent implements OnInit {
         labelText = item?.inputLabel + '';
         requireStyle = !!item?.inputCheckRequired;
         placeholderText = item?.inputPlaceholder + '';
-        /*console.log(inputStyle);
-        console.log(labelText);
-        console.log(requireStyle);
-        console.log(placeholderText);*/
       });
     if(type === 'input') {
       return inputStyle;
+    } else if(type === 'label') {
+      return labelText;
+    } else if(type === 'placeholder') {
+      return placeholderText;
+    } else if(type === 'required') {
+      return requireStyle;
+    }
+    return;
+  }
+
+  getTextAreaStyle(id: string, type: string) {
+    let textAreaStyle: string = '';
+    let labelText: string = '';
+    let placeholderText: string = '';
+    let requireStyle: boolean = false;
+    this.store$.select(getTextAreaById(id))
+      .subscribe((item) => {
+        textAreaStyle = 'width: ' + item?.textAreaWidth + '; height: ' + item?.textAreaHeight +
+          '; border-style: ' + item?.textAreaBorderType + '; color: ' + item?.textAreaColor +
+          '; font-size: ' + item?.textAreaFontSize + '; font-weight: ' + item?.textAreaFontWeight;
+        labelText = item?.textAreaLabel + '';
+        requireStyle = !!item?.textAreaCheckRequired;
+        placeholderText = item?.textAreaPlaceholder + '';
+      });
+    if(type === 'textArea') {
+      return textAreaStyle;
     } else if(type === 'label') {
       return labelText;
     } else if(type === 'placeholder') {
@@ -128,8 +150,8 @@ export class CreatedFormComponent implements OnInit {
     } else if(addField.field === 'Textarea') {
       this.store$.dispatch(new TextAreaAddAction({
         id: addField.id,
-        textAreaLabel: '',
-        textAreaPlaceholder: ''
+        textAreaLabel: 'Textarea',
+        textAreaPlaceholder: 'Input placeholder'
       }));
     } else if(addField.field === 'Checkbox') {
       this.store$.dispatch(new CheckBoxAddAction({

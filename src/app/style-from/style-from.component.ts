@@ -4,7 +4,7 @@ import {FieldOBJ, FormInterface, FormStyleInterface, InputInterface} from "../in
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput} from "../reducers/form/form.selector";
-import {FormStyleAddAction, InputUpdateAction} from "../reducers/form/form.actions";
+import {FormStyleAddAction, InputUpdateAction, TextAreaUpdateAction} from "../reducers/form/form.actions";
 
 @Component({
   selector: 'app-style-from',
@@ -35,7 +35,6 @@ export class StyleFromComponent implements OnInit {
   };
 
   applyInputStyles() {
-    //console.log(!!this.inputControl.get('inputCheckRequired')?.value!)
     if(this.inputControl.valid) {
       this.store$.dispatch(new InputUpdateAction({
         id: this.fieldOBJ.id,
@@ -50,6 +49,23 @@ export class StyleFromComponent implements OnInit {
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
       }
+  }
+
+  applyTextAreaStyles() {
+    if(this.textAreaControl.valid) {
+      this.store$.dispatch(new TextAreaUpdateAction({
+        id: this.fieldOBJ.id,
+        textAreaLabel: this.textAreaControl.get('textAreaLabel')?.value!,
+        textAreaPlaceholder: this.textAreaControl.get('textAreaPlaceholder')?.value!,
+        textAreaWidth: this.textAreaControl.get('textAreaWidth')?.value! + 'px',
+        textAreaHeight: this.textAreaControl.get('textAreaHeight')?.value! + 'px',
+        textAreaFontSize: this.textAreaControl.get('textAreaFontSize')?.value! + 'px',
+        textAreaFontWeight: this.textAreaControl.get('textAreaFontWeight')?.value!,
+        textAreaColor: "rgb(" + this.textAreaControl.get('textAreaColor')?.value! + ")",
+        textAreaBorderType: this.textAreaControl.get('textAreaBorderType')?.value!,
+        textAreaCheckRequired: !!this.textAreaControl.get('textAreaCheckRequired')?.value!
+      }));
+    }
     this.inputs$.subscribe(value => {
       console.log(value);
     })

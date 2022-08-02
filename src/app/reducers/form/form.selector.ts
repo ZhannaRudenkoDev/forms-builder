@@ -59,3 +59,25 @@ export const getInputById = (id: string) => createSelector(selectorContFeature,
   }
 });
 
+export const getTextAreaById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+    if (allItems.textAreas) {
+      return allItems.textAreas.find(item => {
+        return item.id === id;
+      });
+    } else {
+      return {
+        id: '',
+        textAreaLabel: '',
+        textAreaPlaceholder: '',
+        textAreaWidth: '',
+        textAreaHeight: '',
+        textAreaFontSize: '',
+        textAreaFontWeight: '',
+        textAreaColor: '',
+        textAreaBorderType: '',
+        textAreaCheckRequired: false
+      };
+    }
+  });
+

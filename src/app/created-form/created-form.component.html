@@ -26,8 +26,11 @@
              (click)="getField(field)"
              [attr.id]="field.id">
           <div class="text-field text-field_floating">
-            <textarea class="text-field__input" placeholder="Placeholder"></textarea>
-            <label class="text-field__label" >Textarea label</label>
+            <textarea class="text-field__input" [placeholder]="getTextAreaStyle(field.id, 'placeholder')"
+                      [style]="getTextAreaStyle(field.id, 'textArea')"></textarea>
+            <label class="text-field__label" >{{getTextAreaStyle(field.id, 'label')}}
+              <span style="color: red"
+                    [ngStyle] = "{'visibility': getTextAreaStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span></label>
           </div>
         </div>
         <div *ngIf="field.field === 'Button'" class="form-created__button-wrapper"

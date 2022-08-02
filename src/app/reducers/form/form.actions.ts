@@ -6,7 +6,6 @@ import {
   CheckBoxInterface,
   ButtonInterface, FormStyleInterface
 } from "../../interfaces";
-import {AbstractControl, FormControl, ɵFormGroupRawValue, ɵGetProperty, ɵTypedOrUntyped} from "@angular/forms";
 
 export const enum formActionsType {
   inputADD = '[FORM].inputADD',
@@ -16,6 +15,7 @@ export const enum formActionsType {
   buttonADD = '[FORM].buttonADD',
   formStyleADD = '[FORM].formStyleADD',
   inputUpdate = '[FORM].inputUpdate',
+  textAreaUpdate = '[FORM].textAreaUpdate',
 }
 
 export class InputAddAction implements Action {
@@ -35,6 +35,10 @@ export class SelectAddAction implements Action {
 
 export class TextAreaAddAction implements Action {
   readonly type = formActionsType.textAreaADD;
+  constructor(public payload: TextAreaInterface) {}
+}
+export class TextAreaUpdateAction implements Action {
+  readonly type = formActionsType.textAreaUpdate;
   constructor(public payload: TextAreaInterface) {}
 }
 
@@ -59,5 +63,6 @@ export type FormActions = InputAddAction
   | CheckBoxAddAction
   | ButtonAddAction
   | FormStyleAddAction
-  | InputUpdateAction;
+  | InputUpdateAction
+  | TextAreaUpdateAction;
 

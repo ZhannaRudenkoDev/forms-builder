@@ -58,6 +58,14 @@ export const formReducer = (state = initialState, action: FormActions) => {
         ...state,
         inputs: [...updatedInput]
       }
+    case formActionsType.textAreaUpdate:
+      const updatedTextArea = state.textAreas.map(textArea => {
+        return textArea.id === action.payload.id ? action.payload : textArea;
+      })
+      return {
+        ...state,
+        textAreas: [...updatedTextArea]
+      }
     default:
       return {...state};
   }
