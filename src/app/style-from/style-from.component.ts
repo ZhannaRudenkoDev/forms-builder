@@ -4,7 +4,12 @@ import {FieldOBJ, FormInterface, FormStyleInterface, InputInterface} from "../in
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput} from "../reducers/form/form.selector";
-import {FormStyleAddAction, InputUpdateAction, TextAreaUpdateAction} from "../reducers/form/form.actions";
+import {
+  ButtonUpdateAction,
+  FormStyleAddAction,
+  InputUpdateAction,
+  TextAreaUpdateAction
+} from "../reducers/form/form.actions";
 
 @Component({
   selector: 'app-style-from',
@@ -66,10 +71,22 @@ export class StyleFromComponent implements OnInit {
         textAreaCheckRequired: !!this.textAreaControl.get('textAreaCheckRequired')?.value!
       }));
     }
-    this.inputs$.subscribe(value => {
-      console.log(value);
-    })
-    //console.log(this.fieldOBJ)
+  }
+
+  applyButtonStyles() {
+    if(this.buttonControl.valid) {
+      this.store$.dispatch(new ButtonUpdateAction({
+        id: this.fieldOBJ.id,
+        buttonLabel: this.buttonControl.get('buttonLabel')?.value!,
+        buttonWidth: this.buttonControl.get('buttonWidth')?.value! + 'px',
+        buttonHeight: this.buttonControl.get('buttonHeight')?.value! + 'px',
+        buttonFontSize: this.buttonControl.get('buttonFontSize')?.value! + 'px',
+        buttonFontWeight: this.buttonControl.get('buttonFontWeight')?.value!,
+        buttonColor: "rgb(" + this.buttonControl.get('buttonColor')?.value! + ")",
+        buttonBorderType: this.buttonControl.get('buttonBorderType')?.value!,
+        buttonCheckRequired: !!this.buttonControl.get('buttonCheckRequired')?.value!
+      }));
+    }
   }
 
   formGeneral= new FormGroup({
@@ -139,6 +156,7 @@ export class StyleFromComponent implements OnInit {
     'buttonFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'buttonFontWeight': new FormControl(''),
     'buttonColor': new FormControl('', ValidateRGB),
+    'buttonColorBackground': new FormControl('', ValidateRGB),
     'buttonBorderType': new FormControl(''),
     'buttonCheckRequired': new FormControl(''),
   });
@@ -174,6 +192,9 @@ export class StyleFromComponent implements OnInit {
   }
   get buttonColor() {
     return this.buttonControl.get('buttonColor');
+  }
+  get buttonColorBackground() {
+    return this.buttonControl.get('buttonColorBackground');
   }
 
 

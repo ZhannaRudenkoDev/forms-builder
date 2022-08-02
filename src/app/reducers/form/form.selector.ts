@@ -81,3 +81,25 @@ export const getTextAreaById = (id: string) => createSelector(selectorContFeatur
     }
   });
 
+export const getButtonById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+    if (allItems.buttons) {
+      return allItems.buttons.find(item => {
+        return item.id === id;
+      });
+    } else {
+      return {
+        id: '',
+        buttonLabel: '',
+        buttonWidth: '',
+        buttonHeight: '',
+        buttonFontSize: '',
+        buttonFontWeight: '',
+        buttonColor: '',
+        buttonColorBackground: '',
+        buttonBorderType: '',
+        buttonCheckRequired: '',
+      };
+    }
+  });
+

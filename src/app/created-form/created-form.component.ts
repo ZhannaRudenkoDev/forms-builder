@@ -18,7 +18,7 @@ import {
   createCheckBoxes, createFormStyle,
   createInput,
   createSelect,
-  createTextArea,
+  createTextArea, getButtonById,
   getInputById, getTextAreaById
 } from "../reducers/form/form.selector";
 import {
@@ -105,6 +105,29 @@ export class CreatedFormComponent implements OnInit {
     return;
   }
 
+  getButtonStyle(id: string, type: string) {
+    let buttonStyle: string = '';
+    let labelText: string = '';
+    let requireStyle: boolean = false;
+    this.store$.select(getButtonById(id))
+      .subscribe((item) => {
+        buttonStyle = 'width: ' + item?.buttonWidth + '; height: ' + item?.buttonHeight +
+          '; border-style: ' + item?.buttonBorderType + '; color: ' + item?.buttonColor +
+          '; font-size: ' + item?.buttonFontSize + '; font-weight: ' + item?.buttonFontWeight +
+           '; background-color: ' + item?.buttonColorBackground;
+        labelText = item?.buttonLabel + '';
+        requireStyle = !!item?.buttonCheckRequired;
+      });
+    if(type === 'button') {
+      return buttonStyle;
+    } else if(type === 'label') {
+      return labelText;
+    } else if(type === 'required') {
+      return requireStyle;
+    }
+    return;
+  }
+
 
   get id() {
     return uuidv4();
@@ -161,7 +184,7 @@ export class CreatedFormComponent implements OnInit {
     } else if(addField.field === 'Button') {
       this.store$.dispatch(new ButtonAddAction({
         id: addField.id,
-        buttonLabel: '',
+        buttonLabel: 'Button label',
       }));
     }
 

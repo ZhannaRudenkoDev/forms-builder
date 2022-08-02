@@ -36,7 +36,11 @@
         <div *ngIf="field.field === 'Button'" class="form-created__button-wrapper"
              (click)="getField(field)"
              [attr.id]="field.id">
-          <button mat-button class="form-created__button">Button label</button>
+          <button mat-button class="form-created__button"
+                  [style]="getButtonStyle(field.id, 'button')">
+            {{getButtonStyle(field.id, 'label')}}
+            <span style="color: red"
+                  [ngStyle] = "{'visibility': getButtonStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span></button>
         </div>
         <div *ngIf="field.field === 'Select'" class="form-created__input"
              (click)="getField(field)"

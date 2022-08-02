@@ -60,11 +60,12 @@ export interface CheckBoxInterface {
 export interface ButtonInterface {
   id: string,
   buttonLabel: string,
-  buttonWidth?: number,
-  buttonHeight?: number,
-  buttonFontSize?: number,
+  buttonWidth?: string,
+  buttonHeight?: string,
+  buttonFontSize?: string,
   buttonFontWeight?: string,
   buttonColor?: string,
+  buttonColorBackground?: string,
   buttonBorderType?: string,
   buttonCheckRequired?: boolean,
 }
