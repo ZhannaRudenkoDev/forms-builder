@@ -33,14 +33,12 @@
         <form class="example-accordion-item-body-wrapper-options" [formGroup]="formGeneral">
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
             <mat-label class = "example-accordion-item-body-wrapper-option-label">Text color</mat-label>
-            <input formControlName="colorRGB" matInput type="text" placeholder="22,33,77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-            <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+            <input formControlName="colorRGB" matInput type="color" placeholder="22,33,77" min="10" class = "example-accordion-item-body-wrapper-option-input">
             <small *ngIf="colorRGB && colorRGB.invalid && colorRGB.touched" style="color: darkred">Invalid</small>
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
             <mat-label class = "example-accordion-item-body-wrapper-option-label">Background</mat-label>
-            <input formControlName="backgroundRGB" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-            <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+            <input formControlName="backgroundRGB" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
             <small *ngIf="backgroundRGB && backgroundRGB.invalid && backgroundRGB.touched" style="color: darkred">Invalid</small>
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -53,8 +51,7 @@
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
             <mat-label class = "example-accordion-item-body-wrapper-option-label">Border color</mat-label>
-            <input formControlName="borderColorRGB" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-            <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+            <input formControlName="borderColorRGB" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
             <small *ngIf="borderColorRGB && borderColorRGB.invalid && borderColorRGB.touched" style="color: darkred">Invalid</small>
           </mat-form-field>
         </form>
@@ -101,8 +98,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Color input</mat-label>
-              <input formControlName="inputColor" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="inputColor" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="inputColor && inputColor.invalid && inputColor.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -161,8 +157,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Color input</mat-label>
-              <input formControlName="textAreaColor" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="textAreaColor" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="textAreaColor && textAreaColor.invalid && textAreaColor.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -216,8 +211,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Color input</mat-label>
-              <input formControlName="selectColor" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="selectColor" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="selectColor && selectColor.invalid && selectColor.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -279,14 +273,12 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Color input</mat-label>
-              <input formControlName="buttonColor" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="buttonColor" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="buttonColor && buttonColor.invalid && buttonColor.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Background</mat-label>
-              <input formControlName="buttonColorBackground" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="buttonColorBackground" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="buttonColorBackground && buttonColorBackground.invalid && buttonColorBackground.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
@@ -333,8 +325,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Text color</mat-label>
-              <input formControlName="checkBoxColor" matInput type="text" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
-              <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">RGB</span>
+              <input formControlName="checkBoxColor" matInput type="color" placeholder="22, 33, 77" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <small *ngIf="checkBoxColor && checkBoxColor.invalid && checkBoxColor.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
           </div>

@@ -63,7 +63,7 @@ export class StyleFromComponent implements OnInit {
         inputHeight: this.inputControl.get('inputHeight')?.value! + 'px',
         inputFontSize: this.inputControl.get('inputFontSize')?.value! + 'px',
         inputFontWeight: this.inputControl.get('inputFontSize')?.value!,
-        inputColor: "rgb(" + this.inputControl.get('inputColor')?.value! + ")",
+        inputColor: this.inputControl.get('inputColor')?.value!,
         inputBorderType: this.inputControl.get('inputBorderType')?.value!,
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
@@ -83,7 +83,7 @@ export class StyleFromComponent implements OnInit {
         textAreaHeight: this.textAreaControl.get('textAreaHeight')?.value! + 'px',
         textAreaFontSize: this.textAreaControl.get('textAreaFontSize')?.value! + 'px',
         textAreaFontWeight: this.textAreaControl.get('textAreaFontWeight')?.value!,
-        textAreaColor: "rgb(" + this.textAreaControl.get('textAreaColor')?.value! + ")",
+        textAreaColor:  this.textAreaControl.get('textAreaColor')?.value!,
         textAreaBorderType: this.textAreaControl.get('textAreaBorderType')?.value!,
         textAreaCheckRequired: !!this.textAreaControl.get('textAreaCheckRequired')?.value!
       }));
@@ -104,7 +104,7 @@ export class StyleFromComponent implements OnInit {
         selectHeight: this.selectControl.get('selectHeight')?.value! + 'px',
         selectFontSize: this.selectControl.get('selectFontSize')?.value! + 'px',
         selectFontWeight: this.selectControl.get('selectFontWeight')?.value!,
-        selectColor: "rgb(" + this.selectControl.get('selectColor')?.value! + ")",
+        selectColor: this.selectControl.get('selectColor')?.value!,
         selectBorderType: this.selectControl.get('selectBorderType')?.value!,
         selectCheckRequired: !!this.selectControl.get('selectCheckRequired')?.value!,
         selectAddOption: this.selectOptions!
@@ -121,7 +121,8 @@ export class StyleFromComponent implements OnInit {
         buttonHeight: this.buttonControl.get('buttonHeight')?.value! + 'px',
         buttonFontSize: this.buttonControl.get('buttonFontSize')?.value! + 'px',
         buttonFontWeight: this.buttonControl.get('buttonFontWeight')?.value!,
-        buttonColor: "rgb(" + this.buttonControl.get('buttonColor')?.value! + ")",
+        buttonColor: this.buttonControl.get('buttonColor')?.value!,
+        buttonColorBackground: this.buttonControl.get('buttonColorBackground')?.value!,
         buttonBorderType: this.buttonControl.get('buttonBorderType')?.value!,
         buttonCheckRequired: !!this.buttonControl.get('buttonCheckRequired')?.value!
       }));
@@ -135,7 +136,7 @@ export class StyleFromComponent implements OnInit {
         checkBoxLabel: this.checkBoxControl.get('checkBoxLabel')?.value!,
         checkBoxFontSize: this.checkBoxControl.get('checkBoxFontSize')?.value! + 'px',
         checkBoxFontWeight: this.checkBoxControl.get('checkBoxFontWeight')?.value!,
-        checkBoxColor: "rgb(" + this.checkBoxControl.get('checkBoxColor')?.value! + ")",
+        checkBoxColor: this.checkBoxControl.get('checkBoxColor')?.value!,
         checkBoxCheckRequired: !!this.checkBoxControl.get('checkBoxCheckRequired')?.value!,
         checkBoxTitle: this.checkBoxControl.get('checkBoxTitle')?.value!
       }));
@@ -145,20 +146,21 @@ export class StyleFromComponent implements OnInit {
 
   formGeneral= new FormGroup({
     'formLabel': new FormControl('Form label', [Validators.required, Validators.minLength(3)]),
-    'colorRGB': new FormControl('', ValidateRGB),
-    'backgroundRGB': new FormControl('', ValidateRGB),
+    'colorRGB': new FormControl(''),
+    'backgroundRGB': new FormControl(''),
     'borderStyle': new FormControl(''),
-    'borderColorRGB': new FormControl('', ValidateRGB),
+    'borderColorRGB': new FormControl(''),
   })
 
   applyFormStyles() {
+    console.log(this.formGeneral.get('colorRGB')?.value!);
     if(this.formGeneral.valid) {
       this.store$.dispatch(formStyleADD({
         formLabel: this.formGeneral.get('formLabel')?.value!,
-        colorRGB: "rgb(" + this.formGeneral.get('colorRGB')?.value! + ")",
-        backgroundRGB: "rgb(" + this.formGeneral.get('backgroundRGB')?.value! + ")",
+        colorRGB:  this.formGeneral.get('colorRGB')?.value!,
+        backgroundRGB: this.formGeneral.get('backgroundRGB')?.value!,
         borderStyle: this.formGeneral.get('borderStyle')?.value!,
-        borderColorRGB: "rgb(" + this.formGeneral.get('borderColorRGB')?.value! + ")",
+        borderColorRGB: this.formGeneral.get('borderColorRGB')?.value!,
       }));
     }
     this.form$.subscribe(value => {
@@ -173,7 +175,7 @@ export class StyleFromComponent implements OnInit {
     'inputHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'inputFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'inputFontWeight': new FormControl(''),
-    'inputColor': new FormControl('', ValidateRGB),
+    'inputColor': new FormControl(''),
     'inputBorderType': new FormControl(''),
     'inputCheckRequired': new FormControl(''),
   });
@@ -185,7 +187,7 @@ export class StyleFromComponent implements OnInit {
     'textAreaHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'textAreaFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'textAreaFontWeight': new FormControl(''),
-    'textAreaColor': new FormControl('', ValidateRGB),
+    'textAreaColor': new FormControl(''),
     'textAreaBorderType': new FormControl(''),
     'textAreaCheckRequired': new FormControl(''),
   });
@@ -197,7 +199,7 @@ export class StyleFromComponent implements OnInit {
     'selectHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'selectFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'selectFontWeight': new FormControl(''),
-    'selectColor': new FormControl('', ValidateRGB),
+    'selectColor': new FormControl(''),
     'selectBorderType': new FormControl(''),
     'selectCheckRequired': new FormControl(''),
     'selectAddOption': new FormControl('', Validators.minLength(3)),
@@ -209,8 +211,8 @@ export class StyleFromComponent implements OnInit {
     'buttonHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'buttonFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'buttonFontWeight': new FormControl(''),
-    'buttonColor': new FormControl('', ValidateRGB),
-    'buttonColorBackground': new FormControl('', ValidateRGB),
+    'buttonColor': new FormControl(''),
+    'buttonColorBackground': new FormControl(''),
     'buttonBorderType': new FormControl(''),
     'buttonCheckRequired': new FormControl(''),
   });
@@ -219,7 +221,7 @@ export class StyleFromComponent implements OnInit {
     'checkBoxLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
     'checkBoxFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
     'checkBoxFontWeight': new FormControl(''),
-    'checkBoxColor': new FormControl('', ValidateRGB),
+    'checkBoxColor': new FormControl(''),
     'checkBoxCheckRequired': new FormControl(''),
     'checkBoxTitle': new FormControl('', [Validators.required, Validators.minLength(3)])
   });
@@ -337,7 +339,7 @@ export class StyleFromComponent implements OnInit {
 
 }
 
-function ValidateRGB(control: AbstractControl): {[key: string]: any} | null  {
+/*function ValidateRGB(control: AbstractControl): {[key: string]: any} | null  {
   const rgbArray = control.value.split(',');
   if (parseInt(rgbArray[0]) < 0 || parseInt(rgbArray[0]) > 255) {
     return { 'colorRGBInvalid': true };
@@ -347,4 +349,4 @@ function ValidateRGB(control: AbstractControl): {[key: string]: any} | null  {
     return { 'colorRGBInvalid': true };
   } else
     return null;
-}
+}*/
