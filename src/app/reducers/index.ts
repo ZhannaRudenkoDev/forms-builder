@@ -1,15 +1,10 @@
 import {
-  ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import  {formNode, formReducer} from "./form/form.reducer";
-import {FormInterface, FormStyleInterface} from "../interfaces";
-import {FormActions} from "./form/form.actions";
-
+import {FormInterface} from "../interfaces";
 
 
 export interface State {

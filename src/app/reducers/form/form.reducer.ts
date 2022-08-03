@@ -82,6 +82,24 @@ export const formReducer = (state = initialState, action: FormActions) => {
         ...state,
         checkBoxes: [...updatedCheckBox]
       }
+    case formActionsType.selectAddOption:
+      const updatedSelectOption = state.selects.map(select => {
+        return select.id === action.payload.id
+          ? {...select, selectAddOption: [...select.selectAddOption, action.payload.option]}
+          : select;
+      })
+      return {
+        ...state,
+        selects: [...updatedSelectOption]
+      }
+    case formActionsType.selectUpdate:
+      const updatedSelect = state.selects.map(select => {
+        return select.id === action.payload.id ? action.payload : select;
+      })
+      return {
+        ...state,
+        selects: [...updatedSelect]
+      }
     default:
       return {...state};
   }

@@ -3,11 +3,11 @@ import {AbstractControl, FormControl, FormGroup,NG_VALUE_ACCESSOR, Validators} f
 import {FieldOBJ, FormInterface, FormStyleInterface, InputInterface} from "../interfaces";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import {createFormStyle, createInput} from "../reducers/form/form.selector";
+import {createFormStyle, createInput, getSelectOptionsById} from "../reducers/form/form.selector";
 import {
   ButtonUpdateAction, CheckBoxUpdateAction,
   FormStyleAddAction,
-  InputUpdateAction,
+  InputUpdateAction, SelectAddOptionAction, SelectUpdateAction,
   TextAreaUpdateAction
 } from "../reducers/form/form.actions";
 
@@ -29,6 +29,7 @@ export class StyleFromComponent implements OnInit {
   public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
   public inputs$: Observable<InputInterface[]> = this.store$.pipe(select(createInput));
 
+
   expandedIndex = 0;
 
 
@@ -38,6 +39,16 @@ export class StyleFromComponent implements OnInit {
     field: '',
     id: ''
   };
+
+  addOptionSelect() {
+    if(this.selectControl.get('selectAddOption')?.valid) {
+      this.store$.dispatch(new SelectAddOptionAction({
+        id: this.fieldOBJ.id,
+        option: this.selectControl.get('selectAddOption')?.value!
+      }))
+    }
+
+  }
 
   applyInputStyles() {
     if(this.inputControl.valid) {
@@ -69,6 +80,28 @@ export class StyleFromComponent implements OnInit {
         textAreaColor: "rgb(" + this.textAreaControl.get('textAreaColor')?.value! + ")",
         textAreaBorderType: this.textAreaControl.get('textAreaBorderType')?.value!,
         textAreaCheckRequired: !!this.textAreaControl.get('textAreaCheckRequired')?.value!
+      }));
+    }
+  }
+
+  selectOptions: string[] = [];
+
+  applySelectStyles() {
+    if(this.selectControl.valid) {
+      this.store$.pipe(select(getSelectOptionsById(this.fieldOBJ.id))).subscribe(items => {
+       this.selectOptions = items;
+      })
+      this.store$.dispatch(new SelectUpdateAction({
+        id: this.fieldOBJ.id,
+        selectLabel: this.selectControl.get('selectLabel')?.value!,
+        selectWidth: this.selectControl.get('selectWidth')?.value! + 'px',
+        selectHeight: this.selectControl.get('selectHeight')?.value! + 'px',
+        selectFontSize: this.selectControl.get('selectFontSize')?.value! + 'px',
+        selectFontWeight: this.selectControl.get('selectFontWeight')?.value!,
+        selectColor: "rgb(" + this.selectControl.get('selectColor')?.value! + ")",
+        selectBorderType: this.selectControl.get('selectBorderType')?.value!,
+        selectCheckRequired: !!this.selectControl.get('selectCheckRequired')?.value!,
+        selectAddOption: this.selectOptions!
       }));
     }
   }

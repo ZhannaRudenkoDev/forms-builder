@@ -18,7 +18,8 @@ export const enum formActionsType {
   textAreaUpdate = '[FORM].textAreaUpdate',
   buttonUpdate = '[FORM].buttonUpdate',
   checkBoxUpdate = '[FORM].checkBoxUpdate',
-
+  selectAddOption = '[FORM].selectAddOption',
+  selectUpdate = '[FORM].selectUpdate',
 }
 
 export class InputAddAction implements Action {
@@ -36,10 +37,24 @@ export class SelectAddAction implements Action {
   constructor(public payload: SelectInterface) {}
 }
 
+export class SelectAddOptionAction implements Action {
+  readonly type = formActionsType.selectAddOption;
+  constructor(public payload: {
+    id: string,
+    option: string
+  }) {}
+}
+
+export class SelectUpdateAction implements Action {
+  readonly type = formActionsType.selectUpdate;
+  constructor(public payload: SelectInterface) {}
+}
+
 export class TextAreaAddAction implements Action {
   readonly type = formActionsType.textAreaADD;
   constructor(public payload: TextAreaInterface) {}
 }
+
 export class TextAreaUpdateAction implements Action {
   readonly type = formActionsType.textAreaUpdate;
   constructor(public payload: TextAreaInterface) {}
@@ -52,7 +67,7 @@ export class CheckBoxAddAction implements Action {
 
 export class CheckBoxUpdateAction implements Action {
   readonly type = formActionsType.checkBoxUpdate;
-  constructor(public payload: CheckBoxInterface) {}
+  constructor(public payload: CheckBoxInterface ) {}
 }
 
 export class ButtonAddAction implements Action {
@@ -78,5 +93,7 @@ export type FormActions = InputAddAction
   | InputUpdateAction
   | TextAreaUpdateAction
   | ButtonUpdateAction
-  | CheckBoxUpdateAction;
+  | CheckBoxUpdateAction
+  | SelectAddOptionAction
+  | SelectUpdateAction;
 

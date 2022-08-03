@@ -47,11 +47,14 @@
              (click)="getField(field)"
              [attr.id]="field.id">
           <div class="floating-label">
-            <select class="floating-select" value="">
-              <option value=""></option>
+            <select class="floating-select" value="" [style]="getSelectStyle(field.id, 'select')">
+              <option *ngFor="let option of (getSelectOptions(field.id) | async)"   value="">
+                {{option}}
+              </option>
             </select>
             <span class="highlight"></span>
-            <label class="label__select">Select</label>
+            <label class="label__select" [style]="getSelectStyle(field.id, 'labelStyle')">  {{getSelectStyle(field.id, 'label')}} <span style="color: red"
+            [ngStyle] = "{'visibility': getSelectStyle(field.id, 'required') ? 'visible' : 'hidden'}"> * </span></label>
           </div>
         </div>
         <div *ngIf="field.field === 'Checkbox'" class="form-created__input"

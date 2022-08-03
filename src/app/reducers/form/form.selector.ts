@@ -122,3 +122,40 @@ export const getCheckBoxById = (id: string) => createSelector(selectorContFeatur
     }
   });
 
+export const getSelectById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+    if (allItems.selects) {
+      return allItems.selects.find(item => {
+        return item.id === id;
+      });
+    } else {
+      return {
+        id: '',
+        selectLabel: '',
+        selectWidth: '',
+        selectHeight: '',
+        selectFontSize: '',
+        selectFontWeight: '',
+        selectColor: '',
+        selectBorderType: '',
+        selectCheckRequired: false,
+        selectAddOption: [],
+      };
+    }
+  });
+
+export const getSelectOptionsById = (id: string) => createSelector(selectorContFeature,
+  (allItems) => {
+    let item: string[] | undefined;
+    if (allItems.selects) {
+      allItems.selects.forEach(select => {
+        if(select.id === id) {
+          item = select.selectAddOption;
+        }
+      })
+      return item!;
+    } else {
+      return [];
+    }
+  });
+

@@ -19,7 +19,7 @@ import {
   createInput,
   createSelect,
   createTextArea, getButtonById, getCheckBoxById,
-  getInputById, getTextAreaById
+  getInputById, getSelectById, getSelectOptionsById, getTextAreaById
 } from "../reducers/form/form.selector";
 import {
   ButtonAddAction,
@@ -45,13 +45,16 @@ export class CreatedFormComponent implements OnInit {
   public selects$: Observable<SelectInterface[]> = this.store$.pipe(select(createSelect));
   public textArea$: Observable<TextAreaInterface[]> = this.store$.pipe(select(createTextArea));
   public checkbox$: Observable<CheckBoxInterface[]> = this.store$.pipe(select(createCheckBoxes));
-  public button$: Observable<ButtonInterface[]> = this.store$.pipe(select(createButtons));
   public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
 
   public formStyles: FormStyleInterface = {formLabel: "Form label"};
 
 
   @Output() fieldStyleEvent = new EventEmitter<FieldOBJ>();
+
+  getSelectOptions(id: string) {
+    return this.store$.pipe(select(getSelectOptionsById(id)));
+  }
 
   getInputStyle(id: string, type: string) {
     let inputStyle: string = '';
@@ -73,6 +76,31 @@ export class CreatedFormComponent implements OnInit {
       return labelText;
     } else if(type === 'placeholder') {
       return placeholderText;
+    } else if(type === 'required') {
+      return requireStyle;
+    }
+    return;
+  }
+  getSelectStyle(id: string, type: string) {
+    let selectStyle: string = '';
+    let labelText: string = '';
+    let labelStyle: string = '';
+    let requireStyle: boolean = false;
+    this.store$.select(getSelectById(id))
+      .subscribe((item) => {
+        selectStyle = 'width: ' + item?.selectWidth + '; height: ' + item?.selectHeight +
+          '; border-style: ' + item?.selectBorderType + '; background-color: ' + item?.selectColor +
+          '; font-size: ' + item?.selectFontSize + '; font-weight: ' + item?.selectFontWeight;
+        labelStyle = 'font-size: ' + item?.selectFontSize + '; font-weight: ' + item?.selectFontWeight;
+        labelText = item?.selectLabel + '';
+        requireStyle = !!item?.selectCheckRequired;
+      });
+    if(type === 'select') {
+      return selectStyle;
+    } else if(type === 'label') {
+      return labelText;
+    } else if(type === 'labelStyle') {
+      return labelText;
     } else if(type === 'required') {
       return requireStyle;
     }
@@ -161,6 +189,9 @@ export class CreatedFormComponent implements OnInit {
 
   getField(field: FieldOBJ) {
     this.fieldStyleEvent.emit(field);
+    this.selects$.subscribe(item => {
+      console.log(item);
+    })
     //this.getInputStyle(field.id);
   }
 
@@ -194,7 +225,8 @@ export class CreatedFormComponent implements OnInit {
     } else if(addField.field === 'Select') {
       this.store$.dispatch(new SelectAddAction({
         id: addField.id,
-        selectLabel: '',
+        selectLabel: 'Select',
+        selectAddOption: []
       }));
     } else if(addField.field === 'Textarea') {
       this.store$.dispatch(new TextAreaAddAction({
@@ -214,22 +246,6 @@ export class CreatedFormComponent implements OnInit {
         buttonLabel: 'Button label',
       }));
     }
-
-    this.inputs$.subscribe(value => {
-      console.log(value);
-    })
-    this.selects$.subscribe(value => {
-      console.log(value);
-    })
-    this.textArea$.subscribe(value => {
-      console.log(value);
-    })
-    this.checkbox$.subscribe(value => {
-      console.log(value);
-    })
-    this.button$.subscribe(value => {
-      console.log(value);
-    })
 
   }
 

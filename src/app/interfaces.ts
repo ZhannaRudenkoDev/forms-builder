@@ -25,14 +25,14 @@ export interface InputInterface {
 export interface SelectInterface {
   id: string,
   selectLabel: string,
-  selectWidth?: number,
-  selectHeight?: number,
-  selectFontSize?: number,
+  selectWidth?: string,
+  selectHeight?: string,
+  selectFontSize?: string,
   selectFontWeight?: string,
   selectColor?: string,
   selectBorderType?: string,
   selectCheckRequired?: boolean,
-  selectAddOption?: string[],
+  selectAddOption: string[],
 }
 
 export interface TextAreaInterface {
