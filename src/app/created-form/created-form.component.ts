@@ -22,11 +22,11 @@ import {
   getInputById, getSelectById, getSelectOptionsById, getTextAreaById
 } from "../reducers/form/form.selector";
 import {
-  ButtonAddAction,
-  CheckBoxAddAction,
-  InputAddAction,
-  SelectAddAction,
-  TextAreaAddAction
+  buttonADD,
+  checkBoxADD,
+  inputADD,
+  selectADD,
+  textAreaADD,
 } from "../reducers/form/form.actions";
 
 
@@ -217,31 +217,34 @@ export class CreatedFormComponent implements OnInit {
     this.fieldObj.push(addField);
 
     if(addField.field === 'Input') {
-      this.store$.dispatch(new InputAddAction({
+      this.store$.dispatch(inputADD({
         id: addField.id,
         inputLabel: 'Input label',
         inputPlaceholder: 'Input placeholder'
       }));
+      this.inputs$.subscribe(item => {
+        console.log(item);
+      })
     } else if(addField.field === 'Select') {
-      this.store$.dispatch(new SelectAddAction({
+      this.store$.dispatch(selectADD({
         id: addField.id,
         selectLabel: 'Select',
         selectAddOption: []
       }));
     } else if(addField.field === 'Textarea') {
-      this.store$.dispatch(new TextAreaAddAction({
+      this.store$.dispatch(textAreaADD({
         id: addField.id,
         textAreaLabel: 'Textarea',
         textAreaPlaceholder: 'Input placeholder'
       }));
     } else if(addField.field === 'Checkbox') {
-      this.store$.dispatch(new CheckBoxAddAction({
+      this.store$.dispatch(checkBoxADD({
         id: addField.id,
         checkBoxLabel: 'label',
         checkBoxTitle: 'CheckBox Title'
       }));
     } else if(addField.field === 'Button') {
-      this.store$.dispatch(new ButtonAddAction({
+      this.store$.dispatch(buttonADD({
         id: addField.id,
         buttonLabel: 'Button label',
       }));

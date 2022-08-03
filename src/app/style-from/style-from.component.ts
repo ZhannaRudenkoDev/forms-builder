@@ -5,10 +5,13 @@ import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput, getSelectOptionsById} from "../reducers/form/form.selector";
 import {
-  ButtonUpdateAction, CheckBoxUpdateAction,
-  FormStyleAddAction,
-  InputUpdateAction, SelectAddOptionAction, SelectUpdateAction,
-  TextAreaUpdateAction
+  buttonUpdate,
+  checkBoxUpdate,
+  formStyleADD,
+  inputUpdate,
+  selectAddOption,
+  selectUpdate,
+  textAreaUpdate,
 } from "../reducers/form/form.actions";
 
 @Component({
@@ -42,7 +45,7 @@ export class StyleFromComponent implements OnInit {
 
   addOptionSelect() {
     if(this.selectControl.get('selectAddOption')?.valid) {
-      this.store$.dispatch(new SelectAddOptionAction({
+      this.store$.dispatch(selectAddOption({
         id: this.fieldOBJ.id,
         option: this.selectControl.get('selectAddOption')?.value!
       }))
@@ -52,7 +55,7 @@ export class StyleFromComponent implements OnInit {
 
   applyInputStyles() {
     if(this.inputControl.valid) {
-      this.store$.dispatch(new InputUpdateAction({
+      this.store$.dispatch(inputUpdate({
         id: this.fieldOBJ.id,
         inputLabel: this.inputControl.get('inputLabel')?.value!,
         inputPlaceholder: this.inputControl.get('inputPlaceholder')?.value!,
@@ -65,11 +68,14 @@ export class StyleFromComponent implements OnInit {
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
       }
+    this.inputs$.subscribe(item => {
+      console.log(item);
+    })
   }
 
   applyTextAreaStyles() {
     if(this.textAreaControl.valid) {
-      this.store$.dispatch(new TextAreaUpdateAction({
+      this.store$.dispatch(textAreaUpdate({
         id: this.fieldOBJ.id,
         textAreaLabel: this.textAreaControl.get('textAreaLabel')?.value!,
         textAreaPlaceholder: this.textAreaControl.get('textAreaPlaceholder')?.value!,
@@ -91,7 +97,7 @@ export class StyleFromComponent implements OnInit {
       this.store$.pipe(select(getSelectOptionsById(this.fieldOBJ.id))).subscribe(items => {
        this.selectOptions = items;
       })
-      this.store$.dispatch(new SelectUpdateAction({
+      this.store$.dispatch(selectUpdate({
         id: this.fieldOBJ.id,
         selectLabel: this.selectControl.get('selectLabel')?.value!,
         selectWidth: this.selectControl.get('selectWidth')?.value! + 'px',
@@ -108,7 +114,7 @@ export class StyleFromComponent implements OnInit {
 
   applyButtonStyles() {
     if(this.buttonControl.valid) {
-      this.store$.dispatch(new ButtonUpdateAction({
+      this.store$.dispatch(buttonUpdate({
         id: this.fieldOBJ.id,
         buttonLabel: this.buttonControl.get('buttonLabel')?.value!,
         buttonWidth: this.buttonControl.get('buttonWidth')?.value! + 'px',
@@ -124,7 +130,7 @@ export class StyleFromComponent implements OnInit {
 
   applyCheckBoxStyles() {
     if(this.checkBoxControl.valid) {
-      this.store$.dispatch(new CheckBoxUpdateAction({
+      this.store$.dispatch(checkBoxUpdate({
         id: this.fieldOBJ.id,
         checkBoxLabel: this.checkBoxControl.get('checkBoxLabel')?.value!,
         checkBoxFontSize: this.checkBoxControl.get('checkBoxFontSize')?.value! + 'px',
@@ -147,7 +153,7 @@ export class StyleFromComponent implements OnInit {
 
   applyFormStyles() {
     if(this.formGeneral.valid) {
-      this.store$.dispatch(new FormStyleAddAction({
+      this.store$.dispatch(formStyleADD({
         formLabel: this.formGeneral.get('formLabel')?.value!,
         colorRGB: "rgb(" + this.formGeneral.get('colorRGB')?.value! + ")",
         backgroundRGB: "rgb(" + this.formGeneral.get('backgroundRGB')?.value! + ")",

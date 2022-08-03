@@ -1,4 +1,4 @@
-import {Action} from "@ngrx/store";
+import {Action, createAction, props} from "@ngrx/store";
 import {
   InputInterface,
   SelectInterface,
@@ -7,7 +7,31 @@ import {
   ButtonInterface, FormStyleInterface
 } from "../../interfaces";
 
-export const enum formActionsType {
+
+export const inputADD = createAction('[FORM].inputADD', props<InputInterface>());
+export const inputUpdate = createAction('[FORM].inputUpdate', props<InputInterface>());
+
+export const selectADD = createAction('[FORM].selectADD', props<SelectInterface>());
+export const selectUpdate = createAction('[FORM].selectUpdate', props<SelectInterface>());
+export const selectAddOption = createAction('[FORM].selectAddOption', props<{
+  id: string,
+  option: string
+}>());
+
+export const textAreaADD = createAction('[FORM].textAreaADD', props<TextAreaInterface>());
+export const textAreaUpdate = createAction('[FORM].textAreaUpdate', props<TextAreaInterface>());
+
+export const checkBoxADD = createAction('[FORM].checkBoxADD', props<CheckBoxInterface>());
+export const checkBoxUpdate = createAction('[FORM].checkBoxUpdate', props<CheckBoxInterface>());
+
+export const buttonADD = createAction('[FORM].buttonADD', props<ButtonInterface>());
+export const buttonUpdate = createAction('[FORM].buttonUpdate', props<ButtonInterface>());
+
+export const formStyleADD = createAction('[FORM].formStyleADD', props<FormStyleInterface>());
+
+
+// old style code
+/*export const enum formActionsType {
   inputADD = '[FORM].inputADD',
   selectADD = '[FORM].selectADD',
   textAreaADD = '[FORM].textAreaADD',
@@ -21,6 +45,7 @@ export const enum formActionsType {
   selectAddOption = '[FORM].selectAddOption',
   selectUpdate = '[FORM].selectUpdate',
 }
+
 
 export class InputAddAction implements Action {
   readonly type = formActionsType.inputADD;
@@ -95,5 +120,6 @@ export type FormActions = InputAddAction
   | ButtonUpdateAction
   | CheckBoxUpdateAction
   | SelectAddOptionAction
-  | SelectUpdateAction;
+  | SelectUpdateAction;*/
+
 
