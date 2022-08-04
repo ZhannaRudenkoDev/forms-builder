@@ -1,4 +1,11 @@
-import {FormControl, Validators} from "@angular/forms";
+export interface User {
+  id: number,
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  token?: string,
+}
 
 export interface FormStyleInterface {
   formLabel: string,
