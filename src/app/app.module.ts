@@ -16,6 +16,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { LoginComponent } from './login/login.component';
+import {appRoutingModule} from "./app.routing";
 
 
 
@@ -27,6 +29,7 @@ import { environment } from '../environments/environment';
     BuilderComponent,
     FormItemsComponent,
     CreatedFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { environment } from '../environments/environment';
     MaterialModule,
     ReactiveFormsModule,
     CommonModule,
+    appRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
