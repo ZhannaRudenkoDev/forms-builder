@@ -11,13 +11,19 @@ import { StyleFromComponent } from './style-from/style-from.component';
 import { BuilderComponent } from './builder/builder.component';
 import { FormItemsComponent } from './form-items/form-items.component';
 import { CreatedFormComponent } from './created-form/created-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import {appRoutingModule} from "./app.routing";
+import { SignUpComponent } from './sign-up/sign-up.component';
+import {AuthenticationService} from "./services/authentication.service";
+import {EffectsModule} from "@ngrx/effects";
+import {AuthEffects} from "./effects/auth.effects";
+
+
 
 
 
@@ -30,18 +36,21 @@ import {appRoutingModule} from "./app.routing";
     FormItemsComponent,
     CreatedFormComponent,
     LoginComponent,
+    SignUpComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    CommonModule,
-    appRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
-  ],
-  providers: [],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        CommonModule,
+        appRoutingModule,
+        EffectsModule.forRoot([AuthEffects]),
+        StoreModule.forRoot(reducers, {metaReducers}),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        FormsModule
+    ],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

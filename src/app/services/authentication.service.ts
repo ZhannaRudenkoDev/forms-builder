@@ -1,46 +1,27 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {User} from "../interfaces";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')!));
-    this.currentUser = this.currentUserSubject.asObservable();
+  getToken(): string {
+    return localStorage.getItem('token')!;
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+  logIn(email: string, password: string): Observable<any> {
+    const url = `${environment.apiUrl}/login`;
+    return this.http.post<User>(url, {email, password});
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
-  }
-
-  logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next({
-      id: 0,
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      token: ''
-    });
+  signUp(email: string, password: string): Observable<User> {
+    const url = `${environment.apiUrl}/register`;
+    return this.http.post<User>(url, {email, password});
   }
 
 }

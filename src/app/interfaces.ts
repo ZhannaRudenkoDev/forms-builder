@@ -1,10 +1,9 @@
-export interface User {
-  id: number,
-  username: string,
-  password: string,
-  firstName: string,
-  lastName: string,
-  token?: string,
+import {User} from "./models/user";
+
+export interface UserState {
+  isAuthenticated: boolean;
+  user: User | null;
+  errorMessage: string | null;
 }
 
 export interface FormStyleInterface {
