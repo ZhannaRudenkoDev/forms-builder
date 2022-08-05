@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "email": "a@email.com",
+      "password": "$2a$10$uj.ubFhpyMHVch7TuQq.Ze3yL/tq6P3TQnw13Dl5M87zpdVRP0b7.",
+      "username": "Name",
+      "token": "8c73e2a6-9b99-45c7-a624-764a86f28fdd",
+      "id": 1
+    },
+    {
+      "email": "rudenko@gmail.com",
+      "password": "$2a$10$YuGkk06BLjgbmsGXVy9x2OG1hGC31Zaz9gXlNaEIlLN8DzOPBcc3C",
+      "username": "Zhanna",
+      "token": "9214c87d-652a-412f-9f3f-4ccd303719ae",
+      "id": 2
+    },
+    {
+      "email": "anna@gmail.com",
+      "password": "$2a$10$MaKaaRBnjrqrmEKj/hqaIuL2IUv8nf41QtnNLC9Q.f6afBUZT.r96",
+      "username": "Anna",
+      "token": "4a0f62de-94ba-49d4-8da5-dcd8cd1fd816",
+      "id": 3
+    },
+    {
+      "email": "michael@gmail.com",
+      "password": "$2a$10$yTdNRcJ0RldVmMBOlJBePOxF.WzCAUaSUhSBwV7BlBEdXGvZQYmty",
+      "username": "Michael",
+      "token": "42030ff8-9cf4-4c0e-8171-208f120c5c13",
+      "id": 4
+    }
+  ]
+}

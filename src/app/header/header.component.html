@@ -2,7 +2,7 @@
   <div class="header__wrapper">
     <div class="header__user-name">
       <div class="header__user-name-wrapper">
-        Hi, <span>user</span>
+        Hi, <span>{{userName$ | async}}</span>
       </div>
     </div>
     <h1 class="header__title">
@@ -11,7 +11,7 @@
       </a>
     </h1>
     <div class="header__logout">
-      <button type="button">
+      <button type="button" (click)="logOut()">
         <img src="assets/header-assets/logout.png" alt="logout">
       </button>
     </div>

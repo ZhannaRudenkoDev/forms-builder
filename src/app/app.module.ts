@@ -20,11 +20,8 @@ import { LoginComponent } from './login/login.component';
 import {appRoutingModule} from "./app.routing";
 import { SignUpComponent } from './sign-up/sign-up.component';
 import {AuthenticationService} from "./services/authentication.service";
-import {EffectsModule} from "@ngrx/effects";
-import {AuthEffects} from "./effects/auth.effects";
-
-
-
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./intercepters/auth.interceptor";
 
 
 @NgModule({
@@ -45,12 +42,18 @@ import {AuthEffects} from "./effects/auth.effects";
         ReactiveFormsModule,
         CommonModule,
         appRoutingModule,
-        EffectsModule.forRoot([AuthEffects]),
+        HttpClientModule,
         StoreModule.forRoot(reducers, {metaReducers}),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         FormsModule
     ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

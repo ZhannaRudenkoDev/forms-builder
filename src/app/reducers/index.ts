@@ -4,13 +4,14 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import  {formNode, formReducer} from "./form/form.reducer";
-import {FormInterface, UserState} from "../interfaces";
+import {FormInterface} from "../interfaces";
 import {userNode, userReducer} from "./user/user.reducer";
+import {User} from "../models/user";
 
 
 export interface State {
   [formNode]: FormInterface;
-  [userNode]: UserState;
+  [userNode]: User;
 }
 
 export const reducers: ActionReducerMap<State, any> = {

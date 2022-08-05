@@ -1,35 +1,22 @@
 import {createReducer, on} from "@ngrx/store";
-import {UserState} from "../../interfaces";
-import {logInFailure, logInSuccess} from "./user.actions";
+import {User} from "../../models/user";
+import {setUser} from "./user.actions";
 
 
 export const userNode = 'user';
 
-const initialState: UserState = {
-  isAuthenticated: false,
-  user: null,
-  errorMessage: null
+const initialState: User = {
+  username: 'user',
+  email: '',
+  password: '',
+  token: ''
 }
 
 export const userReducer = createReducer(
   initialState,
   on(
-  logInSuccess,
-  (state, userPayload) => ({
-    ...state,
-    isAuthenticated: true,
-    user: {
-      token: userPayload.token,
-      email: userPayload.email
-    },
-    errorMessage: null
-  })
+    setUser,
+    (state, user) => ({...state, ...user})
   ),
-  on(
-    logInFailure,
-    (state) => ({
-      ...state,
-      errorMessage: 'Incorrect email and/or password.'
-    })
-  ),
+
 )
