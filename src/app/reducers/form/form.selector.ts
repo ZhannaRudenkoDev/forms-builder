@@ -2,7 +2,7 @@ import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {formNode} from "./form.reducer";
 import {
   ButtonInterface,
-  CheckBoxInterface,
+  CheckBoxInterface, FieldOBJ,
   FormInterface, FormStyleInterface,
   InputInterface,
   SelectInterface,
@@ -14,6 +14,10 @@ export const selectorContFeature = createFeatureSelector<FormInterface>(formNode
 export const createInput = createSelector(
   selectorContFeature,
   (state: FormInterface) : InputInterface[] => state.inputs
+)
+export const createFormList = createSelector(
+  selectorContFeature,
+  (state: FormInterface) : FieldOBJ[] => state.formList
 )
 export const createSelect = createSelector(
   selectorContFeature,

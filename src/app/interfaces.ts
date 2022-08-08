@@ -1,10 +1,3 @@
-import {User} from "./models/user";
-
-export interface UserState {
-  isAuthenticated: boolean;
-  user: User | null;
-  errorMessage: string | null;
-}
 
 export interface FormStyleInterface {
   formLabel: string,
@@ -83,7 +76,8 @@ export interface FormInterface {
   selects: SelectInterface[],
   textAreas: TextAreaInterface[],
   checkBoxes: CheckBoxInterface[],
-  buttons: ButtonInterface[]
+  buttons: ButtonInterface[],
+  formList: FieldOBJ[]
 }
 
 export interface FieldOBJ {

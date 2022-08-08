@@ -15,7 +15,7 @@ import {select, Store} from "@ngrx/store";
 
 import {
   createButtons,
-  createCheckBoxes, createFormStyle,
+  createCheckBoxes, createFormList, createFormStyle,
   createInput,
   createSelect,
   createTextArea, getButtonById, getCheckBoxById,
@@ -39,16 +39,17 @@ import {
 export class CreatedFormComponent implements OnInit {
 
   fields: string[] = [];
-  fieldObj: FieldOBJ[] = []
+  fieldObj: FieldOBJ[] = [];
 
   public inputs$: Observable<InputInterface[]> = this.store$.pipe(select(createInput));
   public selects$: Observable<SelectInterface[]> = this.store$.pipe(select(createSelect));
   public textArea$: Observable<TextAreaInterface[]> = this.store$.pipe(select(createTextArea));
   public checkbox$: Observable<CheckBoxInterface[]> = this.store$.pipe(select(createCheckBoxes));
   public form$: Observable<FormStyleInterface> = this.store$.pipe(select(createFormStyle));
+  public formList$: Observable<FieldOBJ[]> = this.store$.pipe(select(createFormList));
+
 
   public formStyles: FormStyleInterface = {formLabel: "Form label"};
-
 
   @Output() fieldStyleEvent = new EventEmitter<FieldOBJ>();
 
@@ -81,6 +82,7 @@ export class CreatedFormComponent implements OnInit {
     }
     return;
   }
+
   getSelectStyle(id: string, type: string) {
     let selectStyle: string = '';
     let labelText: string = '';
@@ -189,10 +191,6 @@ export class CreatedFormComponent implements OnInit {
 
   getField(field: FieldOBJ) {
     this.fieldStyleEvent.emit(field);
-    this.selects$.subscribe(item => {
-      console.log(item);
-    })
-    //this.getInputStyle(field.id);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -209,12 +207,11 @@ export class CreatedFormComponent implements OnInit {
         event.currentIndex
       );
     }
-    const addField = {
+    const addField: FieldOBJ = {
       field: event.container.data[event.currentIndex],
       id: event.container.data[event.currentIndex] + uuidv4()
     }
 
-    this.fieldObj.push(addField);
 
     if(addField.field === 'Input') {
       this.store$.dispatch(inputADD({

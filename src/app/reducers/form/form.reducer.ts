@@ -1,11 +1,11 @@
 import {FormInterface} from "../../interfaces";
 import {
-  buttonADD, buttonUpdate,
-  checkBoxADD, checkBoxUpdate,
+  buttonADD, buttonDelete, buttonUpdate,
+  checkBoxADD, checkBoxDelete, checkBoxUpdate,
   formStyleADD,
-  inputADD, inputUpdate,
-  selectADD, selectAddOption, selectUpdate,
-  textAreaADD, textAreaUpdate
+  inputADD, inputDelete, inputUpdate,
+  selectADD, selectAddOption, selectDelete, selectUpdate,
+  textAreaADD, textAreaDelete, textAreaUpdate
 } from "./form.actions";
 import {createReducer, on} from "@ngrx/store";
 
@@ -23,30 +23,67 @@ const initialState: FormInterface = {
   selects: [],
   textAreas: [],
   checkBoxes: [],
-  buttons: []
+  buttons: [],
+  formList: []
 }
 
 export const formReducer = createReducer(
   initialState,
   on(
     inputADD,
-    (state, input) => ({ ...state,  inputs: [...state.inputs, input] })
+    (state, input) => ({ ...state,
+      inputs: [...state.inputs, input],
+      formList: [...state.formList, { id: input.id, field: 'Input'}] })
+  ),
+  on(
+    inputDelete,
+    (state, {id}) => ({ ...state,
+      inputs: [...state.inputs.filter((input) => input.id !== id)],
+      formList: [...state.formList.filter((field) => field.id !== id)]})
   ),
   on(
     selectADD,
-    (state, select) => ({ ...state,  selects: [...state.selects, select] })
+    (state, select) => ({ ...state,  selects: [...state.selects, select],
+      formList: [...state.formList, { id: select.id, field: 'Select'}]})
+  ),
+  on(
+    selectDelete,
+    (state, {id}) => ({ ...state,
+      selects: [...state.selects.filter((select) => select.id !== id)],
+      formList: [...state.formList.filter((field) => field.id !== id)]})
   ),
   on(
     textAreaADD,
-    (state, textArea) => ({ ...state,  textAreas: [...state.textAreas, textArea] })
+    (state, textArea) => ({ ...state,  textAreas: [...state.textAreas, textArea],
+      formList: [...state.formList, { id: textArea.id, field: 'Textarea'}]})
+  ),
+  on(
+    textAreaDelete,
+    (state, {id}) => ({ ...state,
+      textAreas: [...state.textAreas.filter((textArea) => textArea.id !== id)],
+      formList: [...state.formList.filter((field) => field.id !== id)]})
   ),
   on(
     checkBoxADD,
-    (state, checkBox) => ({ ...state,  checkBoxes: [...state.checkBoxes, checkBox] })
+    (state, checkBox) => ({ ...state,  checkBoxes: [...state.checkBoxes, checkBox],
+      formList: [...state.formList, { id: checkBox.id, field: 'Checkbox'}]})
+  ),
+  on(
+    checkBoxDelete,
+    (state, {id}) => ({ ...state,
+      checkBoxes: [...state.checkBoxes.filter((checkBox) => checkBox.id !== id)],
+      formList: [...state.formList.filter((field) => field.id !== id)]})
   ),
   on(
     buttonADD,
-    (state, button) => ({ ...state,  buttons: [...state.buttons, button] })
+    (state, button) => ({ ...state,  buttons: [...state.buttons, button],
+      formList: [...state.formList, { id: button.id, field: 'Button'}]})
+  ),
+  on(
+    buttonDelete,
+    (state, {id}) => ({ ...state,
+      buttons: [...state.buttons.filter((button) => button.id !== id)],
+      formList: [...state.formList.filter((field) => field.id !== id)]})
   ),
   on(
     formStyleADD,

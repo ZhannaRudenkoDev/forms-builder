@@ -5,12 +5,13 @@ import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput, getSelectOptionsById} from "../reducers/form/form.selector";
 import {
-  buttonUpdate,
+  buttonDelete,
+  buttonUpdate, checkBoxDelete,
   checkBoxUpdate,
-  formStyleADD,
+  formStyleADD, inputDelete,
   inputUpdate,
-  selectAddOption,
-  selectUpdate,
+  selectAddOption, selectDelete,
+  selectUpdate, textAreaDelete,
   textAreaUpdate,
 } from "../reducers/form/form.actions";
 
@@ -68,9 +69,6 @@ export class StyleFromComponent implements OnInit {
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
       }
-    this.inputs$.subscribe(item => {
-      console.log(item);
-    })
   }
 
   applyTextAreaStyles() {
@@ -88,6 +86,33 @@ export class StyleFromComponent implements OnInit {
         textAreaCheckRequired: !!this.textAreaControl.get('textAreaCheckRequired')?.value!
       }));
     }
+  }
+
+  deleteInput() {
+    this.store$.dispatch(inputDelete({
+      id: this.fieldOBJ.id
+    }));
+  }
+  deleteSelect() {
+    this.store$.dispatch(selectDelete({
+      id: this.fieldOBJ.id
+    }));
+  }
+  deleteButton() {
+    this.store$.dispatch(buttonDelete({
+      id: this.fieldOBJ.id
+    }));
+  }
+  deleteTextArea() {
+    this.store$.dispatch(textAreaDelete({
+      id: this.fieldOBJ.id
+    }));
+  }
+
+  deleteCheckBox() {
+    this.store$.dispatch(checkBoxDelete({
+      id: this.fieldOBJ.id
+    }));
   }
 
   selectOptions: string[] = [];

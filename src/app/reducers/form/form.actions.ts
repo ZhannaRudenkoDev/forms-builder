@@ -4,12 +4,14 @@ import {
   SelectInterface,
   TextAreaInterface,
   CheckBoxInterface,
-  ButtonInterface, FormStyleInterface
+  ButtonInterface, FormStyleInterface, FieldOBJ
 } from "../../interfaces";
 
 
 export const inputADD = createAction('[FORM].inputADD', props<InputInterface>());
 export const inputUpdate = createAction('[FORM].inputUpdate', props<InputInterface>());
+export const inputDelete = createAction('[FORM].inputDelete', props<{id: string}>());
+
 
 export const selectADD = createAction('[FORM].selectADD', props<SelectInterface>());
 export const selectUpdate = createAction('[FORM].selectUpdate', props<SelectInterface>());
@@ -17,15 +19,23 @@ export const selectAddOption = createAction('[FORM].selectAddOption', props<{
   id: string,
   option: string
 }>());
+export const selectDelete = createAction('[FORM].selectDelete', props<{id: string}>());
+
 
 export const textAreaADD = createAction('[FORM].textAreaADD', props<TextAreaInterface>());
 export const textAreaUpdate = createAction('[FORM].textAreaUpdate', props<TextAreaInterface>());
+export const textAreaDelete = createAction('[FORM].textAreaDelete', props<{id: string}>());
+
 
 export const checkBoxADD = createAction('[FORM].checkBoxADD', props<CheckBoxInterface>());
 export const checkBoxUpdate = createAction('[FORM].checkBoxUpdate', props<CheckBoxInterface>());
+export const checkBoxDelete = createAction('[FORM].checkBoxDelete', props<{id: string}>());
+
 
 export const buttonADD = createAction('[FORM].buttonADD', props<ButtonInterface>());
 export const buttonUpdate = createAction('[FORM].buttonUpdate', props<ButtonInterface>());
+export const buttonDelete = createAction('[FORM].buttonDelete', props<{id: string}>());
+
 
 export const formStyleADD = createAction('[FORM].formStyleADD', props<FormStyleInterface>());
 
