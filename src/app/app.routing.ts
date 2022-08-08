@@ -1,10 +1,10 @@
 import { Routes, RouterModule } from '@angular/router';
+import {BuilderComponent} from "./components/builder/builder.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthGuardService} from "./auth/services/auth-guard.service";
+import {SignUpComponent} from "./auth/sign-up/sign-up.component";
 
-import {BuilderComponent} from "./builder/builder.component";
 
-import {LoginComponent} from "./login/login.component";
-import {SignUpComponent} from "./sign-up/sign-up.component";
-import {AuthGuardService} from "./services/auth-guard.service";
 
 
 const routes: Routes = [

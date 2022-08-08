@@ -5,55 +5,37 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from "../material/material.module";
-import { HeaderComponent } from './header/header.component';
-import { StyleFromComponent } from './style-from/style-from.component';
-import { BuilderComponent } from './builder/builder.component';
-import { FormItemsComponent } from './form-items/form-items.component';
-import { CreatedFormComponent } from './created-form/created-form.component';
+import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { LoginComponent } from './login/login.component';
 import {appRoutingModule} from "./app.routing";
-import { SignUpComponent } from './sign-up/sign-up.component';
-import {AuthenticationService} from "./services/authentication.service";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthInterceptor} from "./intercepters/auth.interceptor";
+import {AuthModule} from "./auth/auth.module";
+import {metaReducers, reducers} from "./store";
+import {FormModule} from "./form-builder-sections/form.module";
+import {ComponentsModule} from "./components/components.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    StyleFromComponent,
-    BuilderComponent,
-    FormItemsComponent,
-    CreatedFormComponent,
-    LoginComponent,
-    SignUpComponent,
   ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         MaterialModule,
+        AuthModule,
         ReactiveFormsModule,
         CommonModule,
+        FormModule,
+        ComponentsModule,
         appRoutingModule,
-        HttpClientModule,
         StoreModule.forRoot(reducers, {metaReducers}),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         FormsModule
     ],
-  providers: [AuthenticationService,
-    {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
-      multi:true
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
