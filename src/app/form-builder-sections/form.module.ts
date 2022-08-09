@@ -5,6 +5,7 @@ import {FormItemsComponent} from "./form-items/form-items.component";
 import {MaterialModule} from "../material/material.module";
 import {CommonModule} from "@angular/common";
 import { PixelPipePipe } from './pipes/pixel-pipe.pipe';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { PixelPipePipe } from './pipes/pixel-pipe.pipe';
     FormItemsComponent,
     CreatedFormComponent,
     PixelPipePipe,
+    DeleteDialogComponent,
   ],
   imports: [
     MaterialModule,
@@ -22,7 +24,9 @@ import { PixelPipePipe } from './pipes/pixel-pipe.pipe';
   exports: [
     CreatedFormComponent,
     StyleFromComponent,
-    FormItemsComponent
-  ]
+    FormItemsComponent,
+    DeleteDialogComponent
+  ],
+  entryComponents: [DeleteDialogComponent]
 })
 export class FormModule { }

@@ -15,6 +15,8 @@ import {
   textAreaUpdate,
 } from "../store/form/form.actions";
 import {FieldElement, FormElement, FormStyle, InputElement} from "../interfaces";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-style-from',
@@ -92,31 +94,122 @@ export class StyleFromComponent implements OnInit {
     }
   }
 
+  /*openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(DeleteDialogComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output:", data)
+    );
+  }*/
+
   deleteInput() {
-    this.store$.dispatch(inputDelete({
-      id: this.fieldOBJ.id
-    }));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data) {
+          this.store$.dispatch(inputDelete({
+            id: this.fieldOBJ.id
+          }));
+          this.inputControl.reset();
+          this.field = '';
+          this.fieldOBJ = {
+            field: '',
+            id: ''
+          }
+        }
+      }
+    );
   }
+
   deleteSelect() {
-    this.store$.dispatch(selectDelete({
-      id: this.fieldOBJ.id
-    }));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data) {
+          this.store$.dispatch(selectDelete({
+            id: this.fieldOBJ.id
+          }));
+          this.selectControl.reset();
+          this.field = '';
+          this.fieldOBJ = {
+            field: '',
+            id: ''
+          }
+        }
+      }
+    );
   }
   deleteButton() {
-    this.store$.dispatch(buttonDelete({
-      id: this.fieldOBJ.id
-    }));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data) {
+          this.store$.dispatch(buttonDelete({
+            id: this.fieldOBJ.id
+          }));
+          this.buttonControl.reset();
+          this.field = '';
+          this.fieldOBJ = {
+            field: '',
+            id: ''
+          }
+        }
+      }
+    );
   }
   deleteTextArea() {
-    this.store$.dispatch(textAreaDelete({
-      id: this.fieldOBJ.id
-    }));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data) {
+          this.store$.dispatch(textAreaDelete({
+            id: this.fieldOBJ.id
+          }));
+          this.textAreaControl.reset();
+          this.field = '';
+          this.fieldOBJ = {
+            field: '',
+            id: ''
+          }
+        }
+      }
+    );
   }
 
   deleteCheckBox() {
-    this.store$.dispatch(checkBoxDelete({
-      id: this.fieldOBJ.id
-    }));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if(data) {
+          this.store$.dispatch(checkBoxDelete({
+            id: this.fieldOBJ.id
+          }));
+          this.checkBoxControl.reset();
+          this.field = '';
+          this.fieldOBJ = {
+            field: '',
+            id: ''
+          }
+        }
+      }
+    );
   }
 
   selectOptions: string[] = [];
@@ -345,7 +438,8 @@ export class StyleFromComponent implements OnInit {
     return this.textAreaControl.get('textAreaColor');
   }
 
-  constructor(private store$: Store<FormElement>) { }
+  constructor(private store$: Store<FormElement>,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     console.log("Style component");
@@ -371,7 +465,7 @@ export class StyleFromComponent implements OnInit {
 function ValidatePxWidth(control: AbstractControl): {[key: string]: any} | null  {
   const value = parseInt(control.value.substring(0, control.value.length - 2));
   const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (value < 0 || value > 390 || pxValue !== 'px') {
+  if (control.value && (value < 0 || value > 390 || pxValue !== 'px')) {
     return { 'validatePxInvalid': true };
   } else {
     return null;
@@ -380,7 +474,7 @@ function ValidatePxWidth(control: AbstractControl): {[key: string]: any} | null 
 function ValidatePxHeight(control: AbstractControl): {[key: string]: any} | null  {
   const value = parseInt(control.value.substring(0, control.value.length - 2));
   const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (value < 10 || value > 70 || pxValue !== 'px') {
+  if (control.value && (value < 10 || value > 70 || pxValue !== 'px')) {
     return { 'validatePxInvalid': true };
   } else {
     return null;
@@ -389,7 +483,7 @@ function ValidatePxHeight(control: AbstractControl): {[key: string]: any} | null
 function ValidatePxFont(control: AbstractControl): {[key: string]: any} | null  {
   const value = parseInt(control.value.substring(0, control.value.length - 2));
   const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (value < 5 || value > 30 || pxValue !== 'px') {
+  if (control.value && (value < 5 || value > 30 || pxValue !== 'px')) {
     return { 'validatePxInvalid': true };
   } else {
     return null;
