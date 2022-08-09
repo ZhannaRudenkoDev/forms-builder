@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray} from "@angular/cdk/drag-drop";
 import {v4 as uuidv4} from 'uuid';
 import {Observable} from "rxjs";
@@ -33,7 +33,7 @@ import {
 @Component({
   selector: 'app-created-form',
   templateUrl: './created-form.component.html',
-  styleUrls: ['./created-form.component.scss']
+  styleUrls: ['./created-form.component.scss'],
 })
 
 export class CreatedFormComponent implements OnInit {

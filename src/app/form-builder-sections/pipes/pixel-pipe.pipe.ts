@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PixelPipePipe implements PipeTransform {
   transform(value: string): string {
-    if(!value.includes('px')) {
+    if(value && !value.includes('px')) {
       return value + 'px';
     } else {
       return value;

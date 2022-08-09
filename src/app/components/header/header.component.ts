@@ -30,10 +30,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
-      this.authService.logIn().subscribe(users => {
-        const user: User = users.find((user: User) => {
-          return user.token === localStorage.getItem('token');
-        });
+      this.authService.logInWithToken().subscribe(user => {
         console.log(user);
         if (user) {
           this.store$.dispatch(setUser(user));

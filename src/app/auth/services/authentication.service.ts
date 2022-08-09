@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {filter, map, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../models/user";
 import {Router} from "@angular/router";
@@ -14,8 +14,29 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  logIn(): Observable<any> {
-    return this.http.get<User>('http://localhost:3000/users');
+  logIn(email: string, password: string): Observable<User> {
+    return this.http.get<any>('http://localhost:3000/users').pipe(
+      map(users => {
+        return users.find((user: User) => {
+          return user.email === email && user.password === password;
+        });
+      }),
+      tap(user => {
+        if(user) {
+          localStorage.setItem('token', user.token!);
+        }
+      })
+    )
+  }
+
+  logInWithToken(): Observable<User> {
+    return this.http.get<any>('http://localhost:3000/users').pipe(
+      map(users => {
+        return users.find((user: User) => {
+          return user.token === localStorage.getItem('token');
+        });
+      })
+    );
   }
 
   signUp(user: User): Observable<User> {

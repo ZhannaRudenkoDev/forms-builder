@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, forwardRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
@@ -6,12 +6,16 @@ import {createFormStyle, createInput, getSelectOptionsById} from "../store/form/
 
 import {
   buttonDelete,
-  buttonUpdate, checkBoxDelete,
+  buttonUpdate,
+  checkBoxDelete,
   checkBoxUpdate,
-  formStyleAdd, inputDelete,
+  formStyleAdd,
+  inputDelete,
   inputUpdate,
-  selectAddOption, selectDelete,
-  selectUpdate, textAreaDelete,
+  selectAddOption,
+  selectDelete,
+  selectUpdate,
+  textAreaDelete,
   textAreaUpdate,
 } from "../store/form/form.actions";
 import {FieldElement, FormElement, FormStyle, InputElement} from "../interfaces";
@@ -28,7 +32,8 @@ import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
       multi: true,
       useExisting: forwardRef(() => StyleFromComponent),
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StyleFromComponent implements OnInit {
 
@@ -93,21 +98,6 @@ export class StyleFromComponent implements OnInit {
       }));
     }
   }
-
-  /*openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    this.dialog.open(DeleteDialogComponent, dialogConfig);
-
-    const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output:", data)
-    );
-  }*/
 
   deleteInput() {
     const dialogConfig = new MatDialogConfig();

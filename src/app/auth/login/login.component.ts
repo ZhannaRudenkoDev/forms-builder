@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {setUser} from "../store/user/user.actions";
 import {getUsers} from "../store/user/user.selector";
+import {map, tap} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -28,15 +29,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if(this.userLogin.valid) {
-      this.authService.logIn().subscribe(users => {
-        const user = users.find((user: User) => {
-          return user.email === this.userLogin.value.email && user.password === this.userLogin.value.password;
-        });
+      this.authService.logIn( this.userLogin.value.email!, this.userLogin.value.password!)
+        .subscribe(user => {
         if(user) {
           this.success = true;
-          localStorage.setItem('token', user.token);
           this.store$.dispatch(setUser(user));
-          this.store$.pipe(select(getUsers)).subscribe(users => console.log(users))
           this.router.navigate(['/'])
         } else {
           this.errMessage = "Can't find the user"
