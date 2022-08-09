@@ -4,6 +4,7 @@ import {CreatedFormComponent} from "./created-form/created-form.component";
 import {FormItemsComponent} from "./form-items/form-items.component";
 import {MaterialModule} from "../material/material.module";
 import {CommonModule} from "@angular/common";
+import { PixelPipePipe } from './pipes/pixel-pipe.pipe';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import {CommonModule} from "@angular/common";
     StyleFromComponent,
     FormItemsComponent,
     CreatedFormComponent,
+    PixelPipePipe,
   ],
   imports: [
     MaterialModule,

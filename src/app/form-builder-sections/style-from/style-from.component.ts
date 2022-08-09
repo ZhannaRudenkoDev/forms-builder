@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, forwardRef} from '@angular/core';
-import {FormControl, FormGroup,NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput, getSelectOptionsById} from "../store/form/form.selector";
@@ -61,15 +61,18 @@ export class StyleFromComponent implements OnInit {
         id: this.fieldOBJ.id,
         inputLabel: this.inputControl.get('inputLabel')?.value!,
         inputPlaceholder: this.inputControl.get('inputPlaceholder')?.value!,
-        inputWidth: this.inputControl.get('inputWidth')?.value! + 'px',
-        inputHeight: this.inputControl.get('inputHeight')?.value! + 'px',
-        inputFontSize: this.inputControl.get('inputFontSize')?.value! + 'px',
+        inputWidth: this.inputControl.get('inputWidth')?.value!,
+        inputHeight: this.inputControl.get('inputHeight')?.value!,
+        inputFontSize: this.inputControl.get('inputFontSize')?.value!,
         inputFontWeight: this.inputControl.get('inputFontSize')?.value!,
         inputColor: this.inputControl.get('inputColor')?.value!,
         inputBorderType: this.inputControl.get('inputBorderType')?.value!,
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
       }
+    this.inputs$.subscribe(item => {
+      console.log(item);
+    })
   }
 
   applyTextAreaStyles() {
@@ -78,9 +81,9 @@ export class StyleFromComponent implements OnInit {
         id: this.fieldOBJ.id,
         textAreaLabel: this.textAreaControl.get('textAreaLabel')?.value!,
         textAreaPlaceholder: this.textAreaControl.get('textAreaPlaceholder')?.value!,
-        textAreaWidth: this.textAreaControl.get('textAreaWidth')?.value! + 'px',
-        textAreaHeight: this.textAreaControl.get('textAreaHeight')?.value! + 'px',
-        textAreaFontSize: this.textAreaControl.get('textAreaFontSize')?.value! + 'px',
+        textAreaWidth: this.textAreaControl.get('textAreaWidth')?.value!,
+        textAreaHeight: this.textAreaControl.get('textAreaHeight')?.value!,
+        textAreaFontSize: this.textAreaControl.get('textAreaFontSize')?.value!,
         textAreaFontWeight: this.textAreaControl.get('textAreaFontWeight')?.value!,
         textAreaColor:  this.textAreaControl.get('textAreaColor')?.value!,
         textAreaBorderType: this.textAreaControl.get('textAreaBorderType')?.value!,
@@ -126,9 +129,9 @@ export class StyleFromComponent implements OnInit {
       this.store$.dispatch(selectUpdate({
         id: this.fieldOBJ.id,
         selectLabel: this.selectControl.get('selectLabel')?.value!,
-        selectWidth: this.selectControl.get('selectWidth')?.value! + 'px',
-        selectHeight: this.selectControl.get('selectHeight')?.value! + 'px',
-        selectFontSize: this.selectControl.get('selectFontSize')?.value! + 'px',
+        selectWidth: this.selectControl.get('selectWidth')?.value!,
+        selectHeight: this.selectControl.get('selectHeight')?.value!,
+        selectFontSize: this.selectControl.get('selectFontSize')?.value!,
         selectFontWeight: this.selectControl.get('selectFontWeight')?.value!,
         selectColor: this.selectControl.get('selectColor')?.value!,
         selectBorderType: this.selectControl.get('selectBorderType')?.value!,
@@ -143,9 +146,9 @@ export class StyleFromComponent implements OnInit {
       this.store$.dispatch(buttonUpdate({
         id: this.fieldOBJ.id,
         buttonLabel: this.buttonControl.get('buttonLabel')?.value!,
-        buttonWidth: this.buttonControl.get('buttonWidth')?.value! + 'px',
-        buttonHeight: this.buttonControl.get('buttonHeight')?.value! + 'px',
-        buttonFontSize: this.buttonControl.get('buttonFontSize')?.value! + 'px',
+        buttonWidth: this.buttonControl.get('buttonWidth')?.value!,
+        buttonHeight: this.buttonControl.get('buttonHeight')?.value!,
+        buttonFontSize: this.buttonControl.get('buttonFontSize')?.value!,
         buttonFontWeight: this.buttonControl.get('buttonFontWeight')?.value!,
         buttonColor: this.buttonControl.get('buttonColor')?.value!,
         buttonColorBackground: this.buttonControl.get('buttonColorBackground')?.value!,
@@ -160,7 +163,7 @@ export class StyleFromComponent implements OnInit {
       this.store$.dispatch(checkBoxUpdate({
         id: this.fieldOBJ.id,
         checkBoxLabel: this.checkBoxControl.get('checkBoxLabel')?.value!,
-        checkBoxFontSize: this.checkBoxControl.get('checkBoxFontSize')?.value! + 'px',
+        checkBoxFontSize: this.checkBoxControl.get('checkBoxFontSize')?.value!,
         checkBoxFontWeight: this.checkBoxControl.get('checkBoxFontWeight')?.value!,
         checkBoxColor: this.checkBoxControl.get('checkBoxColor')?.value!,
         checkBoxCheckRequired: !!this.checkBoxControl.get('checkBoxCheckRequired')?.value!,
@@ -197,9 +200,9 @@ export class StyleFromComponent implements OnInit {
   inputControl = new FormGroup({
     'inputLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
     'inputPlaceholder': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'inputWidth': new FormControl('', [Validators.min(10), Validators.max(390)]),
-    'inputHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
-    'inputFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'inputWidth': new FormControl('', ValidatePxWidth),
+    'inputHeight': new FormControl('', ValidatePxHeight),
+    'inputFontSize': new FormControl('', ValidatePxFont),
     'inputFontWeight': new FormControl(''),
     'inputColor': new FormControl(''),
     'inputBorderType': new FormControl(''),
@@ -209,9 +212,9 @@ export class StyleFromComponent implements OnInit {
   textAreaControl = new FormGroup({
     'textAreaLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
     'textAreaPlaceholder': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'textAreaWidth': new FormControl('', [Validators.min(10), Validators.max(390)]),
-    'textAreaHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
-    'textAreaFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'textAreaWidth': new FormControl('', ValidatePxWidth),
+    'textAreaHeight': new FormControl('', ValidatePxHeight),
+    'textAreaFontSize': new FormControl('', ValidatePxFont),
     'textAreaFontWeight': new FormControl(''),
     'textAreaColor': new FormControl(''),
     'textAreaBorderType': new FormControl(''),
@@ -221,9 +224,9 @@ export class StyleFromComponent implements OnInit {
 
   selectControl = new FormGroup({
     'selectLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'selectWidth': new FormControl('', [Validators.min(10), Validators.max(390)]),
-    'selectHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
-    'selectFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'selectWidth': new FormControl('', ValidatePxWidth),
+    'selectHeight': new FormControl('', ValidatePxHeight),
+    'selectFontSize': new FormControl('', ValidatePxFont),
     'selectFontWeight': new FormControl(''),
     'selectColor': new FormControl(''),
     'selectBorderType': new FormControl(''),
@@ -233,9 +236,9 @@ export class StyleFromComponent implements OnInit {
 
   buttonControl = new FormGroup({
     'buttonLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'buttonWidth': new FormControl('', [Validators.min(10), Validators.max(390)]),
-    'buttonHeight': new FormControl('', [Validators.min(10), Validators.max(100)]),
-    'buttonFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'buttonWidth': new FormControl('', ValidatePxWidth),
+    'buttonHeight': new FormControl('', ValidatePxHeight),
+    'buttonFontSize': new FormControl('', ValidatePxFont),
     'buttonFontWeight': new FormControl(''),
     'buttonColor': new FormControl(''),
     'buttonColorBackground': new FormControl(''),
@@ -245,7 +248,7 @@ export class StyleFromComponent implements OnInit {
 
   checkBoxControl = new FormGroup({
     'checkBoxLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'checkBoxFontSize': new FormControl('', [Validators.min(10), Validators.max(100)]),
+    'checkBoxFontSize': new FormControl('', ValidatePxFont),
     'checkBoxFontWeight': new FormControl(''),
     'checkBoxColor': new FormControl(''),
     'checkBoxCheckRequired': new FormControl(''),
@@ -363,4 +366,32 @@ export class StyleFromComponent implements OnInit {
     return this.formGeneral.get('borderColorRGB');
   }
 
+}
+
+function ValidatePxWidth(control: AbstractControl): {[key: string]: any} | null  {
+  const value = parseInt(control.value.substring(0, control.value.length - 2));
+  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
+  if (value < 0 || value > 390 || pxValue !== 'px') {
+    return { 'validatePxInvalid': true };
+  } else {
+    return null;
+  }
+}
+function ValidatePxHeight(control: AbstractControl): {[key: string]: any} | null  {
+  const value = parseInt(control.value.substring(0, control.value.length - 2));
+  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
+  if (value < 10 || value > 70 || pxValue !== 'px') {
+    return { 'validatePxInvalid': true };
+  } else {
+    return null;
+  }
+}
+function ValidatePxFont(control: AbstractControl): {[key: string]: any} | null  {
+  const value = parseInt(control.value.substring(0, control.value.length - 2));
+  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
+  if (value < 5 || value > 30 || pxValue !== 'px') {
+    return { 'validatePxInvalid': true };
+  } else {
+    return null;
+  }
 }

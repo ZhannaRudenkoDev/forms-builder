@@ -72,19 +72,27 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Width</mat-label>
-              <input formControlName="inputWidth" matInput type="number" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <!--  [value]="this.inputControl.get('inputWidth')?.value! | pixelPipe"-->
+              <input formControlName="inputWidth"
+                     [value]="this.inputControl.get('inputWidth')?.value! | pixelPipe"
+                     matInput type="text" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="inputWidth && inputWidth.invalid && inputWidth.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Height</mat-label>
-              <input formControlName="inputHeight" matInput type="number" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input
+                formControlName="inputHeight"
+                [value]="this.inputControl.get('inputHeight')?.value! | pixelPipe"
+                matInput type="text" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="inputHeight && inputHeight.invalid && inputHeight.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
-              <input formControlName="inputFontSize" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="inputFontSize"
+                     [value]="this.inputControl.get('inputFontSize')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="inputFontSize && inputFontSize.invalid && inputFontSize.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
@@ -131,19 +139,25 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Width</mat-label>
-              <input formControlName="textAreaWidth" matInput type="number" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="textAreaWidth"
+                     [value]="this.textAreaControl.get('textAreaWidth')?.value! | pixelPipe"
+                     matInput type="text" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="textAreaWidth && textAreaWidth.invalid && textAreaWidth.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Height</mat-label>
-              <input formControlName="textAreaHeight" matInput type="number" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="textAreaHeight"
+                     [value]="this.textAreaControl.get('textAreaHeight')?.value! | pixelPipe"
+                     matInput type="text" placeholder="10" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="textAreaHeight && textAreaHeight.invalid && textAreaHeight.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
-              <input formControlName="textAreaFontSize" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="textAreaFontSize"
+                     [value]="this.textAreaControl.get('textAreaFontSize')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="textAreaFontSize && textAreaFontSize.invalid && textAreaFontSize.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
@@ -185,19 +199,25 @@
           <div class="example-accordion-item-body-wrapper-options" [formGroup]="selectControl">
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Width</mat-label>
-              <input formControlName="selectWidth" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="selectWidth"
+                     [value]="this.selectControl.get('selectWidth')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="selectWidth && selectWidth.invalid && selectWidth.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Height</mat-label>
-              <input formControlName="selectHeight" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="selectHeight"
+                     [value]="this.selectControl.get('selectHeight')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="selectHeight && selectHeight.invalid && selectHeight.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
-              <input formControlName="selectFontSize" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="selectFontSize"
+                     [value]="this.selectControl.get('selectFontSize')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="selectFontSize && selectFontSize.invalid && selectFontSize.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
@@ -247,19 +267,25 @@
           <div class="example-accordion-item-body-wrapper-options">
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Width</mat-label>
-              <input formControlName="buttonWidth" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="buttonWidth"
+                     [value]="this.buttonControl.get('buttonWidth')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="buttonWidth && buttonWidth.invalid && buttonWidth.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Height</mat-label>
-              <input formControlName="buttonHeight" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="buttonHeight"
+                     [value]="this.buttonControl.get('buttonHeight')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="buttonHeight && buttonHeight.invalid && buttonHeight.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
-              <input formControlName="buttonFontSize" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="buttonFontSize"
+                     [value]="this.buttonControl.get('buttonFontSize')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="buttonFontSize && buttonFontSize.invalid && buttonFontSize.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
@@ -311,7 +337,9 @@
           <div class="example-accordion-item-body-wrapper-options">
             <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">
               <mat-label class = "example-accordion-item-body-wrapper-option-label">Font size</mat-label>
-              <input formControlName="checkBoxFontSize" matInput type="number" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
+              <input formControlName="checkBoxFontSize"
+                     [value]="this.checkBoxControl.get('checkBoxFontSize')?.value! | pixelPipe"
+                     matInput type="text" placeholder="1" min="10" class = "example-accordion-item-body-wrapper-option-input">
               <span matSuffix class = "example-accordion-item-body-wrapper-option-suffix">px</span>
               <small *ngIf="checkBoxFontSize && checkBoxFontSize.invalid && checkBoxFontSize.touched" style="color: darkred">Invalid</small>
             </mat-form-field>
