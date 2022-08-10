@@ -28,6 +28,7 @@ import {
   SelectElement,
   TextAreaElement
 } from "../interfaces";
+import {Fields} from "../enums";
 
 
 @Component({
@@ -213,7 +214,7 @@ export class CreatedFormComponent implements OnInit {
     }
 
 
-    if(addField.field === 'Input') {
+    if(addField.field === Fields.input) {
       this.store$.dispatch(inputAdd({
         id: addField.id,
         inputLabel: 'Input label',
@@ -222,25 +223,25 @@ export class CreatedFormComponent implements OnInit {
       this.inputs$.subscribe(item => {
         console.log(item);
       })
-    } else if(addField.field === 'Select') {
+    } else if(addField.field === Fields.select) {
       this.store$.dispatch(selectAdd({
         id: addField.id,
         selectLabel: 'Select',
         selectAddOption: []
       }));
-    } else if(addField.field === 'Textarea') {
+    } else if(addField.field === Fields.textArea) {
       this.store$.dispatch(textAreaAdd({
         id: addField.id,
         textAreaLabel: 'Textarea',
         textAreaPlaceholder: 'Input placeholder'
       }));
-    } else if(addField.field === 'Checkbox') {
+    } else if(addField.field === Fields.checkBox) {
       this.store$.dispatch(checkBoxAdd({
         id: addField.id,
         checkBoxLabel: 'label',
         checkBoxTitle: 'CheckBox Title'
       }));
-    } else if(addField.field === 'Button') {
+    } else if(addField.field === Fields.button) {
       this.store$.dispatch(buttonAdd({
         id: addField.id,
         buttonLabel: 'Button label',
