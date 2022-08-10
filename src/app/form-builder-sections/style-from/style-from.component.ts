@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {Observable} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {select, Store} from "@ngrx/store";
 import {createFormStyle, createInput, getSelectOptionsById} from "../store/form/form.selector";
 
@@ -35,15 +35,12 @@ import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StyleFromComponent implements OnInit {
+export class StyleFromComponent implements OnInit, OnDestroy {
 
   items = ['Form General Styles', 'Field Styles'];
-  public form$: Observable<FormStyle> = this.store$.pipe(select(createFormStyle));
-  public inputs$: Observable<InputElement[]> = this.store$.pipe(select(createInput));
-
-
   expandedIndex = 0;
 
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   @Input() field = '';
 
@@ -77,9 +74,6 @@ export class StyleFromComponent implements OnInit {
         inputCheckRequired: !!this.inputControl.get('inputCheckRequired')?.value!
       }));
       }
-    this.inputs$.subscribe(item => {
-      console.log(item);
-    })
   }
 
   applyTextAreaStyles() {
@@ -103,7 +97,9 @@ export class StyleFromComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       data => {
         if(data) {
           this.store$.dispatch(inputDelete({
@@ -124,7 +120,9 @@ export class StyleFromComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       data => {
         if(data) {
           this.store$.dispatch(selectDelete({
@@ -144,7 +142,9 @@ export class StyleFromComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       data => {
         if(data) {
           this.store$.dispatch(buttonDelete({
@@ -164,7 +164,9 @@ export class StyleFromComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       data => {
         if(data) {
           this.store$.dispatch(textAreaDelete({
@@ -185,7 +187,9 @@ export class StyleFromComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(DeleteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       data => {
         if(data) {
           this.store$.dispatch(checkBoxDelete({
@@ -206,7 +210,9 @@ export class StyleFromComponent implements OnInit {
 
   applySelectStyles() {
     if(this.selectControl.valid) {
-      this.store$.pipe(select(getSelectOptionsById(this.fieldOBJ.id))).subscribe(items => {
+      this.store$.pipe(select(getSelectOptionsById(this.fieldOBJ.id)),
+        takeUntil(this.destroy$))
+        .subscribe(items => {
        this.selectOptions = items;
       })
       this.store$.dispatch(selectUpdate({
@@ -275,9 +281,6 @@ export class StyleFromComponent implements OnInit {
         borderColorRGB: this.formGeneral.get('borderColorRGB')?.value!,
       }));
     }
-    this.form$.subscribe(value => {
-      console.log(value);
-    })
   }
 
   inputControl = new FormGroup({
@@ -434,6 +437,11 @@ export class StyleFromComponent implements OnInit {
   ngOnInit(): void {
     console.log("Style component");
     console.log(this.fieldOBJ);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
   get formLabel() {
     return this.formGeneral.get('formLabel');

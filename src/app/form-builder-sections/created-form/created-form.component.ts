@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CdkDragDrop, copyArrayItem, moveItemInArray} from "@angular/cdk/drag-drop";
 import {v4 as uuidv4} from 'uuid';
-import {Observable} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {select, Store} from "@ngrx/store";
 
 import {
@@ -37,17 +37,23 @@ import {Fields} from "../enums";
   styleUrls: ['./created-form.component.scss'],
 })
 
-export class CreatedFormComponent implements OnInit {
+export class CreatedFormComponent implements OnInit, OnDestroy {
 
   fields: string[] = [];
   fieldObj: FieldElement[] = [];
 
-  public inputs$: Observable<InputElement[]> = this.store$.pipe(select(createInput));
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+
+  /*public inputs$: Observable<InputElement[]> = this.store$.pipe(select(createInput));
   public selects$: Observable<SelectElement[]> = this.store$.pipe(select(createSelect));
   public textArea$: Observable<TextAreaElement[]> = this.store$.pipe(select(createTextArea));
-  public checkbox$: Observable<CheckBoxElement[]> = this.store$.pipe(select(createCheckBoxes));
-  public form$: Observable<FormStyle> = this.store$.pipe(select(createFormStyle));
-  public formList$: Observable<FieldElement[]> = this.store$.pipe(select(createFormList));
+  public checkbox$: Observable<CheckBoxElement[]> = this.store$.pipe(select(createCheckBoxes));*/
+
+  public form$: Observable<FormStyle> = this.store$.pipe(select(createFormStyle),
+                                                          takeUntil(this.destroy$));
+  public formList$: Observable<FieldElement[]> = this.store$.pipe(select(createFormList),
+                                                            takeUntil(this.destroy$));
 
 
   public formStyles: FormStyle = {formLabel: "Form label"};
@@ -55,7 +61,9 @@ export class CreatedFormComponent implements OnInit {
   @Output() fieldStyleEvent = new EventEmitter<FieldElement>();
 
   getSelectOptions(id: string) {
-    return this.store$.pipe(select(getSelectOptionsById(id)));
+    return this.store$.pipe(
+      select(getSelectOptionsById(id)),
+      takeUntil(this.destroy$));
   }
 
   getInputStyle(id: string, type: string) {
@@ -64,6 +72,7 @@ export class CreatedFormComponent implements OnInit {
     let placeholderText: string = '';
     let requireStyle: boolean = false;
     this.store$.select(getInputById(id))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
         inputStyle = 'width: ' + item?.inputWidth + '; height: ' + item?.inputHeight +
                      '; border-style: ' + item?.inputBorderType + '; color: ' + item?.inputColor +
@@ -90,6 +99,7 @@ export class CreatedFormComponent implements OnInit {
     let labelStyle: string = '';
     let requireStyle: boolean = false;
     this.store$.select(getSelectById(id))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
         selectStyle = 'width: ' + item?.selectWidth + '; height: ' + item?.selectHeight +
           '; border-style: ' + item?.selectBorderType + '; background-color: ' + item?.selectColor +
@@ -116,6 +126,7 @@ export class CreatedFormComponent implements OnInit {
     let placeholderText: string = '';
     let requireStyle: boolean = false;
     this.store$.select(getTextAreaById(id))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
         textAreaStyle = 'width: ' + item?.textAreaWidth + '; height: ' + item?.textAreaHeight +
           '; border-style: ' + item?.textAreaBorderType + '; color: ' + item?.textAreaColor +
@@ -141,6 +152,7 @@ export class CreatedFormComponent implements OnInit {
     let labelText: string = '';
     let requireStyle: boolean = false;
     this.store$.select(getButtonById(id))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
         buttonStyle = 'width: ' + item?.buttonWidth + '; height: ' + item?.buttonHeight +
           '; border-style: ' + item?.buttonBorderType + '; color: ' + item?.buttonColor +
@@ -165,6 +177,7 @@ export class CreatedFormComponent implements OnInit {
     let titleText: string = '';
     let requireStyle: boolean = false;
     this.store$.select(getCheckBoxById(id))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
         checkBoxStyle = 'color: ' + item?.checkBoxColor +
           '; font-size: ' + item?.checkBoxFontSize + '; font-weight: ' + item?.checkBoxFontWeight;
@@ -220,9 +233,6 @@ export class CreatedFormComponent implements OnInit {
         inputLabel: 'Input label',
         inputPlaceholder: 'Input placeholder'
       }));
-      this.inputs$.subscribe(item => {
-        console.log(item);
-      })
     } else if(addField.field === Fields.select) {
       this.store$.dispatch(selectAdd({
         id: addField.id,
@@ -252,8 +262,14 @@ export class CreatedFormComponent implements OnInit {
 
   constructor(private store$: Store<FormElement>) { }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.form$.subscribe(value => {
+    this.form$
+      .subscribe(value => {
       this.formStyles = value;
     })
   }

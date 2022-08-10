@@ -6,6 +6,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {MaterialModule} from "../material/material.module";
 import {RouterModule} from "@angular/router";
+import {EffectsModule} from "@ngrx/effects";
+import {AuthEffects} from "./store/auth.effects";
 
 @NgModule({
   declarations: [
@@ -15,7 +17,7 @@ import {RouterModule} from "@angular/router";
   imports: [
     HttpClientModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [AuthenticationService,
     {

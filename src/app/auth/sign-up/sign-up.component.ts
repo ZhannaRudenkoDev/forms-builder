@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication.service";
 import {v4 as uuidv4} from 'uuid';
 import {Router} from "@angular/router";
+import {Subject, takeUntil} from "rxjs";
 
 
 @Component({
@@ -10,10 +11,12 @@ import {Router} from "@angular/router";
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
 
   success = false;
-  errMessage = ''
+  errMessage = '';
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
 
   userSignUp= new FormGroup({
     'username': new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -31,7 +34,9 @@ export class SignUpComponent implements OnInit {
         email: this.userSignUp.get('email')?.value!,
         password: this.userSignUp.get('password')?.value!,
         token: uuidv4(),
-      }).subscribe({
+      })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
         next: () => {
           this.success = true
           this.router.navigate(['/log-in']);
@@ -46,6 +51,11 @@ export class SignUpComponent implements OnInit {
     } else {
       this.errMessage = 'Please enter valid values'
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   ngOnInit(): void {

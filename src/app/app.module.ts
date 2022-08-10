@@ -15,6 +15,8 @@ import {AuthModule} from "./auth/auth.module";
 import {metaReducers, reducers} from "./store";
 import {FormModule} from "./form-builder-sections/form.module";
 import {ComponentsModule} from "./components/components.module";
+import {EffectsModule} from "@ngrx/effects";
+import {AuthEffects} from "./auth/store/auth.effects";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {ComponentsModule} from "./components/components.module";
         ComponentsModule,
         appRoutingModule,
         StoreModule.forRoot(reducers, {metaReducers}),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([ AuthEffects ]),
+      !environment.production ? StoreDevtoolsModule.instrument() : [],
         FormsModule
     ],
   providers: [],
