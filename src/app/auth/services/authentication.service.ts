@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {filter, map, Observable, tap} from "rxjs";
+import {concatMap, filter, flatMap, map, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../models/user";
 import {Router} from "@angular/router";
@@ -26,19 +26,14 @@ export class AuthenticationService {
         if(user) {
           localStorage.setItem('token', user.token!);
         }
-      })
+      }),
     )
   }
 
-
-
   logInWithToken(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/users').pipe(
-      map(users => {
-        return users.find((user: User) => {
-          return user.token === localStorage.getItem('token');
-        });
-      })
+      concatMap((users:User[])=> users),
+      filter(user => user.token === localStorage.getItem('token'))
     );
   }
 

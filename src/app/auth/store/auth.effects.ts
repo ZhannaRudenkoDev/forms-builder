@@ -43,11 +43,10 @@ export class AuthEffects {
     })
   ));
 
-
-
   constructor(
     private actions$: Actions,
     private authService: AuthenticationService,
+
     private router: Router
   ) {}
 }

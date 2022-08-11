@@ -28,7 +28,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
       this.authService.logInWithToken()
-        .pipe(takeUntil(this.destroy$))
+        .pipe(
+          takeUntil(this.destroy$)
+        )
         .subscribe(user => {
         if (user) {
           this.store$.dispatch(setUserWithToken({...user}));
