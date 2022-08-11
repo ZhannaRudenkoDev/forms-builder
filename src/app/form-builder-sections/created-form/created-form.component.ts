@@ -44,7 +44,6 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-
   /*public inputs$: Observable<InputElement[]> = this.store$.pipe(select(createInput));
   public selects$: Observable<SelectElement[]> = this.store$.pipe(select(createSelect));
   public textArea$: Observable<TextAreaElement[]> = this.store$.pipe(select(createTextArea));

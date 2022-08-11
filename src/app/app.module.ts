@@ -34,7 +34,7 @@ import {AuthEffects} from "./auth/store/auth.effects";
         ComponentsModule,
         appRoutingModule,
         StoreModule.forRoot(reducers, {metaReducers}),
-        EffectsModule.forRoot([ AuthEffects ]),
+        EffectsModule.forRoot([AuthEffects]),
       !environment.production ? StoreDevtoolsModule.instrument() : [],
         FormsModule
     ],

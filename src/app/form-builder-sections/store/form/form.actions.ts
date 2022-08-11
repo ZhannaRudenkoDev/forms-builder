@@ -8,7 +8,6 @@ import {
   TextAreaElement
 } from "../../interfaces";
 
-
 export const inputAdd = createAction('[FORM].inputADD', props<InputElement>());
 export const inputUpdate = createAction('[FORM].inputUpdate', props<InputElement>());
 export const inputDelete = createAction('[FORM].inputDelete', props<{id: string}>());

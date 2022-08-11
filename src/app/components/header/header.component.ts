@@ -3,8 +3,8 @@ import {select, Store} from "@ngrx/store";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../auth/services/authentication.service";
 import {User} from "../../auth/models/user";
-import {getUser} from "../../auth/store/user/user.selector";
-import {setUser} from "../../auth/store/user/user.actions";
+import {getUser, getUsers} from "../../auth/store/user/user.selector";
+import {removeUser, setUser, setUserWithToken} from "../../auth/store/user/user.actions";
 
 @Component({
   selector: 'app-header',
@@ -13,8 +13,8 @@ import {setUser} from "../../auth/store/user/user.actions";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public userName$: Observable<string>  = this.store$.pipe(select(getUser));
   destroy$: Subject<boolean> = new Subject<boolean>();
+  public userName$: Observable<string>  = this.store$.pipe(select(getUser), takeUntil(this.destroy$));
 
 
   constructor(private authService: AuthenticationService,
@@ -22,12 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logOut() {
     this.authService.logout()
-    this.store$.dispatch(setUser({
-      username: 'user',
-      email: '',
-      password: '',
-      token: ''
-    }));
+    this.store$.dispatch(removeUser());
   }
 
   ngOnInit(): void {
@@ -35,9 +30,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.authService.logInWithToken()
         .pipe(takeUntil(this.destroy$))
         .subscribe(user => {
-        console.log(user);
         if (user) {
-          this.store$.dispatch(setUser(user));
+          this.store$.dispatch(setUserWithToken({...user}));
+          this.store$.pipe(select(getUsers)).subscribe(item => console.log(item));
         }
       })
     }

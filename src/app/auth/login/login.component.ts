@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {setUser} from "../store/user/user.actions";
 import {getUsers} from "../store/user/user.selector";
-import {map, Subject, takeUntil, tap} from "rxjs";
+import {filter, from, map, Subject, takeUntil, tap} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   success = false;
   errMessage = '';
   destroy$: Subject<boolean> = new Subject<boolean>();
-
 
   constructor(private authService: AuthenticationService,
               private router: Router,
@@ -36,8 +35,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe(user => {
         if(user) {
           this.success = true;
-          this.store$.dispatch(setUser(user));
-          //this.store$.pipe(select(getUsers)).subscribe(item => console.log(item));
+          this.store$.dispatch(setUser({...user}));
+          this.store$.pipe(select(getUsers)).subscribe(item => console.log(item));
           this.router.navigate(['/'])
         } else {
           this.errMessage = "Can't find the user"

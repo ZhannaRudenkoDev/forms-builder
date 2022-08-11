@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {Subject, takeUntil} from "rxjs";
 import {select, Store} from "@ngrx/store";
-import {createFormStyle, createInput, getSelectOptionsById} from "../store/form/form.selector";
+import {getSelectOptionsById} from "../store/form/form.selector";
 
 import {
   buttonDelete,
@@ -21,6 +21,7 @@ import {
 import {FieldElement, FormElement, FormStyle, InputElement} from "../interfaces";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
+import {ValidatePxFont, ValidatePxHeight, ValidatePxWidth} from "../validate.func";
 
 @Component({
   selector: 'app-style-from',
@@ -460,30 +461,4 @@ export class StyleFromComponent implements OnInit, OnDestroy {
 
 }
 
-function ValidatePxWidth(control: AbstractControl): {[key: string]: any} | null  {
-  const value = parseInt(control.value.substring(0, control.value.length - 2));
-  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (control.value && (value < 0 || value > 390 || pxValue !== 'px')) {
-    return { 'validatePxInvalid': true };
-  } else {
-    return null;
-  }
-}
-function ValidatePxHeight(control: AbstractControl): {[key: string]: any} | null  {
-  const value = parseInt(control.value.substring(0, control.value.length - 2));
-  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (control.value && (value < 10 || value > 70 || pxValue !== 'px')) {
-    return { 'validatePxInvalid': true };
-  } else {
-    return null;
-  }
-}
-function ValidatePxFont(control: AbstractControl): {[key: string]: any} | null  {
-  const value = parseInt(control.value.substring(0, control.value.length - 2));
-  const pxValue = control.value.substring(control.value.length - 2, control.value.length);
-  if (control.value && (value < 5 || value > 30 || pxValue !== 'px')) {
-    return { 'validatePxInvalid': true };
-  } else {
-    return null;
-  }
-}
+

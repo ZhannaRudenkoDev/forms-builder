@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "../models/user";
 import {Router} from "@angular/router";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,7 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  logIn(email: string, password: string): Observable<User> {
+  logIn(email: string, password: string): Observable<any> {
     return this.http.get<any>('http://localhost:3000/users').pipe(
       map(users => {
         return users.find((user: User) => {
@@ -29,7 +30,9 @@ export class AuthenticationService {
     )
   }
 
-  logInWithToken(): Observable<User> {
+
+
+  logInWithToken(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/users').pipe(
       map(users => {
         return users.find((user: User) => {

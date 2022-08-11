@@ -1,6 +1,6 @@
 import {createReducer, on} from "@ngrx/store";
 import {User} from "../../models/user";
-import {lohInFailure, lohInSuccess, setUser} from "./user.actions";
+import {lohInFailure, lohInSuccess, removeUser, setUser, setUserWithToken} from "./user.actions";
 
 
 export const userNode = 'user';
@@ -18,6 +18,21 @@ export const userReducer = createReducer(
   on(
     setUser,
     (state, user) => ({...state, ...user})
+  ),
+  on(
+    setUserWithToken,
+    (state, user) => ({...state, ...user})
+  ),
+  on(
+    removeUser,
+    (state) => ({
+      ...state,
+      username: 'user',
+      email: '',
+      password: '',
+      token: '',
+      success: false
+    })
   ),
   on(
     lohInSuccess,
