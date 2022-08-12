@@ -1,17 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {FieldElement} from "../../form-builder-sections/interfaces";
+import {Fields} from "../../form-builder-sections/enums";
+
 
 @Component({
   selector: 'app-builder',
   templateUrl: './builder.component.html',
   styleUrls: ['./builder.component.scss']
 })
+
 export class BuilderComponent implements OnInit {
 
   public field: FieldElement = {
     field: '',
     id: ''
   };
+
 
   getField(field: FieldElement) {
     this.field = field;

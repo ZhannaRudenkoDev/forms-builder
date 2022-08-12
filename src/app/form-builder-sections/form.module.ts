@@ -6,7 +6,11 @@ import {MaterialModule} from "../material/material.module";
 import {CommonModule} from "@angular/common";
 import { PixelPipePipe } from './pipes/pixel-pipe.pipe';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-
+import { InputItemComponent } from './input-item/input-item.component';
+import { TextareaItemComponent } from './textarea-item/textarea-item.component';
+import { SelectItemComponent } from './select-item/select-item.component';
+import { ButtonItemComponent } from './button-item/button-item.component';
+import { CheckboxItemComponent } from './checkbox-item/checkbox-item.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +19,11 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     CreatedFormComponent,
     PixelPipePipe,
     DeleteDialogComponent,
+    InputItemComponent,
+    TextareaItemComponent,
+    SelectItemComponent,
+    ButtonItemComponent,
+    CheckboxItemComponent,
   ],
   imports: [
     MaterialModule,
@@ -25,7 +34,8 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     CreatedFormComponent,
     StyleFromComponent,
     FormItemsComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    InputItemComponent
   ],
   entryComponents: [DeleteDialogComponent]
 })
