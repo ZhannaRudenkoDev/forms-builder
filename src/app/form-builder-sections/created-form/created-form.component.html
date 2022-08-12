@@ -1,4 +1,5 @@
-<section class="form-created"
+<section class="form">
+<div class="form-created"
          [style.background-color]="this.formStyles.backgroundRGB"
          [style.border-style]="this.formStyles.borderStyle"
          [style.border-color]="this.formStyles.borderColorRGB">
@@ -75,4 +76,8 @@
       </div>
     </div>
   </div>
+</div>
+  <button mat-button
+          [ngStyle] = "{'visibility': displaySaveButton() ? 'visible' : 'hidden'}"
+          class="apply__button" (click)="saveForm()">Save form</button>
 </section>

@@ -75,7 +75,8 @@ export interface FormElement {
   textAreas: TextAreaElement[],
   checkBoxes: CheckBoxElement[],
   buttons: ButtonElement[],
-  formList: FieldElement[]
+  formList: FieldElement[],
+  forms: any[]
 }
 
 export interface FieldElement {

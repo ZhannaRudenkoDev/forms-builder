@@ -38,6 +38,8 @@ export const buttonDelete = createAction('[FORM].buttonDelete', props<{id: strin
 
 
 export const formStyleAdd = createAction('[FORM].formStyleADD', props<FormStyle>());
+export const saveForm = createAction('[FORM].saveForm');
+
 
 
 

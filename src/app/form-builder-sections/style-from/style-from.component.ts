@@ -80,5 +80,3 @@ export class StyleFromComponent implements OnInit, OnDestroy {
   }
 
 }
-
-

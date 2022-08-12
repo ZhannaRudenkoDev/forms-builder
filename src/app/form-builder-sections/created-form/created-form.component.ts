@@ -15,7 +15,7 @@ import {
 import {
   buttonAdd,
   checkBoxAdd,
-  inputAdd,
+  inputAdd, saveForm,
   selectAdd,
   textAreaAdd,
 } from "../store/form/form.actions";
@@ -53,6 +53,19 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
                                                           takeUntil(this.destroy$));
   public formList$: Observable<FieldElement[]> = this.store$.pipe(select(createFormList),
                                                             takeUntil(this.destroy$));
+
+  displaySaveButton() : boolean {
+    let displayFlag: boolean = false;
+    this.formList$.subscribe(items => {
+      items.length ? displayFlag = true : displayFlag = false;
+    })
+    return displayFlag;
+  }
+
+  saveForm() {
+    this.store$.dispatch(saveForm());
+    this.store$.subscribe(item => console.log(item));
+  }
 
 
   public formStyles: FormStyle = {formLabel: "Form label"};

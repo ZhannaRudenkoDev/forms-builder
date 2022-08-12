@@ -8,7 +8,7 @@ import {
   formStyleAdd,
   inputAdd,
   inputDelete,
-  inputUpdate,
+  inputUpdate, saveForm,
   selectAdd,
   selectAddOption,
   selectDelete,
@@ -35,11 +35,22 @@ const initialState: FormElement = {
   textAreas: [],
   checkBoxes: [],
   buttons: [],
-  formList: []
+  formList: [],
+  forms: []
 }
 
 export const formReducer = createReducer(
   initialState,
+  on(
+    saveForm,
+    (state) => ({
+      ...initialState,
+      forms: [...state.forms,  [state.inputs, state.formGeneral,
+        state.formList, state.selects,
+        state.buttons, state.checkBoxes,
+        state.textAreas]]
+    })
+  ),
   on(
     inputAdd,
     (state, input) => ({ ...state,
