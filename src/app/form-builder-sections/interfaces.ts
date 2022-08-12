@@ -80,6 +80,7 @@ export interface FormElement {
 
 export interface FieldElement {
   field: string,
-  id: string
+  id: string,
+  select?: boolean
 }
 

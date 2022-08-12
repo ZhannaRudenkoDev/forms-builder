@@ -204,7 +204,9 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
 
   getField(field: FieldElement) {
     this.fieldStyleEvent.emit(field);
+    field.select = !field.select;
   }
+
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

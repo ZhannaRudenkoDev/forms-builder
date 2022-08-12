@@ -12,7 +12,8 @@
       <div *ngFor="let field of formList$ | async" cdkDrag class="form-created__input">
         <div *ngIf="field.field === 'Input'" class="form-created__input"
              (click)="getField(field)"
-             [attr.id]="field.id">
+             [attr.id]="field.id"
+              >
           <div class="text-field text-field_floating">
             <input class="text-field__input"
                    type="text" [placeholder]="getInputStyle(field.id, 'placeholder')"

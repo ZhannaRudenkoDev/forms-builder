@@ -1,8 +1,23 @@
 @import '../../../styles.scss';
 
+
+.form-created__input {
+  width: 100%;
+  &:hover {
+    background-color: #C2D6E1;
+    input {
+      background-color: #C2D6E1;
+
+    }
+    textarea {
+      background-color: #C2D6E1;
+    }
+  }
+}
+
 .form-created {
   width: 100%;
-  padding: 10px 24px;
+  padding: 10px 0;
   &__wrapper {
     width: 100%;
     margin: 5px;
@@ -24,6 +39,7 @@
     flex-direction: column;
     min-height: 10px;
     width: 100%;
+    align-self: center;
   }
   &__input {
     width: 100%;
@@ -79,6 +95,7 @@
 .text-field_floating .text-field__label {
   position: absolute;
   top: 0;
+  left: 20px;
   height: 100%;
   padding: 1rem .75rem;
   pointer-events: none;
@@ -93,6 +110,20 @@
   color: $mainColor;
 }
 
+@media (max-width: 1140px) {
+  .text-field_floating .text-field__label {
+    left: 40px;
+  }
+
+}
+
+@media (max-width: 650px) {
+  .text-field_floating .text-field__label {
+    left: 20px;
+  }
+
+}
+
 .text-field_floating .text-field__input::placeholder {
   color: transparent;
 }
@@ -100,6 +131,10 @@
 .text-field_floating .text-field__input:not(:placeholder-shown) {
   padding-top: 1.625rem;
   padding-bottom: .625rem;
+}
+
+.text-field_floating {
+  justify-content: center;
 }
 
 .text-field_floating .text-field__input:focus~.text-field__label,
