@@ -26,9 +26,8 @@
             [formGroup]="formGeneral">
         <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-label">
           <mat-label class="example-accordion-item-body-wrapper-label-text">Form Label</mat-label>
-          <input formControlName="formLabel"
+          <input [formControl]="formLabelControl"
             class="example-accordion-item-body-wrapper-input" matInput>
-          <small *ngIf="formLabel && formLabel.invalid && formLabel.touched" style="color: darkred">Invalid</small>
         </mat-form-field>
         <form class="example-accordion-item-body-wrapper-options" [formGroup]="formGeneral">
           <mat-form-field appearance="fill" class="example-accordion-item-body-wrapper-option">

@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 
@@ -14,14 +14,38 @@ import {MatDialog} from "@angular/material/dialog";
   selector: 'app-style-from',
   templateUrl: './style-from.component.html',
   styleUrls: ['./style-from.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => StyleFromComponent),
+      multi: true,
+    },
+  ],
 })
-export class StyleFromComponent implements OnInit, OnDestroy {
+export class StyleFromComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   items = ['Form General Styles', 'Field Styles'];
   expandedIndex = 0;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
+
+  public formLabelControl: FormControl = new FormControl();
+
+  writeValue(value: any) {
+    if(value) {
+      this.formLabelControl.setValue(value);
+    }
+  }
+
+  registerOnChange(fn: Function) {
+    this.formLabelControl.valueChanges.subscribe((val) => fn(val));
+  }
+
+  registerOnTouched(fn: Function) {
+    this.formLabelControl.valueChanges.subscribe((val) => fn(val));
+  }
+
 
   @Input() field = '';
 
@@ -32,7 +56,6 @@ export class StyleFromComponent implements OnInit, OnDestroy {
 
 
   formGeneral= new FormGroup({
-    'formLabel': new FormControl('Form label', [Validators.required, Validators.minLength(3)]),
     'colorRGB': new FormControl(''),
     'backgroundRGB': new FormControl(''),
     'borderStyle': new FormControl(''),
@@ -40,10 +63,10 @@ export class StyleFromComponent implements OnInit, OnDestroy {
   })
 
   applyFormStyles() {
-    console.log(this.formGeneral.get('colorRGB')?.value!);
-    if(this.formGeneral.valid) {
+    console.log(this.formLabelControl.value);
+    if(this.formGeneral.valid && this.formLabelControl.valid) {
       this.store$.dispatch(formStyleAdd({
-        formLabel: this.formGeneral.get('formLabel')?.value!,
+        formLabel: this.formLabelControl.value!,
         colorRGB:  this.formGeneral.get('colorRGB')?.value!,
         backgroundRGB: this.formGeneral.get('backgroundRGB')?.value!,
         borderStyle: this.formGeneral.get('borderStyle')?.value!,
