@@ -15,36 +15,14 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './style-from.component.html',
   styleUrls: ['./style-from.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => StyleFromComponent),
-      multi: true,
-    },
-  ],
 })
-export class StyleFromComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class StyleFromComponent implements OnInit, OnDestroy {
 
   items = ['Form General Styles', 'Field Styles'];
   expandedIndex = 0;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public formLabelControl: FormControl = new FormControl();
-
-  writeValue(value: any) {
-    if(value) {
-      this.formLabelControl.setValue(value);
-    }
-  }
-
-  registerOnChange(fn: Function) {
-    this.formLabelControl.valueChanges.subscribe((val) => fn(val));
-  }
-
-  registerOnTouched(fn: Function) {
-    this.formLabelControl.valueChanges.subscribe((val) => fn(val));
-  }
 
 
   @Input() field = '';
@@ -56,6 +34,7 @@ export class StyleFromComponent implements OnInit, OnDestroy, ControlValueAccess
 
 
   formGeneral= new FormGroup({
+    'formLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
     'colorRGB': new FormControl(''),
     'backgroundRGB': new FormControl(''),
     'borderStyle': new FormControl(''),
@@ -63,10 +42,9 @@ export class StyleFromComponent implements OnInit, OnDestroy, ControlValueAccess
   })
 
   applyFormStyles() {
-    console.log(this.formLabelControl.value);
-    if(this.formGeneral.valid && this.formLabelControl.valid) {
+    if(this.formGeneral.valid) {
       this.store$.dispatch(formStyleAdd({
-        formLabel: this.formLabelControl.value!,
+        formLabel: this.formGeneral.get('formLabel')?.value!,
         colorRGB:  this.formGeneral.get('colorRGB')?.value!,
         backgroundRGB: this.formGeneral.get('backgroundRGB')?.value!,
         borderStyle: this.formGeneral.get('borderStyle')?.value!,
@@ -87,6 +65,7 @@ export class StyleFromComponent implements OnInit, OnDestroy, ControlValueAccess
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
+
   get formLabel() {
     return this.formGeneral.get('formLabel');
   }

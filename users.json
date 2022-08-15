@@ -27,6 +27,13 @@
       "username": "Michael",
       "token": "42030ff8-9cf4-4c0e-8171-208f120c5c13",
       "id": 4
+    },
+    {
+      "username": "Call",
+      "email": "call@email.com",
+      "password": "zhanna2002Q",
+      "token": "ec70bf63-68fe-4181-b4c6-b72c3a4f4ca4",
+      "id": 5
     }
   ]
 }

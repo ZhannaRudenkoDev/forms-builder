@@ -8,16 +8,22 @@ import {MaterialModule} from "../material/material.module";
 import {RouterModule} from "@angular/router";
 import {EffectsModule} from "@ngrx/effects";
 import {AuthEffects} from "./store/auth.effects";
+import { PasswordInputComponent } from './password-input/password-input.component';
+import {MatIconModule} from "@angular/material/icon";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignUpComponent,
+    PasswordInputComponent,
   ],
   imports: [
     HttpClientModule,
     MaterialModule,
     RouterModule,
+    MatIconModule,
+    CommonModule,
   ],
   providers: [AuthenticationService,
     {
