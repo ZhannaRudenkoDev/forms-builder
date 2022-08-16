@@ -17,22 +17,21 @@ import { select, Store } from '@ngrx/store';
 import {
   createFormList,
   createFormStyle,
-  getButtonById,
-  getCheckBoxById,
-  getInputById,
-  getSelectById,
+  getFieldById,
   getSelectOptionsById,
-  getTextAreaById,
 } from '../store/form/form.selector';
+import { fieldAdd, saveForm } from '../store/form/form.actions';
 import {
-  buttonAdd,
-  checkBoxAdd,
-  inputAdd,
-  saveForm,
-  selectAdd,
-  textAreaAdd,
-} from '../store/form/form.actions';
-import { FieldElement, FormElement, FormStyle } from '../interfaces';
+  ButtonStyleElement,
+  CheckBoxStyleElement,
+  FieldElement,
+  FieldStyleElement,
+  FormElement,
+  FormStyle,
+  InputStyleElement,
+  SelectStyleElement,
+  TextAreaStyleElement,
+} from '../interfaces';
 import { Fields } from '../enums';
 
 @Component({
@@ -50,7 +49,8 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     select(createFormStyle),
     takeUntil(this.destroy$)
   );
-  public formList$: Observable<FieldElement[]> = this.store$.pipe(
+
+  public formList$: Observable<FieldStyleElement<any>[]> = this.store$.pipe(
     select(createFormList),
     takeUntil(this.destroy$)
   );
@@ -85,26 +85,27 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let placeholderText: string = '';
     let requireStyle: boolean = false;
     this.store$
-      .select(getInputById(id))
+      .select(getFieldById(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         inputStyle =
           'width: ' +
-          item?.inputWidth +
+          item?.fieldStyles.inputWidth +
           '; height: ' +
-          item?.inputHeight +
+          item?.fieldStyles.inputHeight +
           '; border-style: ' +
-          item?.inputBorderType +
+          item?.fieldStyles.inputBorderType +
           '; color: ' +
-          item?.inputColor +
+          item?.fieldColor +
           '; font-size: ' +
-          item?.inputFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.inputFontWeight;
-        labelText = item?.inputLabel + '';
-        requireStyle = !!item?.inputCheckRequired;
-        placeholderText = item?.inputPlaceholder + '';
+          item?.fieldFontWeight;
+        labelText = item?.fieldLabel + '';
+        requireStyle = !!item?.fieldCheckRequired;
+        placeholderText = item?.fieldStyles.inputPlaceholder + '';
       });
+
     if (type === 'input') {
       return inputStyle;
     } else if (type === 'label') {
@@ -123,29 +124,29 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelStyle: string = '';
     let requireStyle: boolean = false;
     this.store$
-      .select(getSelectById(id))
+      .select(getFieldById(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         selectStyle =
           'width: ' +
-          item?.selectWidth +
+          item?.fieldStyles.selectWidth +
           '; height: ' +
-          item?.selectHeight +
+          item?.fieldStyles.selectHeight +
           '; border-style: ' +
-          item?.selectBorderType +
+          item?.fieldStyles.selectBorderType +
           '; background-color: ' +
-          item?.selectColor +
+          item?.fieldColor +
           '; font-size: ' +
-          item?.selectFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.selectFontWeight;
+          item?.fieldFontWeight;
         labelStyle =
           'font-size: ' +
-          item?.selectFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.selectFontWeight;
-        labelText = item?.selectLabel + '';
-        requireStyle = !!item?.selectCheckRequired;
+          item?.fieldFontWeight;
+        labelText = item?.fieldLabel + '';
+        requireStyle = !!item?.fieldCheckRequired;
       });
     if (type === 'select') {
       return selectStyle;
@@ -165,25 +166,25 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let placeholderText: string = '';
     let requireStyle: boolean = false;
     this.store$
-      .select(getTextAreaById(id))
+      .select(getFieldById(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         textAreaStyle =
           'width: ' +
-          item?.textAreaWidth +
+          item?.fieldStyles.textAreaWidth +
           '; height: ' +
-          item?.textAreaHeight +
+          item?.fieldStyles.textAreaHeight +
           '; border-style: ' +
-          item?.textAreaBorderType +
+          item?.fieldStyles.textAreaBorderType +
           '; color: ' +
-          item?.textAreaColor +
+          item?.fieldColor +
           '; font-size: ' +
-          item?.textAreaFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.textAreaFontWeight;
-        labelText = item?.textAreaLabel + '';
-        requireStyle = !!item?.textAreaCheckRequired;
-        placeholderText = item?.textAreaPlaceholder + '';
+          item?.fieldFontWeight;
+        labelText = item?.fieldLabel + '';
+        requireStyle = !!item?.fieldCheckRequired;
+        placeholderText = item?.fieldStyles.textAreaPlaceholder + '';
       });
     if (type === 'textArea') {
       return textAreaStyle;
@@ -202,26 +203,26 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelText: string = '';
     let requireStyle: boolean = false;
     this.store$
-      .select(getButtonById(id))
+      .select(getFieldById(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         buttonStyle =
           'width: ' +
-          item?.buttonWidth +
+          item?.fieldStyles.buttonWidth +
           '; height: ' +
-          item?.buttonHeight +
+          item?.fieldStyles.buttonHeight +
           '; border-style: ' +
-          item?.buttonBorderType +
+          item?.fieldStyles.buttonBorderType +
           '; color: ' +
-          item?.buttonColor +
+          item?.fieldColor +
           '; font-size: ' +
-          item?.buttonFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.buttonFontWeight +
+          item?.fieldFontWeight +
           '; background-color: ' +
-          item?.buttonColorBackground;
-        labelText = item?.buttonLabel + '';
-        requireStyle = !!item?.buttonCheckRequired;
+          item?.fieldStyles.buttonColorBackground;
+        labelText = item?.fieldLabel + '';
+        requireStyle = !!item?.fieldCheckRequired;
       });
     if (type === 'button') {
       return buttonStyle;
@@ -239,19 +240,19 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let titleText: string = '';
     let requireStyle: boolean = false;
     this.store$
-      .select(getCheckBoxById(id))
+      .select(getFieldById(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         checkBoxStyle =
           'color: ' +
-          item?.checkBoxColor +
+          item?.fieldColor +
           '; font-size: ' +
-          item?.checkBoxFontSize +
+          item?.fieldFontSize +
           '; font-weight: ' +
-          item?.checkBoxFontWeight;
-        labelText = item?.checkBoxLabel + '';
-        titleText = item?.checkBoxTitle + '';
-        requireStyle = !!item?.checkBoxCheckRequired;
+          item?.fieldFontWeight;
+        labelText = item?.fieldLabel + '';
+        titleText = item?.fieldStyles.checkBoxTitle + '';
+        requireStyle = !!item?.fieldCheckRequired;
       });
     if (type === 'checkBox') {
       return checkBoxStyle;
@@ -269,9 +270,11 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     return uuidv4();
   }
 
-  getField(field: FieldElement) {
-    this.fieldStyleEvent.emit(field);
-    field.select = !field.select;
+  getField(field: string, id: string) {
+    this.fieldStyleEvent.emit({
+      field: field,
+      id: id,
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -289,50 +292,56 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
         event.currentIndex
       );
     }
-    const addField: FieldElement = {
-      field: event.container.data[event.currentIndex],
-      id: event.container.data[event.currentIndex] + uuidv4(),
-    };
+    const fieldType = event.container.data[event.currentIndex];
 
-    if (addField.field === Fields.input) {
-      this.store$.dispatch(
-        inputAdd({
-          id: addField.id,
-          inputLabel: 'Input label',
+    if (fieldType === Fields.input) {
+      const addFieldInput: FieldStyleElement<InputStyleElement> = {
+        fieldLabel: 'Input label',
+        fieldStyles: {
           inputPlaceholder: 'Input placeholder',
-        })
-      );
-    } else if (addField.field === Fields.select) {
-      this.store$.dispatch(
-        selectAdd({
-          id: addField.id,
-          selectLabel: 'Select',
+        },
+        field: event.container.data[event.currentIndex],
+        id: event.container.data[event.currentIndex] + uuidv4(),
+      };
+      this.store$.dispatch(fieldAdd({ ...addFieldInput }));
+    } else if (fieldType === Fields.select) {
+      const addFieldSelect: FieldStyleElement<SelectStyleElement> = {
+        fieldLabel: 'Select',
+        fieldStyles: {
           selectAddOption: [],
-        })
-      );
-    } else if (addField.field === Fields.textArea) {
-      this.store$.dispatch(
-        textAreaAdd({
-          id: addField.id,
-          textAreaLabel: 'Textarea',
-          textAreaPlaceholder: 'Input placeholder',
-        })
-      );
-    } else if (addField.field === Fields.checkBox) {
-      this.store$.dispatch(
-        checkBoxAdd({
-          id: addField.id,
-          checkBoxLabel: 'label',
-          checkBoxTitle: 'CheckBox Title',
-        })
-      );
-    } else if (addField.field === Fields.button) {
-      this.store$.dispatch(
-        buttonAdd({
-          id: addField.id,
-          buttonLabel: 'Button label',
-        })
-      );
+        },
+        field: event.container.data[event.currentIndex],
+        id: event.container.data[event.currentIndex] + uuidv4(),
+      };
+      this.store$.dispatch(fieldAdd({ ...addFieldSelect }));
+    } else if (fieldType === Fields.textArea) {
+      const addFieldTextArea: FieldStyleElement<TextAreaStyleElement> = {
+        fieldLabel: 'Textarea',
+        fieldStyles: {
+          textAreaPlaceholder: '',
+        },
+        field: event.container.data[event.currentIndex],
+        id: event.container.data[event.currentIndex] + uuidv4(),
+      };
+      this.store$.dispatch(fieldAdd({ ...addFieldTextArea }));
+    } else if (fieldType === Fields.checkBox) {
+      const addFieldCheckBox: FieldStyleElement<CheckBoxStyleElement> = {
+        fieldLabel: 'CheckBox',
+        fieldStyles: {
+          checkBoxTitle: 'CheckBox title',
+        },
+        field: event.container.data[event.currentIndex],
+        id: event.container.data[event.currentIndex] + uuidv4(),
+      };
+      this.store$.dispatch(fieldAdd({ ...addFieldCheckBox }));
+    } else if (fieldType === Fields.button) {
+      const addFieldButton: FieldStyleElement<ButtonStyleElement> = {
+        fieldLabel: 'Button',
+        fieldStyles: {},
+        field: event.container.data[event.currentIndex],
+        id: event.container.data[event.currentIndex] + uuidv4(),
+      };
+      this.store$.dispatch(fieldAdd({ ...addFieldButton }));
     }
   }
 

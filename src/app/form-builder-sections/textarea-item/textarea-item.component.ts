@@ -4,7 +4,7 @@ import { FormItemStyle } from '../abstract/field.abstract';
 import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { textAreaDelete, textAreaUpdate } from '../store/form/form.actions';
+import { fieldDelete, fieldUpdate } from '../store/form/form.actions';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
@@ -32,7 +32,7 @@ export class TextareaItemComponent extends FormItemStyle implements OnDestroy {
     super(store$, dialog);
   }
 
-  protected formControl: FormGroup = new FormGroup({
+  protected formStyleGroup: FormGroup = new FormGroup({
     textAreaLabel: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -51,23 +51,26 @@ export class TextareaItemComponent extends FormItemStyle implements OnDestroy {
   });
 
   protected applyFieldStyles(): void {
-    if (this.formControl.valid) {
+    if (this.formStyleGroup.valid) {
       this.store$.dispatch(
-        textAreaUpdate({
+        fieldUpdate({
           id: this.fieldOBJ.id,
-          textAreaLabel: this.formControl.get('textAreaLabel')?.value!,
-          textAreaPlaceholder: this.formControl.get('textAreaPlaceholder')
+          field: 'Textarea',
+          fieldLabel: this.formStyleGroup.get('textAreaLabel')?.value!,
+          fieldFontSize: this.formStyleGroup.get('textAreaFontSize')?.value!,
+          fieldFontWeight:
+            this.formStyleGroup.get('textAreaFontWeight')?.value!,
+          fieldColor: this.formStyleGroup.get('textAreaColor')?.value!,
+          fieldCheckRequired: !!this.formStyleGroup.get('textAreaCheckRequired')
             ?.value!,
-          textAreaWidth: this.formControl.get('textAreaWidth')?.value!,
-          textAreaHeight: this.formControl.get('textAreaHeight')?.value!,
-          textAreaFontSize: this.formControl.get('textAreaFontSize')?.value!,
-          textAreaFontWeight:
-            this.formControl.get('textAreaFontWeight')?.value!,
-          textAreaColor: this.formControl.get('textAreaColor')?.value!,
-          textAreaBorderType:
-            this.formControl.get('textAreaBorderType')?.value!,
-          textAreaCheckRequired: !!this.formControl.get('textAreaCheckRequired')
-            ?.value!,
+          fieldStyles: {
+            textAreaPlaceholder: this.formStyleGroup.get('textAreaPlaceholder')
+              ?.value!,
+            textAreaWidth: this.formStyleGroup.get('textAreaWidth')?.value!,
+            textAreaHeight: this.formStyleGroup.get('textAreaHeight')?.value!,
+            textAreaBorderType:
+              this.formStyleGroup.get('textAreaBorderType')?.value!,
+          },
         })
       );
     }
@@ -83,11 +86,11 @@ export class TextareaItemComponent extends FormItemStyle implements OnDestroy {
       .subscribe(data => {
         if (data) {
           this.store$.dispatch(
-            textAreaDelete({
+            fieldDelete({
               id: this.fieldOBJ.id,
             })
           );
-          this.formControl.reset();
+          this.formStyleGroup.reset();
         }
       });
   }
@@ -97,21 +100,21 @@ export class TextareaItemComponent extends FormItemStyle implements OnDestroy {
     this.destroy$.unsubscribe();
   }
   get textAreaLabel() {
-    return this.formControl.get('textAreaLabel');
+    return this.formStyleGroup.get('textAreaLabel');
   }
   get textAreaPlaceholder() {
-    return this.formControl.get('textAreaPlaceholder');
+    return this.formStyleGroup.get('textAreaPlaceholder');
   }
   get textAreaWidth() {
-    return this.formControl.get('textAreaWidth');
+    return this.formStyleGroup.get('textAreaWidth');
   }
   get textAreaHeight() {
-    return this.formControl.get('textAreaHeight');
+    return this.formStyleGroup.get('textAreaHeight');
   }
   get textAreaFontSize() {
-    return this.formControl.get('textAreaFontSize');
+    return this.formStyleGroup.get('textAreaFontSize');
   }
   get textAreaColor() {
-    return this.formControl.get('textAreaColor');
+    return this.formStyleGroup.get('textAreaColor');
   }
 }

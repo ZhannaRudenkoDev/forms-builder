@@ -4,7 +4,7 @@ import { FormItemStyle } from '../abstract/field.abstract';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { inputDelete, inputUpdate } from '../store/form/form.actions';
+import { fieldDelete, fieldUpdate } from '../store/form/form.actions';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -38,7 +38,7 @@ export class InputItemComponent extends FormItemStyle implements OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  protected formControl: FormGroup = new FormGroup({
+  protected formStyleGroup: FormGroup = new FormGroup({
     inputLabel: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -57,20 +57,24 @@ export class InputItemComponent extends FormItemStyle implements OnDestroy {
   });
 
   protected applyFieldStyles(): void {
-    if (this.formControl.valid) {
+    if (this.formStyleGroup.valid) {
       this.store$.dispatch(
-        inputUpdate({
+        fieldUpdate({
           id: this.fieldOBJ.id,
-          inputLabel: this.formControl.get('inputLabel')?.value!,
-          inputPlaceholder: this.formControl.get('inputPlaceholder')?.value!,
-          inputWidth: this.formControl.get('inputWidth')?.value!,
-          inputHeight: this.formControl.get('inputHeight')?.value!,
-          inputFontSize: this.formControl.get('inputFontSize')?.value!,
-          inputFontWeight: this.formControl.get('inputFontSize')?.value!,
-          inputColor: this.formControl.get('inputColor')?.value!,
-          inputBorderType: this.formControl.get('inputBorderType')?.value!,
-          inputCheckRequired:
-            !!this.formControl.get('inputCheckRequired')?.value!,
+          field: 'Input',
+          fieldLabel: this.formStyleGroup.get('inputLabel')?.value!,
+          fieldFontSize: this.formStyleGroup.get('inputFontSize')?.value!,
+          fieldFontWeight: this.formStyleGroup.get('inputFontSize')?.value!,
+          fieldColor: this.formStyleGroup.get('inputColor')?.value!,
+          fieldCheckRequired:
+            !!this.formStyleGroup.get('inputCheckRequired')?.value!,
+          fieldStyles: {
+            inputPlaceholder:
+              this.formStyleGroup.get('inputPlaceholder')?.value!,
+            inputWidth: this.formStyleGroup.get('inputWidth')?.value!,
+            inputHeight: this.formStyleGroup.get('inputHeight')?.value!,
+            inputBorderType: this.formStyleGroup.get('inputBorderType')?.value!,
+          },
         })
       );
     }
@@ -86,31 +90,31 @@ export class InputItemComponent extends FormItemStyle implements OnDestroy {
       .subscribe(data => {
         if (data) {
           this.store$.dispatch(
-            inputDelete({
+            fieldDelete({
               id: this.fieldOBJ.id,
             })
           );
-          this.formControl.reset();
+          this.formStyleGroup.reset();
         }
       });
   }
 
   get inputLabel() {
-    return this.formControl.get('inputLabel');
+    return this.formStyleGroup.get('inputLabel');
   }
   get inputPlaceholder() {
-    return this.formControl.get('inputPlaceholder');
+    return this.formStyleGroup.get('inputPlaceholder');
   }
   get inputWidth() {
-    return this.formControl.get('inputWidth');
+    return this.formStyleGroup.get('inputWidth');
   }
   get inputHeight() {
-    return this.formControl.get('inputHeight');
+    return this.formStyleGroup.get('inputHeight');
   }
   get inputFontSize() {
-    return this.formControl.get('inputFontSize');
+    return this.formStyleGroup.get('inputFontSize');
   }
   get inputColor() {
-    return this.formControl.get('inputColor');
+    return this.formStyleGroup.get('inputColor');
   }
 }

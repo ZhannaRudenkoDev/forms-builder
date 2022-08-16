@@ -5,9 +5,9 @@ import { select, Store } from '@ngrx/store';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormItemStyle } from '../abstract/field.abstract';
 import {
+  fieldDelete,
+  fieldUpdate,
   selectAddOption,
-  selectDelete,
-  selectUpdate,
 } from '../store/form/form.actions';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { getSelectOptionsById } from '../store/form/form.selector';
@@ -46,17 +46,17 @@ export class SelectItemComponent extends FormItemStyle implements OnDestroy {
   }
 
   addOptionSelect() {
-    if (this.formControl.get('selectAddOption')?.valid) {
+    if (this.formStyleGroup.get('selectAddOption')?.valid) {
       this.store$.dispatch(
         selectAddOption({
           id: this.fieldOBJ.id,
-          option: this.formControl.get('selectAddOption')?.value!,
+          option: this.formStyleGroup.get('selectAddOption')?.value!,
         })
       );
     }
   }
 
-  protected formControl: FormGroup = new FormGroup({
+  protected formStyleGroup: FormGroup = new FormGroup({
     selectLabel: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -72,7 +72,7 @@ export class SelectItemComponent extends FormItemStyle implements OnDestroy {
   });
 
   protected applyFieldStyles(): void {
-    if (this.formControl.valid) {
+    if (this.formStyleGroup.valid) {
       this.store$
         .pipe(
           select(getSelectOptionsById(this.fieldOBJ.id)),
@@ -82,18 +82,22 @@ export class SelectItemComponent extends FormItemStyle implements OnDestroy {
           this.selectOptions = items;
         });
       this.store$.dispatch(
-        selectUpdate({
+        fieldUpdate({
           id: this.fieldOBJ.id,
-          selectLabel: this.formControl.get('selectLabel')?.value!,
-          selectWidth: this.formControl.get('selectWidth')?.value!,
-          selectHeight: this.formControl.get('selectHeight')?.value!,
-          selectFontSize: this.formControl.get('selectFontSize')?.value!,
-          selectFontWeight: this.formControl.get('selectFontWeight')?.value!,
-          selectColor: this.formControl.get('selectColor')?.value!,
-          selectBorderType: this.formControl.get('selectBorderType')?.value!,
-          selectCheckRequired: !!this.formControl.get('selectCheckRequired')
+          field: 'Select',
+          fieldLabel: this.formStyleGroup.get('selectLabel')?.value!,
+          fieldFontSize: this.formStyleGroup.get('selectFontSize')?.value!,
+          fieldFontWeight: this.formStyleGroup.get('selectFontWeight')?.value!,
+          fieldColor: this.formStyleGroup.get('selectColor')?.value!,
+          fieldCheckRequired: !!this.formStyleGroup.get('selectCheckRequired')
             ?.value!,
-          selectAddOption: this.selectOptions!,
+          fieldStyles: {
+            selectWidth: this.formStyleGroup.get('selectWidth')?.value!,
+            selectHeight: this.formStyleGroup.get('selectHeight')?.value!,
+            selectBorderType:
+              this.formStyleGroup.get('selectBorderType')?.value!,
+            selectAddOption: this.selectOptions!,
+          },
         })
       );
     }
@@ -109,31 +113,31 @@ export class SelectItemComponent extends FormItemStyle implements OnDestroy {
       .subscribe(data => {
         if (data) {
           this.store$.dispatch(
-            selectDelete({
+            fieldDelete({
               id: this.fieldOBJ.id,
             })
           );
-          this.formControl.reset();
+          this.formStyleGroup.reset();
         }
       });
   }
 
   get selectLabel() {
-    return this.formControl.get('selectLabel');
+    return this.formStyleGroup.get('selectLabel');
   }
   get selectAddOption() {
-    return this.formControl.get('selectAddOption');
+    return this.formStyleGroup.get('selectAddOption');
   }
   get selectWidth() {
-    return this.formControl.get('selectWidth');
+    return this.formStyleGroup.get('selectWidth');
   }
   get selectHeight() {
-    return this.formControl.get('selectHeight');
+    return this.formStyleGroup.get('selectHeight');
   }
   get selectFontSize() {
-    return this.formControl.get('selectFontSize');
+    return this.formStyleGroup.get('selectFontSize');
   }
   get selectColor() {
-    return this.formControl.get('selectColor');
+    return this.formStyleGroup.get('selectColor');
   }
 }

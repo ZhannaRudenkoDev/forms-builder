@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormItemStyle } from '../abstract/field.abstract';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { checkBoxDelete, checkBoxUpdate } from '../store/form/form.actions';
+import { fieldDelete, fieldUpdate } from '../store/form/form.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatePxFont } from '../validate.func';
 
@@ -34,7 +34,7 @@ export class CheckboxItemComponent extends FormItemStyle implements OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  protected formControl: FormGroup = new FormGroup({
+  protected formStyleGroup: FormGroup = new FormGroup({
     checkBoxLabel: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -50,31 +50,34 @@ export class CheckboxItemComponent extends FormItemStyle implements OnDestroy {
   });
 
   get checkBoxLabel() {
-    return this.formControl.get('checkBoxLabel');
+    return this.formStyleGroup.get('checkBoxLabel');
   }
   get checkBoxTitle() {
-    return this.formControl.get('checkBoxTitle');
+    return this.formStyleGroup.get('checkBoxTitle');
   }
   get checkBoxFontSize() {
-    return this.formControl.get('checkBoxFontSize');
+    return this.formStyleGroup.get('checkBoxFontSize');
   }
   get checkBoxColor() {
-    return this.formControl.get('checkBoxColor');
+    return this.formStyleGroup.get('checkBoxColor');
   }
 
   protected applyFieldStyles(): void {
-    if (this.formControl.valid) {
+    if (this.formStyleGroup.valid) {
       this.store$.dispatch(
-        checkBoxUpdate({
+        fieldUpdate({
           id: this.fieldOBJ.id,
-          checkBoxLabel: this.formControl.get('checkBoxLabel')?.value!,
-          checkBoxFontSize: this.formControl.get('checkBoxFontSize')?.value!,
-          checkBoxFontWeight:
-            this.formControl.get('checkBoxFontWeight')?.value!,
-          checkBoxColor: this.formControl.get('checkBoxColor')?.value!,
-          checkBoxCheckRequired: !!this.formControl.get('checkBoxCheckRequired')
+          field: 'Checkbox',
+          fieldLabel: this.formStyleGroup.get('checkBoxLabel')?.value!,
+          fieldFontSize: this.formStyleGroup.get('checkBoxFontSize')?.value!,
+          fieldFontWeight:
+            this.formStyleGroup.get('checkBoxFontWeight')?.value!,
+          fieldColor: this.formStyleGroup.get('checkBoxColor')?.value!,
+          fieldCheckRequired: !!this.formStyleGroup.get('checkBoxCheckRequired')
             ?.value!,
-          checkBoxTitle: this.formControl.get('checkBoxTitle')?.value!,
+          fieldStyles: {
+            checkBoxTitle: this.formStyleGroup.get('checkBoxTitle')?.value!,
+          },
         })
       );
     }
@@ -90,11 +93,11 @@ export class CheckboxItemComponent extends FormItemStyle implements OnDestroy {
       .subscribe(data => {
         if (data) {
           this.store$.dispatch(
-            checkBoxDelete({
+            fieldDelete({
               id: this.fieldOBJ.id,
             })
           );
-          this.formControl.reset();
+          this.formStyleGroup.reset();
         }
       });
   }

@@ -1,4 +1,4 @@
-<form [formGroup]="formControl">
+<form [formGroup]="formStyleGroup">
   <div class="example-accordion-item-body-wrapper-options">
     <mat-form-field
       appearance="fill"
@@ -48,10 +48,9 @@
       <mat-label class="example-accordion-item-body-wrapper-option-label"
         >Width</mat-label
       >
-      <!--  [value]="this.inputControl.get('inputWidth')?.value! | pixelPipe"-->
       <input
         formControlName="inputWidth"
-        [value]="this.formControl.get('inputWidth')?.value! | pixelPipe"
+        [value]="this.formStyleGroup.get('inputWidth')?.value! | pixelPipe"
         matInput
         type="text"
         placeholder="10"
@@ -74,7 +73,7 @@
       >
       <input
         formControlName="inputHeight"
-        [value]="this.formControl.get('inputHeight')?.value! | pixelPipe"
+        [value]="this.formStyleGroup.get('inputHeight')?.value! | pixelPipe"
         matInput
         type="text"
         placeholder="10"
@@ -97,7 +96,7 @@
       >
       <input
         formControlName="inputFontSize"
-        [value]="this.formControl.get('inputFontSize')?.value! | pixelPipe"
+        [value]="this.formStyleGroup.get('inputFontSize')?.value! | pixelPipe"
         matInput
         type="text"
         placeholder="1"

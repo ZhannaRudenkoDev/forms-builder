@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormItemStyle } from '../abstract/field.abstract';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { buttonDelete, buttonUpdate } from '../store/form/form.actions';
+import { fieldDelete, fieldUpdate } from '../store/form/form.actions';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   ValidatePxFont,
@@ -38,7 +38,7 @@ export class ButtonItemComponent extends FormItemStyle implements OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  protected formControl: FormGroup = new FormGroup({
+  protected formStyleGroup: FormGroup = new FormGroup({
     buttonLabel: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -54,21 +54,26 @@ export class ButtonItemComponent extends FormItemStyle implements OnDestroy {
   });
 
   protected applyFieldStyles(): void {
-    if (this.formControl.valid) {
+    if (this.formStyleGroup.valid) {
       this.store$.dispatch(
-        buttonUpdate({
+        fieldUpdate({
           id: this.fieldOBJ.id,
-          buttonLabel: this.formControl.get('buttonLabel')?.value!,
-          buttonWidth: this.formControl.get('buttonWidth')?.value!,
-          buttonHeight: this.formControl.get('buttonHeight')?.value!,
-          buttonFontSize: this.formControl.get('buttonFontSize')?.value!,
-          buttonFontWeight: this.formControl.get('buttonFontWeight')?.value!,
-          buttonColor: this.formControl.get('buttonColor')?.value!,
-          buttonColorBackground: this.formControl.get('buttonColorBackground')
+          field: 'Button',
+          fieldLabel: this.formStyleGroup.get('buttonLabel')?.value!,
+          fieldFontSize: this.formStyleGroup.get('buttonFontSize')?.value!,
+          fieldFontWeight: this.formStyleGroup.get('buttonFontWeight')?.value!,
+          fieldColor: this.formStyleGroup.get('buttonColor')?.value!,
+          fieldCheckRequired: !!this.formStyleGroup.get('buttonCheckRequired')
             ?.value!,
-          buttonBorderType: this.formControl.get('buttonBorderType')?.value!,
-          buttonCheckRequired: !!this.formControl.get('buttonCheckRequired')
-            ?.value!,
+          fieldStyles: {
+            buttonWidth: this.formStyleGroup.get('buttonWidth')?.value!,
+            buttonHeight: this.formStyleGroup.get('buttonHeight')?.value!,
+            buttonColorBackground: this.formStyleGroup.get(
+              'buttonColorBackground'
+            )?.value!,
+            buttonBorderType:
+              this.formStyleGroup.get('buttonBorderType')?.value!,
+          },
         })
       );
     }
@@ -84,31 +89,31 @@ export class ButtonItemComponent extends FormItemStyle implements OnDestroy {
       .subscribe(data => {
         if (data) {
           this.store$.dispatch(
-            buttonDelete({
+            fieldDelete({
               id: this.fieldOBJ.id,
             })
           );
-          this.formControl.reset();
+          this.formStyleGroup.reset();
         }
       });
   }
 
   get buttonLabel() {
-    return this.formControl.get('buttonLabel');
+    return this.formStyleGroup.get('buttonLabel');
   }
   get buttonWidth() {
-    return this.formControl.get('buttonWidth');
+    return this.formStyleGroup.get('buttonWidth');
   }
   get buttonHeight() {
-    return this.formControl.get('buttonHeight');
+    return this.formStyleGroup.get('buttonHeight');
   }
   get buttonFontSize() {
-    return this.formControl.get('buttonFontSize');
+    return this.formStyleGroup.get('buttonFontSize');
   }
   get buttonColor() {
-    return this.formControl.get('buttonColor');
+    return this.formStyleGroup.get('buttonColor');
   }
   get buttonColorBackground() {
-    return this.formControl.get('buttonColorBackground');
+    return this.formStyleGroup.get('buttonColorBackground');
   }
 }

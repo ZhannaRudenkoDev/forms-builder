@@ -4,7 +4,7 @@ import { FormElement } from '../interfaces';
 import { MatDialog } from '@angular/material/dialog';
 
 export abstract class FormItemStyle {
-  protected abstract formControl: FormGroup;
+  protected abstract formStyleGroup: FormGroup;
   protected abstract applyFieldStyles(): void;
   protected abstract deleteField(): void;
 

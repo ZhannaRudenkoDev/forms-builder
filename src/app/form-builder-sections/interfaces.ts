@@ -19,6 +19,24 @@ export interface InputElement {
   inputCheckRequired?: boolean;
 }
 
+export interface InputStyleElement {
+  inputPlaceholder: string;
+  inputWidth?: string;
+  inputHeight?: string;
+  inputBorderType?: string;
+}
+
+export interface FieldStyleElement<T> {
+  id: string;
+  field: string;
+  fieldLabel: string;
+  fieldFontSize?: string;
+  fieldFontWeight?: string;
+  fieldColor?: string;
+  fieldCheckRequired?: boolean;
+  fieldStyles?: T;
+}
+
 export interface SelectElement {
   id: string;
   selectLabel: string;
@@ -29,6 +47,13 @@ export interface SelectElement {
   selectColor?: string;
   selectBorderType?: string;
   selectCheckRequired?: boolean;
+  selectAddOption: string[];
+}
+
+export interface SelectStyleElement {
+  selectWidth?: string;
+  selectHeight?: string;
+  selectBorderType?: string;
   selectAddOption: string[];
 }
 
@@ -45,6 +70,13 @@ export interface TextAreaElement {
   textAreaCheckRequired?: boolean;
 }
 
+export interface TextAreaStyleElement {
+  textAreaPlaceholder: string;
+  textAreaWidth?: string;
+  textAreaHeight?: string;
+  textAreaBorderType?: string;
+}
+
 export interface CheckBoxElement {
   id: string;
   checkBoxLabel: string;
@@ -53,6 +85,10 @@ export interface CheckBoxElement {
   checkBoxFontWeight?: string;
   checkBoxColor?: string;
   checkBoxCheckRequired?: boolean;
+}
+
+export interface CheckBoxStyleElement {
+  checkBoxTitle: string;
 }
 
 export interface ButtonElement {
@@ -68,19 +104,20 @@ export interface ButtonElement {
   buttonCheckRequired?: boolean;
 }
 
+export interface ButtonStyleElement {
+  buttonWidth?: string;
+  buttonHeight?: string;
+  buttonColorBackground?: string;
+  buttonBorderType?: string;
+}
+
 export interface FormElement {
   formGeneral: FormStyle;
-  inputs: InputElement[];
-  selects: SelectElement[];
-  textAreas: TextAreaElement[];
-  checkBoxes: CheckBoxElement[];
-  buttons: ButtonElement[];
-  formList: FieldElement[];
+  formList: FieldStyleElement<any>[];
   forms: any[];
 }
 
 export interface FieldElement {
   field: string;
   id: string;
-  select?: boolean;
 }
