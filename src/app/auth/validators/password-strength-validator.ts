@@ -10,10 +10,10 @@ export function passwordStrengthValidator(): ValidatorFn {
 
     if (!passwordRegularExpression.test(control.value)) {
       return {
-        passwordStrength: true
-      }
+        passwordStrength: true,
+      };
     }
 
     return null;
-  }
+  };
 }

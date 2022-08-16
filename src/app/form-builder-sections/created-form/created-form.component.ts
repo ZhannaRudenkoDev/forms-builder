@@ -1,59 +1,65 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {CdkDragDrop, copyArrayItem, moveItemInArray} from "@angular/cdk/drag-drop";
-import {v4 as uuidv4} from 'uuid';
-import {Observable, Subject, takeUntil} from "rxjs";
-import {select, Store} from "@ngrx/store";
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  CdkDragDrop,
+  copyArrayItem,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+import { v4 as uuidv4 } from 'uuid';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 
 import {
-  createCheckBoxes,
-  createFormList, createFormStyle,
-  createInput,
-  createSelect,
-  createTextArea, getButtonById, getCheckBoxById,
-  getInputById, getSelectById, getSelectOptionsById, getTextAreaById
-} from "../store/form/form.selector";
+  createFormList,
+  createFormStyle,
+  getButtonById,
+  getCheckBoxById,
+  getInputById,
+  getSelectById,
+  getSelectOptionsById,
+  getTextAreaById,
+} from '../store/form/form.selector';
 import {
   buttonAdd,
   checkBoxAdd,
-  inputAdd, saveForm,
+  inputAdd,
+  saveForm,
   selectAdd,
   textAreaAdd,
-} from "../store/form/form.actions";
-import {
-  CheckBoxElement,
-  FieldElement,
-  FormElement,
-  FormStyle,
-  InputElement,
-  SelectElement,
-  TextAreaElement
-} from "../interfaces";
-import {Fields} from "../enums";
-
+} from '../store/form/form.actions';
+import { FieldElement, FormElement, FormStyle } from '../interfaces';
+import { Fields } from '../enums';
 
 @Component({
   selector: 'app-created-form',
   templateUrl: './created-form.component.html',
   styleUrls: ['./created-form.component.scss'],
 })
-
 export class CreatedFormComponent implements OnInit, OnDestroy {
-
   fields: string[] = [];
   fieldObj: FieldElement[] = [];
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public form$: Observable<FormStyle> = this.store$.pipe(select(createFormStyle),
-                                                          takeUntil(this.destroy$));
-  public formList$: Observable<FieldElement[]> = this.store$.pipe(select(createFormList),
-                                                            takeUntil(this.destroy$));
+  public form$: Observable<FormStyle> = this.store$.pipe(
+    select(createFormStyle),
+    takeUntil(this.destroy$)
+  );
+  public formList$: Observable<FieldElement[]> = this.store$.pipe(
+    select(createFormList),
+    takeUntil(this.destroy$)
+  );
 
-  displaySaveButton() : boolean {
+  displaySaveButton(): boolean {
     let displayFlag: boolean = false;
     this.formList$.subscribe(items => {
-      items.length ? displayFlag = true : displayFlag = false;
-    })
+      items.length ? (displayFlag = true) : (displayFlag = false);
+    });
     return displayFlag;
   }
 
@@ -62,15 +68,15 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     this.store$.subscribe(item => console.log(item));
   }
 
-
-  public formStyles: FormStyle = {formLabel: "Form label"};
+  public formStyles: FormStyle = { formLabel: 'Form label' };
 
   @Output() fieldStyleEvent = new EventEmitter<FieldElement>();
 
   getSelectOptions(id: string) {
     return this.store$.pipe(
       select(getSelectOptionsById(id)),
-      takeUntil(this.destroy$));
+      takeUntil(this.destroy$)
+    );
   }
 
   getInputStyle(id: string, type: string) {
@@ -78,23 +84,34 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelText: string = '';
     let placeholderText: string = '';
     let requireStyle: boolean = false;
-    this.store$.select(getInputById(id))
+    this.store$
+      .select(getInputById(id))
       .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        inputStyle = 'width: ' + item?.inputWidth + '; height: ' + item?.inputHeight +
-                     '; border-style: ' + item?.inputBorderType + '; color: ' + item?.inputColor +
-                      '; font-size: ' + item?.inputFontSize + '; font-weight: ' + item?.inputFontWeight;
+      .subscribe(item => {
+        inputStyle =
+          'width: ' +
+          item?.inputWidth +
+          '; height: ' +
+          item?.inputHeight +
+          '; border-style: ' +
+          item?.inputBorderType +
+          '; color: ' +
+          item?.inputColor +
+          '; font-size: ' +
+          item?.inputFontSize +
+          '; font-weight: ' +
+          item?.inputFontWeight;
         labelText = item?.inputLabel + '';
         requireStyle = !!item?.inputCheckRequired;
         placeholderText = item?.inputPlaceholder + '';
       });
-    if(type === 'input') {
+    if (type === 'input') {
       return inputStyle;
-    } else if(type === 'label') {
+    } else if (type === 'label') {
       return labelText;
-    } else if(type === 'placeholder') {
+    } else if (type === 'placeholder') {
       return placeholderText;
-    } else if(type === 'required') {
+    } else if (type === 'required') {
       return requireStyle;
     }
     return;
@@ -105,23 +122,38 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelText: string = '';
     let labelStyle: string = '';
     let requireStyle: boolean = false;
-    this.store$.select(getSelectById(id))
+    this.store$
+      .select(getSelectById(id))
       .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        selectStyle = 'width: ' + item?.selectWidth + '; height: ' + item?.selectHeight +
-          '; border-style: ' + item?.selectBorderType + '; background-color: ' + item?.selectColor +
-          '; font-size: ' + item?.selectFontSize + '; font-weight: ' + item?.selectFontWeight;
-        labelStyle = 'font-size: ' + item?.selectFontSize + '; font-weight: ' + item?.selectFontWeight;
+      .subscribe(item => {
+        selectStyle =
+          'width: ' +
+          item?.selectWidth +
+          '; height: ' +
+          item?.selectHeight +
+          '; border-style: ' +
+          item?.selectBorderType +
+          '; background-color: ' +
+          item?.selectColor +
+          '; font-size: ' +
+          item?.selectFontSize +
+          '; font-weight: ' +
+          item?.selectFontWeight;
+        labelStyle =
+          'font-size: ' +
+          item?.selectFontSize +
+          '; font-weight: ' +
+          item?.selectFontWeight;
         labelText = item?.selectLabel + '';
         requireStyle = !!item?.selectCheckRequired;
       });
-    if(type === 'select') {
+    if (type === 'select') {
       return selectStyle;
-    } else if(type === 'label') {
+    } else if (type === 'label') {
       return labelText;
-    } else if(type === 'labelStyle') {
+    } else if (type === 'labelStyle') {
       return labelText;
-    } else if(type === 'required') {
+    } else if (type === 'required') {
       return requireStyle;
     }
     return;
@@ -132,23 +164,34 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelText: string = '';
     let placeholderText: string = '';
     let requireStyle: boolean = false;
-    this.store$.select(getTextAreaById(id))
+    this.store$
+      .select(getTextAreaById(id))
       .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        textAreaStyle = 'width: ' + item?.textAreaWidth + '; height: ' + item?.textAreaHeight +
-          '; border-style: ' + item?.textAreaBorderType + '; color: ' + item?.textAreaColor +
-          '; font-size: ' + item?.textAreaFontSize + '; font-weight: ' + item?.textAreaFontWeight;
+      .subscribe(item => {
+        textAreaStyle =
+          'width: ' +
+          item?.textAreaWidth +
+          '; height: ' +
+          item?.textAreaHeight +
+          '; border-style: ' +
+          item?.textAreaBorderType +
+          '; color: ' +
+          item?.textAreaColor +
+          '; font-size: ' +
+          item?.textAreaFontSize +
+          '; font-weight: ' +
+          item?.textAreaFontWeight;
         labelText = item?.textAreaLabel + '';
         requireStyle = !!item?.textAreaCheckRequired;
         placeholderText = item?.textAreaPlaceholder + '';
       });
-    if(type === 'textArea') {
+    if (type === 'textArea') {
       return textAreaStyle;
-    } else if(type === 'label') {
+    } else if (type === 'label') {
       return labelText;
-    } else if(type === 'placeholder') {
+    } else if (type === 'placeholder') {
       return placeholderText;
-    } else if(type === 'required') {
+    } else if (type === 'required') {
       return requireStyle;
     }
     return;
@@ -158,21 +201,33 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let buttonStyle: string = '';
     let labelText: string = '';
     let requireStyle: boolean = false;
-    this.store$.select(getButtonById(id))
+    this.store$
+      .select(getButtonById(id))
       .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        buttonStyle = 'width: ' + item?.buttonWidth + '; height: ' + item?.buttonHeight +
-          '; border-style: ' + item?.buttonBorderType + '; color: ' + item?.buttonColor +
-          '; font-size: ' + item?.buttonFontSize + '; font-weight: ' + item?.buttonFontWeight +
-           '; background-color: ' + item?.buttonColorBackground;
+      .subscribe(item => {
+        buttonStyle =
+          'width: ' +
+          item?.buttonWidth +
+          '; height: ' +
+          item?.buttonHeight +
+          '; border-style: ' +
+          item?.buttonBorderType +
+          '; color: ' +
+          item?.buttonColor +
+          '; font-size: ' +
+          item?.buttonFontSize +
+          '; font-weight: ' +
+          item?.buttonFontWeight +
+          '; background-color: ' +
+          item?.buttonColorBackground;
         labelText = item?.buttonLabel + '';
         requireStyle = !!item?.buttonCheckRequired;
       });
-    if(type === 'button') {
+    if (type === 'button') {
       return buttonStyle;
-    } else if(type === 'label') {
+    } else if (type === 'label') {
       return labelText;
-    } else if(type === 'required') {
+    } else if (type === 'required') {
       return requireStyle;
     }
     return;
@@ -183,28 +238,32 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     let labelText: string = '';
     let titleText: string = '';
     let requireStyle: boolean = false;
-    this.store$.select(getCheckBoxById(id))
+    this.store$
+      .select(getCheckBoxById(id))
       .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        checkBoxStyle = 'color: ' + item?.checkBoxColor +
-          '; font-size: ' + item?.checkBoxFontSize + '; font-weight: ' + item?.checkBoxFontWeight;
+      .subscribe(item => {
+        checkBoxStyle =
+          'color: ' +
+          item?.checkBoxColor +
+          '; font-size: ' +
+          item?.checkBoxFontSize +
+          '; font-weight: ' +
+          item?.checkBoxFontWeight;
         labelText = item?.checkBoxLabel + '';
         titleText = item?.checkBoxTitle + '';
         requireStyle = !!item?.checkBoxCheckRequired;
       });
-    if(type === 'checkBox') {
+    if (type === 'checkBox') {
       return checkBoxStyle;
-    } else if(type === 'label') {
+    } else if (type === 'label') {
       return labelText;
-    } else if(type === 'required') {
+    } else if (type === 'required') {
       return requireStyle;
-    } else if(type === 'title') {
+    } else if (type === 'title') {
       return titleText;
     }
     return;
   }
-
-
 
   get id() {
     return uuidv4();
@@ -215,14 +274,14 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     field.select = !field.select;
   }
 
-
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
-      ); } else {
+      );
+    } else {
       copyArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -232,44 +291,52 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
     }
     const addField: FieldElement = {
       field: event.container.data[event.currentIndex],
-      id: event.container.data[event.currentIndex] + uuidv4()
+      id: event.container.data[event.currentIndex] + uuidv4(),
+    };
+
+    if (addField.field === Fields.input) {
+      this.store$.dispatch(
+        inputAdd({
+          id: addField.id,
+          inputLabel: 'Input label',
+          inputPlaceholder: 'Input placeholder',
+        })
+      );
+    } else if (addField.field === Fields.select) {
+      this.store$.dispatch(
+        selectAdd({
+          id: addField.id,
+          selectLabel: 'Select',
+          selectAddOption: [],
+        })
+      );
+    } else if (addField.field === Fields.textArea) {
+      this.store$.dispatch(
+        textAreaAdd({
+          id: addField.id,
+          textAreaLabel: 'Textarea',
+          textAreaPlaceholder: 'Input placeholder',
+        })
+      );
+    } else if (addField.field === Fields.checkBox) {
+      this.store$.dispatch(
+        checkBoxAdd({
+          id: addField.id,
+          checkBoxLabel: 'label',
+          checkBoxTitle: 'CheckBox Title',
+        })
+      );
+    } else if (addField.field === Fields.button) {
+      this.store$.dispatch(
+        buttonAdd({
+          id: addField.id,
+          buttonLabel: 'Button label',
+        })
+      );
     }
-
-
-    if(addField.field === Fields.input) {
-      this.store$.dispatch(inputAdd({
-        id: addField.id,
-        inputLabel: 'Input label',
-        inputPlaceholder: 'Input placeholder'
-      }));
-    } else if(addField.field === Fields.select) {
-      this.store$.dispatch(selectAdd({
-        id: addField.id,
-        selectLabel: 'Select',
-        selectAddOption: []
-      }));
-    } else if(addField.field === Fields.textArea) {
-      this.store$.dispatch(textAreaAdd({
-        id: addField.id,
-        textAreaLabel: 'Textarea',
-        textAreaPlaceholder: 'Input placeholder'
-      }));
-    } else if(addField.field === Fields.checkBox) {
-      this.store$.dispatch(checkBoxAdd({
-        id: addField.id,
-        checkBoxLabel: 'label',
-        checkBoxTitle: 'CheckBox Title'
-      }));
-    } else if(addField.field === Fields.button) {
-      this.store$.dispatch(buttonAdd({
-        id: addField.id,
-        buttonLabel: 'Button label',
-      }));
-    }
-
   }
 
-  constructor(private store$: Store<FormElement>) { }
+  constructor(private store$: Store<FormElement>) {}
 
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -277,10 +344,8 @@ export class CreatedFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.form$
-      .subscribe(value => {
+    this.form$.subscribe(value => {
       this.formStyles = value;
-    })
+    });
   }
-
 }

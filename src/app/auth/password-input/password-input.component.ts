@@ -5,7 +5,7 @@ import {
   FormGroupDirective,
   NgControl,
   NgForm,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -13,9 +13,11 @@ import { ErrorStateMatcher } from '@angular/material/core';
 @Component({
   selector: 'app-password-input',
   templateUrl: './password-input.component.html',
-  styleUrls: ['./password-input.component.scss']
+  styleUrls: ['./password-input.component.scss'],
 })
-export class PasswordInputComponent implements ControlValueAccessor, ErrorStateMatcher {
+export class PasswordInputComponent
+  implements ControlValueAccessor, ErrorStateMatcher
+{
   disabled = false;
 
   icon = 'visibility_off';
@@ -37,7 +39,11 @@ export class PasswordInputComponent implements ControlValueAccessor, ErrorStateM
   matInput!: MatInput;
 
   get required(): boolean {
-    return this._required ?? this.ngControl?.control?.hasValidator(Validators.required) ?? false;
+    return (
+      this._required ??
+      this.ngControl?.control?.hasValidator(Validators.required) ??
+      false
+    );
   }
 
   @Input()
@@ -61,7 +67,10 @@ export class PasswordInputComponent implements ControlValueAccessor, ErrorStateM
     }
   }
 
-  isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: AbstractControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     return this.touched && (this.ngControl?.control?.invalid ?? false);
   }
 

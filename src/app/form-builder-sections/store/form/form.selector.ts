@@ -1,71 +1,72 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {formNode} from "./form.reducer";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { formNode } from './form.reducer';
 import {
   ButtonElement,
   CheckBoxElement,
   FieldElement,
-  FormElement, FormStyle,
+  FormElement,
+  FormStyle,
   InputElement,
   SelectElement,
-  TextAreaElement
-} from "../../interfaces";
+  TextAreaElement,
+} from '../../interfaces';
 
 export const selectorContFeature = createFeatureSelector<FormElement>(formNode);
 
 export const createInput = createSelector(
   selectorContFeature,
-  (state: FormElement) : InputElement[] => state.inputs
-)
+  (state: FormElement): InputElement[] => state.inputs
+);
 export const createFormList = createSelector(
   selectorContFeature,
-  (state: FormElement) : FieldElement[] => state.formList
-)
+  (state: FormElement): FieldElement[] => state.formList
+);
 export const createSelect = createSelector(
   selectorContFeature,
-  (state: FormElement) : SelectElement[] => state.selects
-)
+  (state: FormElement): SelectElement[] => state.selects
+);
 export const createTextArea = createSelector(
   selectorContFeature,
-  (state: FormElement) : TextAreaElement[] => state.textAreas
-)
+  (state: FormElement): TextAreaElement[] => state.textAreas
+);
 export const createCheckBoxes = createSelector(
   selectorContFeature,
-  (state: FormElement) : CheckBoxElement[] => state.checkBoxes
-)
+  (state: FormElement): CheckBoxElement[] => state.checkBoxes
+);
 export const createButtons = createSelector(
   selectorContFeature,
-  (state: FormElement) : ButtonElement[] => state.buttons
-)
+  (state: FormElement): ButtonElement[] => state.buttons
+);
 
 export const createFormStyle = createSelector(
   selectorContFeature,
-  (state: FormElement) : FormStyle => state.formGeneral
-)
+  (state: FormElement): FormStyle => state.formGeneral
+);
 
-export const getInputById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
-  if (allItems.inputs) {
-    return allItems.inputs.find(item => {
-      return item.id === id;
-    });
-  } else {
-    return {
-      id: '',
-      inputLabel: '',
-      inputPlaceholder: '',
-      inputWidth: '',
-      inputHeight: '',
-      inputFontSize: '',
-      inputFontWeight: '',
-      inputColor: '',
-      inputBorderType: '',
-      inputCheckRequired: false
-    };
-  }
-});
+export const getInputById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
+    if (allItems.inputs) {
+      return allItems.inputs.find(item => {
+        return item.id === id;
+      });
+    } else {
+      return {
+        id: '',
+        inputLabel: '',
+        inputPlaceholder: '',
+        inputWidth: '',
+        inputHeight: '',
+        inputFontSize: '',
+        inputFontWeight: '',
+        inputColor: '',
+        inputBorderType: '',
+        inputCheckRequired: false,
+      };
+    }
+  });
 
-export const getTextAreaById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
+export const getTextAreaById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
     if (allItems.textAreas) {
       return allItems.textAreas.find(item => {
         return item.id === id;
@@ -81,13 +82,13 @@ export const getTextAreaById = (id: string) => createSelector(selectorContFeatur
         textAreaFontWeight: '',
         textAreaColor: '',
         textAreaBorderType: '',
-        textAreaCheckRequired: false
+        textAreaCheckRequired: false,
       };
     }
   });
 
-export const getButtonById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
+export const getButtonById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
     if (allItems.buttons) {
       return allItems.buttons.find(item => {
         return item.id === id;
@@ -108,8 +109,8 @@ export const getButtonById = (id: string) => createSelector(selectorContFeature,
     }
   });
 
-export const getCheckBoxById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
+export const getCheckBoxById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
     if (allItems.checkBoxes) {
       return allItems.checkBoxes.find(item => {
         return item.id === id;
@@ -127,8 +128,8 @@ export const getCheckBoxById = (id: string) => createSelector(selectorContFeatur
     }
   });
 
-export const getSelectById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
+export const getSelectById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
     if (allItems.selects) {
       return allItems.selects.find(item => {
         return item.id === id;
@@ -149,18 +150,17 @@ export const getSelectById = (id: string) => createSelector(selectorContFeature,
     }
   });
 
-export const getSelectOptionsById = (id: string) => createSelector(selectorContFeature,
-  (allItems) => {
+export const getSelectOptionsById = (id: string) =>
+  createSelector(selectorContFeature, allItems => {
     let item: string[] | undefined;
     if (allItems.selects) {
       allItems.selects.forEach(select => {
-        if(select.id === id) {
+        if (select.id === id) {
           item = select.selectAddOption;
         }
-      })
+      });
       return item!;
     } else {
       return [];
     }
   });
-

@@ -1,5 +1,4 @@
-@import '../../../styles.scss';
-
+@import "../../../styles.scss";
 
 .example-accordion__position {
   width: 100%;
@@ -37,11 +36,11 @@
   line-height: 17px;
   &:hover {
     cursor: pointer;
-    background-color: #EEF2F4;
+    background-color: #eef2f4;
   }
 }
 .example-accordion-item-description {
-  color: #C2D6E1;
+  color: #c2d6e1;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -70,20 +69,21 @@
     }
   }
   &-options {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-    }
-      &-option {
-        width: 185px;
-        &-label, &-suffix{
-          font-family: $mainFont;
-          color: $mainColor;
-          font-style: normal;
-          font-weight: 400;
-          font-size: 14px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-option {
+    width: 185px;
+    &-label,
+    &-suffix {
+      font-family: $mainFont;
+      color: $mainColor;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
     }
     &-label {
       align-self: center;
@@ -94,7 +94,7 @@
   }
 }
 .apply__button {
-  background: #EEF2F4;
+  background: #eef2f4;
   border-radius: 4px;
   text-align: center;
   width: 155px;
@@ -134,6 +134,3 @@
 .mat-form-field-infix {
   padding: 0;
 }*/
-
-
-

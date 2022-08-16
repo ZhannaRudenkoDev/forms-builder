@@ -1,16 +1,14 @@
-@import '../../../styles.scss';
-
+@import "../../../styles.scss";
 
 .form-created__input {
   width: 100%;
   &:hover {
-    background-color: #C2D6E1;
+    background-color: #c2d6e1;
     input {
-      background-color: #C2D6E1;
-
+      background-color: #c2d6e1;
     }
     textarea {
-      background-color: #C2D6E1;
+      background-color: #c2d6e1;
     }
   }
 }
@@ -51,7 +49,7 @@
     @include displayCenter();
   }
   &__button {
-    background: #EEF2F4;
+    background: #eef2f4;
     border-radius: 4px;
     text-align: center;
     width: 155px;
@@ -88,7 +86,7 @@
   width: 90%;
   line-height: 1.25;
   padding: 1rem 0.75rem;
-  border: 1px solid #C2D6E1;
+  border: 1px solid #c2d6e1;
   border-radius: 4px;
 }
 
@@ -97,11 +95,11 @@
   top: 0;
   left: 20px;
   height: 100%;
-  padding: 1rem .75rem;
+  padding: 1rem 0.75rem;
   pointer-events: none;
   border: 1px solid transparent;
   transform-origin: 0 0;
-  transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
   font-family: $mainFont;
   font-style: normal;
   font-weight: 400;
@@ -114,7 +112,6 @@
   .text-field_floating .text-field__label {
     left: 40px;
   }
-
 }
 
 .form {
@@ -122,7 +119,7 @@
   flex-direction: column;
 }
 .apply__button {
-  background: #EEF2F4;
+  background: #eef2f4;
   border-radius: 4px;
   text-align: center;
   width: 155px;
@@ -139,7 +136,6 @@
   .text-field_floating .text-field__label {
     left: 20px;
   }
-
 }
 
 .text-field_floating .text-field__input::placeholder {
@@ -148,17 +144,19 @@
 .text-field_floating .text-field__input:focus,
 .text-field_floating .text-field__input:not(:placeholder-shown) {
   padding-top: 1.625rem;
-  padding-bottom: .625rem;
+  padding-bottom: 0.625rem;
 }
 
 .text-field_floating {
   justify-content: center;
 }
 
-.text-field_floating .text-field__input:focus~.text-field__label,
-.text-field_floating .text-field__input:not(:placeholder-shown)~.text-field__label {
-  opacity: .65;
-  transform: scale(.85) translateY(-.75rem) translateX(.15rem);
+.text-field_floating .text-field__input:focus ~ .text-field__label,
+.text-field_floating,
+.text-field__input:not(:placeholder-shown),
+~ .text-field__label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.75rem) translateX(0.15rem);
 }
 
 .floating-label {
@@ -176,14 +174,14 @@
   width: 90%;
   height: 50px;
   background-color: transparent;
-  border: 1px solid #C2D6E1;
+  border: 1px solid #c2d6e1;
   border-radius: 4px;
 }
 
 .floating-input:focus,
 .floating-select:focus {
   outline: none;
-  border: 1px solid #C2D6E1;
+  border: 1px solid #c2d6e1;
 }
 
 .label__select {
@@ -202,27 +200,26 @@
   -webkit-transition: 0.2s ease all;
 }
 
-.floating-input:focus~.label__select,
-.floating-input:not(:placeholder-shown)~.label__select {
+.floating-input:focus ~ .label__select,
+.floating-input:not(:placeholder-shown) ~ .label__select {
   top: -18px;
   font-size: 14px;
-  color: #5264AE;
+  color: #5264ae;
 }
 
-.floating-select:focus~.label__select,
-.floating-select:not([value=""]):valid~.label__select {
+.floating-select:focus ~ .label__select,
+.floating-select:not([value=""]):valid ~ .label__select {
   top: -18px;
   font-size: 14px;
-  color: #5264AE;
+  color: #5264ae;
 }
-
 
 /* active state */
 
-.floating-input:focus~.bar:before,
-.floating-input:focus~.bar:after,
-.floating-select:focus~.bar:before,
-.floating-select:focus~.bar:after {
+.floating-input:focus ~ .bar:before,
+.floating-input:focus ~ .bar:after,
+.floating-select:focus ~ .bar:before,
+.floating-select:focus ~ .bar:after {
   width: 50%;
 }
 
@@ -238,9 +235,7 @@
   min-height: 30px;
   max-height: 260px;
   overflow: hidden;
-  overflow-x: hidden;
 }
-
 
 /* highlighter */
 
@@ -254,22 +249,20 @@
   opacity: 0.5;
 }
 
-
 /* active state */
 
-.floating-input:focus~.highlight,
-.floating-select:focus~.highlight {
+.floating-input:focus ~ .highlight,
+.floating-select:focus ~ .highlight {
   -webkit-animation: inputHighlighter 0.3s ease;
   -moz-animation: inputHighlighter 0.3s ease;
   animation: inputHighlighter 0.3s ease;
 }
 
-
 /* animation */
 
 @-webkit-keyframes inputHighlighter {
   from {
-    background: #5264AE;
+    background: #5264ae;
   }
   to {
     width: 0;
@@ -279,7 +272,7 @@
 
 @-moz-keyframes inputHighlighter {
   from {
-    background: #5264AE;
+    background: #5264ae;
   }
   to {
     width: 0;
@@ -289,13 +282,10 @@
 
 @keyframes inputHighlighter {
   from {
-    background: #5264AE;
+    background: #5264ae;
   }
   to {
     width: 0;
     background: transparent;
   }
 }
-
-
-

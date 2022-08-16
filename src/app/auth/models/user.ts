@@ -3,5 +3,5 @@ export class User {
   email?: string;
   password?: string;
   token?: string;
-  success?: boolean
+  success?: boolean;
 }

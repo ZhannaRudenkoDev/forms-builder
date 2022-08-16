@@ -1,14 +1,17 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {Subject} from "rxjs";
-import {Store} from "@ngrx/store";
-
 import {
-  formStyleAdd,
-} from "../store/form/form.actions";
-import {FieldElement, FormElement} from "../interfaces";
-import {MatDialog} from "@angular/material/dialog";
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import { formStyleAdd } from '../store/form/form.actions';
+import { FieldElement, FormElement } from '../interfaces';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-style-from',
@@ -16,50 +19,45 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./style-from.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StyleFromComponent implements OnInit, OnDestroy {
-
+export class StyleFromComponent implements OnDestroy {
   items = ['Form General Styles', 'Field Styles'];
   expandedIndex = 0;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-
-
   @Input() field = '';
 
   @Input() fieldOBJ: FieldElement = {
     field: '',
-    id: ''
+    id: '',
   };
 
-
-  formGeneral= new FormGroup({
-    'formLabel': new FormControl('', [Validators.required, Validators.minLength(3)]),
-    'colorRGB': new FormControl(''),
-    'backgroundRGB': new FormControl(''),
-    'borderStyle': new FormControl(''),
-    'borderColorRGB': new FormControl(''),
-  })
+  formGeneral = new FormGroup({
+    formLabel: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    colorRGB: new FormControl(''),
+    backgroundRGB: new FormControl(''),
+    borderStyle: new FormControl(''),
+    borderColorRGB: new FormControl(''),
+  });
 
   applyFormStyles() {
-    if(this.formGeneral.valid) {
-      this.store$.dispatch(formStyleAdd({
-        formLabel: this.formGeneral.get('formLabel')?.value!,
-        colorRGB:  this.formGeneral.get('colorRGB')?.value!,
-        backgroundRGB: this.formGeneral.get('backgroundRGB')?.value!,
-        borderStyle: this.formGeneral.get('borderStyle')?.value!,
-        borderColorRGB: this.formGeneral.get('borderColorRGB')?.value!,
-      }));
+    if (this.formGeneral.valid) {
+      this.store$.dispatch(
+        formStyleAdd({
+          formLabel: this.formGeneral.get('formLabel')?.value!,
+          colorRGB: this.formGeneral.get('colorRGB')?.value!,
+          backgroundRGB: this.formGeneral.get('backgroundRGB')?.value!,
+          borderStyle: this.formGeneral.get('borderStyle')?.value!,
+          borderColorRGB: this.formGeneral.get('borderColorRGB')?.value!,
+        })
+      );
     }
   }
 
-
-
-  constructor(private store$: Store<FormElement>,
-              private dialog: MatDialog) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private store$: Store<FormElement>, private dialog: MatDialog) {}
 
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -80,5 +78,4 @@ export class StyleFromComponent implements OnInit, OnDestroy {
   get borderColorRGB() {
     return this.formGeneral.get('borderColorRGB');
   }
-
 }

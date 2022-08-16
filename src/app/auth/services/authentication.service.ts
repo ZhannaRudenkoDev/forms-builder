@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import {concatMap, filter, flatMap, map, Observable, tap} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {User} from "../models/user";
-import {Router} from "@angular/router";
-
+import { concatMap, filter, map, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   constructor(private http: HttpClient, private router: Router) {}
@@ -23,16 +22,16 @@ export class AuthenticationService {
         });
       }),
       tap(user => {
-        if(user) {
+        if (user) {
           localStorage.setItem('token', user.token!);
         }
-      }),
-    )
+      })
+    );
   }
 
   logInWithToken(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/users').pipe(
-      concatMap((users:User[])=> users),
+      concatMap((users: User[]) => users),
       filter(user => user.token === localStorage.getItem('token'))
     );
   }
@@ -45,5 +44,4 @@ export class AuthenticationService {
     localStorage.removeItem('token');
     this.router.navigate(['/log-in']);
   }
-
 }

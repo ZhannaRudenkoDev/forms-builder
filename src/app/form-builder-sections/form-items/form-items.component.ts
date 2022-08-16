@@ -1,23 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-form-items',
   templateUrl: './form-items.component.html',
   styleUrls: ['./form-items.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormItemsComponent implements OnInit {
-  fields = [
-    'Input',
-    'Textarea',
-    'Button',
-    'Checkbox',
-    'Select',
-  ];
+export class FormItemsComponent {
+  fields = ['Input', 'Textarea', 'Button', 'Checkbox', 'Select'];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() {}
 }
